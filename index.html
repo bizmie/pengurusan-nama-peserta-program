@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Program MTIB - Hub Pengurusan Cloud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .shadow-premium { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03); }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .print-area { border: none !important; box-shadow: none !important; width: 100% !important; margin: 0 !important; padding: 1cm !important; }
+        }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+        .calendar-day { min-height: 80px; transition: all 0.2s; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; cursor: pointer; position: relative; }
+        .calendar-day:hover { background-color: #f1f5f9; }
+        .is-weekend { background-color: #f8fafc; color: #94a3b8; }
+        .has-event { border-left: 4px solid #2563eb !important; background-color: #f0f7ff; }
+        .selected-day { ring: 3px inset #2563eb; background-color: #f0f9ff !important; }
+
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="bg-[#f3f4f6] text-slate-900">
+
+    <!-- Notifikasi Toast -->
+    <div id="toast" class="fixed top-8 left-1/2 -translate-x-1/2 z-[100] hidden">
+        <div class="bg-slate-900 text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700 animate-in fade-in zoom-in duration-300">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
+            <span id="toast-message" class="text-sm font-bold uppercase tracking-wide">Mesej Berjaya</span>
+        </div>
+    </div>
+
+    <!-- Header / Navigasi -->
+    <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center min-h-[4.5rem] py-2 md:py-0 text-black">
+            <div class="flex items-center gap-4 cursor-pointer" onclick="goToMainMenu()">
+                <div class="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center shadow-lg">
+                    <i data-lucide="layout-grid" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-black text-lg md:text-xl leading-tight uppercase tracking-tighter text-slate-900">Sistem Program MTIB</h1>
+                    <div class="flex items-center gap-2 mt-0.5">
+                        <p id="current-program-label" class="text-xs text-slate-500 font-bold uppercase tracking-widest">Utama</p>
+                        <span id="header-program-date" class="text-xs font-black uppercase text-blue-600 hidden ml-2"></span>
+                        <span id="sync-indicator" class="text-[10px] text-amber-600 animate-pulse font-black hidden ml-2">• Menyelaras...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4 mt-3 md:mt-0">
+                <!-- Action Header Kanan (Hanya dipapar di Main Menu) -->
+                <div id="header-right-main" class="flex flex-col items-end gap-1.5">
+                    <div id="header-current-date" class="hidden md:block text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 shadow-inner">
+                        <!-- Date injected via JS -->
+                    </div>
+                    <button onclick="openProgramModal()" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-1.5 rounded-lg flex items-center justify-center gap-2 text-[10px] font-black shadow-md transition-all active:scale-95">
+                        <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> TAMBAH PROGRAM
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+        
+        <!-- SECTION 1: DASHBOARD UTAMA -->
+        <div id="section-main-menu" class="fade-in">
+            
+            <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+                
+                <!-- Left Column: Activity Summary Widget (WIDER & TALLER) -->
+                <div id="day-summary-panel" class="w-full lg:w-2/3 flex-shrink-0 bg-white rounded-[2.5rem] border border-slate-200 shadow-premium p-8 flex flex-col transition-all bg-gradient-to-b from-white to-slate-50 min-h-[500px] text-black">
+                    <div id="summary-content" class="w-full text-left flex flex-col h-full">
+                        <div class="border-b-4 border-blue-600 pb-4 mb-6 flex justify-between items-end">
+                            <div>
+                                <h4 class="text-blue-700 font-black text-2xl uppercase tracking-tighter">Ringkasan Program</h4>
+                                <p id="summary-date-label" class="text-xs text-slate-400 font-black uppercase tracking-widest mt-1">Semua Program Akan Datang</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 shadow-inner">
+                                <i data-lucide="list-todo" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+                        <div id="summary-events-list" class="space-y-4 overflow-y-auto pr-2 flex-grow pb-4">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Calendar (SMALLER & COMPACT) -->
+                <div class="w-full lg:w-1/3 bg-white rounded-[2.5rem] border border-slate-200 shadow-premium overflow-hidden flex flex-col max-h-[500px] text-black">
+                    <div class="px-6 py-5 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                        <h3 id="calendar-month-year" class="font-black text-base uppercase tracking-tight text-slate-900">BULAN 2026</h3>
+                        <div class="flex gap-2">
+                            <button onclick="changeMonth(-1)" class="p-2 hover:bg-slate-200 rounded-xl transition border border-slate-300 bg-white shadow-sm text-black"><i data-lucide="chevron-left" class="w-4 h-4 text-black"></i></button>
+                            <button onclick="changeMonth(1)" class="p-2 hover:bg-slate-200 rounded-xl transition border border-slate-300 bg-white shadow-sm text-black"><i data-lucide="chevron-right" class="w-4 h-4 text-black"></i></button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid bg-slate-100/50">
+                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Isn</div>
+                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Sel</div>
+                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Rab</div>
+                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Kha</div>
+                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Jum</div>
+                        <div class="p-2.5 text-center text-[10px] font-black text-slate-500 border-b border-r bg-slate-200/50 uppercase">Sab</div>
+                        <div class="p-2.5 text-center text-[10px] font-black text-slate-500 border-b bg-slate-200/50 uppercase">Aha</div>
+                    </div>
+                    <div id="calendar-days" class="calendar-grid text-black flex-grow overflow-y-auto"></div>
+                    <div class="p-3 border-t border-slate-100 bg-slate-50/50 flex justify-center">
+                        <button id="reset-filter-btn" onclick="filterByDate(null)" class="hidden px-6 py-2 text-[10px] font-black text-blue-700 uppercase border-2 border-blue-200 rounded-full hover:bg-blue-600 hover:text-white transition-all shadow-md text-black">Tunjuk Semua</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: KANDUNGAN PROGRAM SPESIFIK -->
+        <div id="section-program-content" class="hidden space-y-6 text-black">
+            
+            <!-- TAB MENU BAR (NEW) -->
+            <div id="program-nav" class="flex flex-wrap items-center justify-between gap-4 bg-white p-3 rounded-[2.5rem] border border-slate-200 shadow-premium w-full hidden">
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="switchTab('dashboard')" class="nav-btn active flex items-center justify-center gap-2 px-6 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-blue-100 text-blue-700 shadow-sm" data-tab="dashboard" title="Dashboard">
+                        <i data-lucide="home" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="switchTab('report')" class="nav-btn flex items-center justify-center gap-2 px-6 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-500 hover:bg-slate-50" data-tab="report">
+                        LAPORAN
+                    </button>
+                    <button onclick="switchTab('settings')" class="nav-btn flex items-center justify-center gap-2 px-6 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-500 hover:bg-slate-50" data-tab="settings">
+                        TETAPAN
+                    </button>
+                </div>
+                <button onclick="goToMainMenu()" class="flex items-center justify-center gap-2 px-6 py-3.5 rounded-[2rem] text-sm font-black transition-all text-red-600 hover:bg-red-50 hover:text-red-700" title="Kembali ke Utama">
+                    <i data-lucide="arrow-left-circle" class="w-5 h-5"></i> KEMBALI
+                </button>
+            </div>
+
+            <!-- TAB DASHBOARD (Kini hanya paparkan statistik besar) -->
+            <div id="tab-dashboard" class="tab-content active fade-in text-black">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-black">
+                    <div class="flex items-center gap-4 text-black text-black">
+                        <i data-lucide="bar-chart-big" class="w-10 h-10 text-blue-700"></i>
+                        <h2 class="text-3xl font-black tracking-tighter uppercase text-slate-900 text-black">Statistik Program</h2>
+                    </div>
+                    <div class="relative w-full md:w-[28rem] text-black">
+                        <i data-lucide="search" class="w-6 h-6 absolute left-6 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="dashboard-search" oninput="renderDashboard()" placeholder="Cari nama wakil..." class="w-full pl-16 pr-8 py-5 bg-white border border-slate-300 rounded-[2rem] text-sm font-bold shadow-sm transition-all text-black outline-none focus:ring-4 focus:ring-blue-100">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 text-black">
+                    <div class="bg-white p-5 rounded-[2rem] border border-slate-200 shadow-premium flex items-center gap-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600 shadow-inner text-black"><i data-lucide="clock" class="w-6 h-6"></i></div>
+                        <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tutup</p><h3 id="stat-closing" class="text-xl font-black text-yellow-500"></h3></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-[2rem] border border-slate-200 shadow-premium flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 shadow-inner text-black"><i data-lucide="users" class="w-6 h-6"></i></div>
+                        <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Hadir</p><h3 id="stat-total" class="text-xl font-black text-black">0</h3></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-[2rem] border border-slate-200 shadow-premium flex items-center gap-4 text-black">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-700 shadow-inner text-black"><i data-lucide="target" class="w-6 h-6 text-black"></i></div>
+                        <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Sasaran</p><h3 id="stat-target" class="text-xl font-black text-black">0</h3></div>
+                    </div>
+                    <div id="widget-needed" class="bg-white p-5 rounded-[2rem] border border-slate-200 shadow-premium flex items-center gap-4 text-black">
+                        <div id="stat-needed-icon" class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center shadow-inner text-slate-400 text-black"></div>
+                        <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Baki</p><h3 id="stat-needed" class="text-xl font-black text-black">0</h3></div>
+                    </div>
+                    <div class="bg-slate-900 p-5 rounded-[2rem] shadow-2xl text-white flex items-center gap-4 text-black text-black">
+                        <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center shadow-inner text-white text-black"><i data-lucide="calendar-check" class="w-6 h-6 text-white"></i></div>
+                        <div><p class="text-[10px] font-black text-white/40 uppercase tracking-widest">Status</p><h3 id="stat-days" class="text-xl font-black text-white text-black">0</h3></div>
+                    </div>
+                </div>
+
+                <!-- Senarai Berdaftar & Carian (Digabung) -->
+                <div class="bg-white p-8 md:p-12 rounded-[3.5rem] border border-slate-200 shadow-premium mt-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-8 border-b-4 border-slate-50 pb-6">
+                        <h3 class="text-2xl font-black uppercase tracking-tighter text-slate-900">Senarai Peserta</h3>
+                        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                            <div class="relative w-full sm:w-72">
+                                <i data-lucide="search" class="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="text" id="dashboard-search" oninput="renderDashboard()" placeholder="Cari nama wakil..." class="w-full pl-12 pr-5 py-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-bold shadow-inner outline-none focus:ring-4 focus:ring-blue-100 transition-all text-black">
+                            </div>
+                            <button onclick="openParticipantModal()" class="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-8 py-3.5 rounded-2xl flex items-center justify-center gap-3 text-sm font-black shadow-xl transition-all active:scale-95 whitespace-nowrap">
+                                <i data-lucide="user-plus" class="w-5 h-5"></i> DAFTAR
+                            </button>
+                        </div>
+                    </div>
+                    <div id="dashboard-list" class="space-y-6 text-black"></div>
+                </div>
+            </div>
+
+            <!-- TAB SETTINGS -->
+            <div id="tab-settings" class="tab-content max-w-3xl mx-auto text-black text-black">
+                <div class="bg-white p-12 rounded-[4rem] border border-slate-200 shadow-premium">
+                    <h2 class="text-3xl font-black uppercase mb-12 border-b-4 border-blue-50 pb-6 flex items-center gap-5 tracking-tighter text-black">
+                        <i data-lucide="settings-2" class="w-10 h-10 text-blue-700"></i> Tetapan Program
+                    </h2>
+                    <form id="settings-form" class="space-y-8 text-black">
+                        <div class="space-y-2">
+                            <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1 text-black">Tajuk Rasmi Program</label>
+                            <input type="text" id="set-prog-name" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1 text-black">Unit Urusetia / Penganjur</label>
+                            <input type="text" id="set-prog-secretariat" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black" required>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6 text-black">
+                            <div class="space-y-2">
+                                <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1">Lokasi Program</label>
+                                <input type="text" id="set-prog-location" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1">Masa / Waktu</label>
+                                <input type="text" id="set-prog-time" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6 text-black">
+                            <div class="space-y-2">
+                                <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1">Sasaran Bilangan Peserta</label>
+                                <input type="number" id="set-prog-target" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-black text-blue-500 uppercase tracking-widest ml-1">Tarikh Program Berlangsung</label>
+                                <input type="date" id="set-prog-event-date" class="w-full px-8 py-5 bg-blue-50 border border-blue-200 rounded-[2rem] text-base font-bold text-blue-900 text-black" required>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-black text-red-500 uppercase tracking-widest ml-1 underline underline-offset-8 text-black">Tarikh Akhir Pendaftaran (TUTUP)</label>
+                            <input type="date" id="set-prog-closing" class="w-full px-8 py-5 bg-red-50 border border-red-200 rounded-[2rem] text-base font-bold text-red-900 shadow-inner" required>
+                        </div>
+                        <div class="space-y-6">
+                            <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-2 border-b-2 pb-2 block text-black">Konfigurasi Bahagian Terlibat</label>
+                            <div id="settings-dept-checklist" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto bg-slate-50 p-8 rounded-[3rem] border border-slate-200 shadow-inner text-black"></div>
+                        </div>
+                        <button type="submit" class="w-full py-6 bg-blue-700 text-white font-black rounded-[3rem] text-base shadow-2xl hover:bg-blue-800 transition-all uppercase tracking-[0.3em] active:scale-95 text-white">
+                            Kemaskini Tetapan Program
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB REPORT -->
+            <div id="tab-report" class="tab-content space-y-6 text-black">
+                <div class="flex justify-end no-print text-black">
+                    <button onclick="window.print()" class="bg-slate-900 text-white px-12 py-5 rounded-[2rem] flex items-center gap-4 font-black text-base shadow-2xl hover:scale-105 transition-all active:scale-95 text-white">
+                        <i data-lucide="printer" class="w-6 h-6 text-white text-black"></i> CETAK LAPORAN (PDF/A4)
+                    </button>
+                </div>
+                <div id="report-container" class="bg-white p-16 shadow-2xl border border-slate-300 mx-auto max-w-[21cm] text-black print-area min-h-[29.7cm] text-black"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Pendaftaran Program Baharu -->
+    <div id="modal-program" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto text-black">
+        <div class="bg-white w-full max-w-2xl rounded-[4rem] border border-slate-200 shadow-2xl p-12 fade-in my-10 text-black">
+            <h2 id="modal-title" class="text-3xl font-black uppercase mb-10 text-center tracking-tighter border-b-4 border-blue-50 pb-6 text-black">Daftar Program Baharu</h2>
+            <form id="program-form" class="space-y-6">
+                <input type="hidden" id="edit-prog-id">
+                <div class="space-y-2">
+                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Nama Program / Seminar / Aktiviti</label>
+                    <input type="text" id="input-prog-name" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold uppercase shadow-inner outline-none focus:ring-4 focus:ring-blue-100 text-black" placeholder="Cth: Kursus Pemantapan IT" required>
+                </div>
+                <div class="space-y-2 text-black">
+                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Unit Urusetia / Cawangan</label>
+                    <input type="text" id="input-prog-secretariat" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner outline-none focus:ring-4 focus:ring-blue-100 text-black" placeholder="Cth: Cawangan Pengurusan Sumber Manusia" required>
+                </div>
+                <div class="grid grid-cols-2 gap-6 text-black">
+                    <div class="space-y-2">
+                        <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Lokasi</label>
+                        <input type="text" id="input-prog-location" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 text-black" required>
+                    </div>
+                    <div class="space-y-2 text-black">
+                        <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Masa</label>
+                        <input type="text" id="input-prog-time" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 text-black" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-6 text-black">
+                    <div class="space-y-2 text-black">
+                        <label class="text-sm font-black text-blue-600 uppercase tracking-widest ml-3 text-black">Tarikh Acara</label>
+                        <input type="date" id="input-prog-event-date" class="w-full px-8 py-4 bg-blue-50 border border-blue-200 rounded-[2rem] text-base font-bold shadow-inner text-black" required>
+                    </div>
+                    <div class="space-y-2 text-black">
+                        <label class="text-sm font-black text-red-600 uppercase tracking-widest ml-3 text-black">Tamat Pendaftaran</label>
+                        <input type="date" id="input-prog-closing" class="w-full px-8 py-4 bg-red-50 border border-red-200 rounded-[2rem] text-base font-bold shadow-inner text-black" required>
+                    </div>
+                </div>
+                <div class="space-y-2 text-black">
+                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Sasaran Peserta</label>
+                    <input type="number" id="input-prog-target" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner text-black" value="50" required>
+                </div>
+                <div class="space-y-4 text-black text-black">
+                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 border-b pb-2 block text-black">Pilih Bahagian Terlibat</label>
+                    <div id="modal-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-40 overflow-y-auto bg-slate-50 p-6 rounded-[2.5rem] border border-slate-200 shadow-inner text-black text-black"></div>
+                </div>
+                <div class="flex gap-6 pt-10 text-black">
+                    <button type="button" onclick="closeProgramModal()" class="flex-1 py-5 text-slate-500 font-black text-sm uppercase tracking-widest transition-all">Batal</button>
+                    <button type="submit" class="flex-[2] py-5 bg-blue-700 text-white font-black rounded-[2rem] text-sm shadow-2xl hover:bg-blue-800 transition-all uppercase tracking-widest active:scale-95 text-white">Simpan Program</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Pendaftaran Peserta (Baru) -->
+    <div id="modal-participant" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto text-black">
+        <div class="bg-white w-full max-w-xl rounded-[3rem] border border-slate-200 shadow-2xl p-10 fade-in my-10 text-black">
+            <h2 id="participant-modal-title" class="text-3xl font-black uppercase mb-8 text-center tracking-tighter border-b-4 border-blue-50 pb-6 text-black">Daftar Peserta Baru</h2>
+            <form id="participant-form" class="space-y-6 text-black">
+                <input type="hidden" id="edit-p-id">
+                <div class="space-y-2 text-black">
+                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Nama Penuh Wakil</label>
+                    <input type="text" id="input-p-name" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 outline-none transition-all text-black" required>
+                </div>
+                <div class="space-y-2 text-black">
+                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Gred / Jawatan</label>
+                    <input type="text" id="input-p-position" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 outline-none transition-all text-black" required>
+                </div>
+                <div class="space-y-2 text-black">
+                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Bahagian / Cawangan MTIB</label>
+                    <select id="input-p-dept" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 outline-none appearance-none cursor-pointer text-black" required></select>
+                </div>
+                <div class="flex gap-6 pt-8 text-black">
+                    <button type="button" onclick="closeParticipantModal()" class="flex-1 py-4 bg-slate-100 text-slate-600 font-black rounded-[2rem] text-sm uppercase tracking-widest hover:bg-slate-200 transition-all text-black">Batal</button>
+                    <button type="submit" class="flex-[2] py-4 bg-blue-700 text-white font-black rounded-[2rem] text-sm shadow-2xl hover:bg-blue-800 transition-all uppercase tracking-widest active:scale-95 text-black">Simpan Rekod</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc, setDoc, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Firebase Configuration 
+        const firebaseConfig = {
+            apiKey: "AIzaSyDHUCV_lJMvwoHJSVOx8IWvDUEYjAfWwKY",
+            authDomain: "pendaftar-peserta-program.firebaseapp.com",
+            projectId: "pendaftar-peserta-program",
+            storageBucket: "pendaftar-peserta-program.firebasestorage.app",
+            messagingSenderId: "653734783504",
+            appId: "1:653734783504:web:7bd499dcb45269a2533895",
+            measurementId: "G-RHRFVZ11MZ"
+        };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mtib-multi-prog-v9';
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const DEPARTMENTS = ["Pejabat Ketua Pengarah", "Pembangunan Perdagangan", "Perancangan Strategik", "Perladangan Hutan", "Pembangunan Industri", "Pemerkasaan Ekonomi Bumiputera", "Pelesenan dan Inspektorat", "Khidmat Pengurusan (Seksyen Pentadbiran)", "Khidmat Pengurusan (Seksyen Kewangan)", "Khidmat Pengurusan (Seksyen Teknologi Maklumat)", "Khidmat Pengurusan (Seksyen Pengurusan Sumber Manusia)", "WISDEC Banting", "Pusat Biokomposit dan Gentian (FIDEC)", "Wilayah Tengah", "Wilayah Timur", "Wilayah Utara", "Wilayah Selatan", "Wilayah Sabah"];
+
+        const OFFICIAL_DATA = [
+            { name: "Pn. Effy Emira Maulad Said Md Nasir", position: "Pegawai", dept: "Pembangunan Perdagangan" },
+            { name: "Pn. Ruhaida Mohd Khari", position: "Pegawai", dept: "Pembangunan Perdagangan" },
+            { name: "En. Sahruddin Mohd Zakrie", position: "Pegawai", dept: "Pembangunan Perdagangan" },
+            { name: "En. Esharizal Elias", position: "Pegawai", dept: "Pembangunan Perdagangan" },
+            { name: "En. Azmi Ismail", position: "Pegawai", dept: "Perancangan Strategik" },
+            { name: "En. Muhammad Fariz Idham", position: "Pegawai", dept: "Perancangan Strategik" },
+            { name: "En. Muhammad Mus Fakaruddin", position: "Pegawai", dept: "Perancangan Strategik" },
+            { name: "En. Khairul 'Amirin", position: "Pegawai", dept: "Perancangan Strategik" },
+            { name: "En. Mohd Ashdar Faisal bin Ashaari", position: "Pegawai", dept: "Perladangan Hutan" },
+            { name: "En. Aminuddin bin Mohamad Sagir", position: "Pegawai", dept: "Perladangan Hutan" },
+            { name: "En. Imran Nabil bin Shaharuddin", position: "Pegawai", dept: "Perladangan Hutan" },
+            { name: "En. Shahrul Rizal bin Shahedan", position: "Pegawai", dept: "Perladangan Hutan" },
+            { name: "Pn. Zarina binti Amran", position: "Pegawai", dept: "Pembangunan Industri" },
+            { name: "Pn. Siti A'esyah binti Zulkifli", position: "Pegawai", dept: "Pembangunan Industri" },
+            { name: "Reza Faidzal bin Md Daud", position: "Pegawai", dept: "Pembangunan Industri" },
+            { name: "Muhammad Fu'ad bin Mohamad Ali", position: "Pegawai", dept: "Pembangunan Industri" },
+            { name: "En. Noor Azhiim bin Sansudin", position: "Pegawai", dept: "Pemerkasaan Ekonomi Bumiputera" },
+            { name: "Pn. Norazfizawatie binti Aziz", position: "Pegawai", dept: "Pemerkasaan Ekonomi Bumiputera" },
+            { name: "En. Panglima Ahkbar bin Ramlee", position: "Pegawai", dept: "Pemerkasaan Ekonomi Bumiputera" },
+            { name: "Cik. Nur Raihana binti Mohd Zuhaidi", position: "Pegawai", dept: "Pemerkasaan Ekonomi Bumiputera" },
+            { name: "En. Azhar bin Ayup @ Hussin", position: "Pegawai", dept: "Pelesenan dan Inspektorat" },
+            { name: "Pn. Nurul Faezah binti Abdullah", position: "Pegawai", dept: "Pelesenan dan Inspektorat" },
+            { name: "En. Muhammad Izwannor bin Jamaludin", position: "Pegawai", dept: "Pelesenan dan Inspektorat" },
+            { name: "Cik Nur Akma Amalia binti Irwan Rafes", position: "Pegawai", dept: "Pelesenan dan Inspektorat" },
+            { name: "En. Hamzah bin Zainon", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Pentadbiran)" },
+            { name: "En. Fazuan bin Abu Bakar", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Pentadbiran)" },
+            { name: "En. Ahmad Mierza Aqil bin Mohd Tarmin", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Pentadbiran)" },
+            { name: "Cik Nurfarah binti Khairudin", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Pentadbiran)" },
+            { name: "Puan Nurul Asyiqin", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Kewangan)" },
+            { name: "En. Ahmad Ikram", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Kewangan)" },
+            { name: "En. Muhammad Afif Mahmood", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Teknologi Maklumat)" },
+            { name: "En. Muhammad Ha'akimi Jaffary", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Teknologi Maklumat)" },
+            { name: "Nur Farahanim Idayu binti Mohd Hanif", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Pengurusan Sumber Manusia)" },
+            { name: "Raihana binti Hassan", position: "Pegawai", dept: "Khidmat Pengurusan (Seksyen Pengurusan Sumber Manusia)" },
+            { name: "En. Abdul Halim Bin Sidi", position: "Pegawai", dept: "WISDEC Banting" },
+            { name: "En. Mohd Sabri Bin Ramli", position: "Pegawai", dept: "WISDEC Banting" },
+            { name: "En. Hasan Bin Syainal", position: "Pegawai", dept: "WISDEC Banting" },
+            { name: "En. Muhamad Hazree Bin Mohamad Nasir (Tc)", position: "Pegawai", dept: "WISDEC Banting" },
+            { name: "En. Muhammad Amir Mohammed", position: "Pegawai", dept: "Pusat Biokomposit dan Gentian (FIDEC)" },
+            { name: "En. Mohammad Maulana Abdullah", position: "Pegawai", dept: "Pusat Biokomposit dan Gentian (FIDEC)" },
+            { name: "En. Mohammad Zakir Abd Wahab", position: "Pegawai", dept: "Pusat Biokomposit dan Gentian (FIDEC)" },
+            { name: "En. Dullah Amit", position: "Pegawai", dept: "Pusat Biokomposit dan Gentian (FIDEC)" },
+            { name: "En. Mohd Zaiddy bin Hassan", position: "Pegawai", dept: "Wilayah Tengah" },
+            { name: "En. Mohammad Nurkhalis bin Mohd Ayob", position: "Pegawai", dept: "Wilayah Tengah" },
+            { name: "En. Mohd Afiq Syahmi bin Khairul Bakri", position: "Pegawai", dept: "Wilayah Tengah" },
+            { name: "En. Amiruddin bin Jasni", position: "Pegawai", dept: "Wilayah Tengah" }
+        ];
+
+        window.state = { programs: [], participants: [], currentProgram: null, user: null, currentMonth: new Date().getMonth(), currentYear: new Date().getFullYear(), hasCheckedSync: false, filterDate: null };
+
+        const initAuth = async () => { 
+            try { await signInAnonymously(auth); } catch (e) { console.error("Auth Fail:", e); } 
+        };
+
+        const setupListeners = () => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    window.state.user = user;
+                    
+                    onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), (snap) => {
+                        window.state.programs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                        if(!window.state.hasCheckedSync) checkInitial();
+                        renderCalendar();
+                        updateDaySummary(window.state.filterDate);
+                        if (window.state.currentProgram) { 
+                            const u = window.state.programs.find(p => p.id === window.state.currentProgram.id); 
+                            if (u) { window.state.currentProgram = u; updateProgramUI(); } 
+                        }
+                    }, (err) => console.error("Permission Error Programs:", err));
+
+                    onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), (snap) => {
+                        window.state.participants = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                        if (window.state.currentProgram) { renderDashboard(); renderReport(); }
+                        updateDaySummary(window.state.filterDate);
+                    }, (err) => console.error("Permission Error Participants:", err));
+                }
+            });
+        };
+
+        const checkInitial = async () => {
+            if (window.state.hasCheckedSync) return;
+            window.state.hasCheckedSync = true;
+            if (window.state.programs.length === 0) {
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), { name: "SAMBUTAN HARI PEKERJA KEBANGSAAN 2026", secretariat: "PSM", targetCount: 50, eventDate: "2026-05-01", closingDate: "2026-04-25", location: "Stadium Bukit Jalil", time: "7.30 Pagi", involvedDepts: DEPARTMENTS, createdAt: new Date().toISOString() });
+                } catch(e) { console.error("Initial Load Fail:", e); }
+            }
+        };
+
+        window.renderCalendar = () => {
+            const container = document.getElementById('calendar-days');
+            if(!container) return;
+            const { currentMonth, currentYear, programs, filterDate } = window.state;
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            let offset = (firstDay === 0) ? 6 : firstDay - 1;
+            const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+            
+            const monthH = document.getElementById('calendar-month-year');
+            if(monthH) monthH.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            
+            container.innerHTML = "";
+            for(let i=0; i<offset; i++) { 
+                const e = document.createElement('div'); e.className="calendar-day border-b border-r border-slate-100 bg-slate-50"; container.appendChild(e); 
+            }
+            
+            for(let d=1; d<=daysInMonth; d++){
+                const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const dw = new Date(currentYear, currentMonth, d).getDay();
+                const dayProg = programs.filter(p => p.eventDate === dateStr);
+                const dayEl = document.createElement('div');
+                dayEl.onclick = () => filterByDate(dateStr);
+                dayEl.className = `calendar-day p-2.5 border-b border-r border-slate-100 ${(dw===0||dw===6)?'is-weekend':'bg-white'} ${dayProg.length?'has-event':''} ${filterDate === dateStr ? 'selected-day' : ''}`;
+                dayEl.innerHTML = `<span class="font-black text-[10px] text-black">${d}</span><div class="mt-1 space-y-1 text-black">${dayProg.map(p => `<div class="text-[8px] font-black uppercase bg-blue-600 text-white p-1 rounded shadow-sm line-clamp-2">${p.name}</div>`).join('')}</div>`;
+                container.appendChild(dayEl);
+            }
+        };
+
+        window.changeMonth = (dir) => { window.state.currentMonth += dir; if(window.state.currentMonth<0){window.state.currentMonth=11; window.state.currentYear--;} else if(window.state.currentMonth>11){window.state.currentMonth=0; window.state.currentYear++;} renderCalendar(); };
+        
+        window.filterByDate = (date) => { 
+            window.state.filterDate = date; 
+            renderCalendar(); 
+            updateDaySummary(date); 
+            const btn = document.getElementById('reset-filter-btn'); 
+            if(btn) btn.classList.toggle('hidden', !date); 
+        };
+
+        const updateDaySummary = (date) => {
+            const listContainer = document.getElementById('summary-events-list');
+            const label = document.getElementById('summary-date-label');
+            
+            let progs = [];
+            if(!date) { 
+                if(label) label.textContent = "Semua Program Akan Datang";
+                progs = window.state.programs.slice().sort((a,b) => new Date(a.eventDate) - new Date(b.eventDate));
+            } else {
+                if(label) label.textContent = `Aktiviti pada: ${new Date(date).toLocaleDateString('ms-MY', { day:'numeric', month:'long', year:'numeric' })}`;
+                progs = window.state.programs.filter(p => p.eventDate === date);
+            }
+            
+            if(listContainer) {
+                if(progs.length === 0) {
+                    listContainer.innerHTML = '<div class="p-6 bg-slate-50 border border-slate-200 rounded-3xl text-center"><p class="text-sm text-slate-400 italic font-bold uppercase">Tiada program direkodkan</p></div>';
+                } else {
+                    listContainer.innerHTML = progs.map(p => {
+                        const count = window.state.participants.filter(pt => pt.programId === p.id).length;
+                        return `
+                        <div onclick="enterProgram('${p.id}')" class="bg-white p-5 rounded-[2rem] border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md cursor-pointer group transition-all text-black">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex gap-2 items-center">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 shadow-inner"><i data-lucide="award" class="w-4 h-4"></i></div>
+                                    <h5 class="text-xs font-black uppercase leading-tight text-slate-900 group-hover:text-blue-700 transition-colors">${p.name}</h5>
+                                </div>
+                                <div class="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="openProgramModal('${p.id}'); event.stopPropagation();" class="p-1.5 bg-slate-50 border border-slate-200 rounded-lg hover:text-blue-700 text-black"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                                    <button onclick="deleteProgram('${p.id}', event)" class="p-1.5 bg-slate-50 border border-slate-200 rounded-lg hover:text-red-700 text-black"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-1.5 mb-3 pl-10">
+                                <p class="text-[9px] font-black uppercase text-blue-800 bg-blue-50 px-2 py-0.5 rounded w-fit">${p.secretariat}</p>
+                                <p class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i> ${p.location}</p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 text-[9px] font-black uppercase border-t border-slate-100 pt-3 mt-3 pl-10">
+                                <div class="text-emerald-700"><span class="text-emerald-400 block text-[7px] mb-0.5">ACARA</span>${p.eventDate}</div>
+                                <div class="text-red-700"><span class="text-red-400 block text-[7px] mb-0.5">TUTUP</span>${p.closingDate}</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-100 pl-10 text-[10px] font-black uppercase text-blue-700">
+                                <span>Kekuatan</span><span>${count} / ${p.targetCount} Daftar</span>
+                            </div>
+                        </div>`;
+                    }).join('');
+                    lucide.createIcons();
+                }
+            }
+        };
+
+        // --- NAVIGATION ---
+        window.goToMainMenu = () => { 
+            window.state.currentProgram = null; 
+            document.getElementById('section-main-menu')?.classList.remove('hidden'); 
+            document.getElementById('section-program-content')?.classList.add('hidden'); 
+            document.getElementById('program-nav')?.classList.add('hidden'); 
+            document.getElementById('header-right-main')?.classList.remove('hidden');
+            const l = document.getElementById('current-program-label'); if(l) l.textContent = "Utama"; 
+            document.getElementById('header-program-date')?.classList.add('hidden'); 
+            updateDaySummary(window.state.filterDate); 
+        };
+
+        window.enterProgram = async (id) => { 
+            const p = window.state.programs.find(pr => pr.id === id); 
+            if (!p) return; window.state.currentProgram = p; 
+            document.getElementById('section-main-menu')?.classList.add('hidden'); 
+            document.getElementById('section-program-content')?.classList.remove('hidden'); 
+            document.getElementById('program-nav')?.classList.remove('hidden'); 
+            document.getElementById('header-right-main')?.classList.add('hidden');
+            updateProgramUI(); switchTab('dashboard'); await checkSyncData(id); 
+        };
+
+        const checkSyncData = async (id) => { const p = window.state.programs.find(x => x.id === id); if(p && p.name.toUpperCase().includes("HARI PEKERJA") && window.state.participants.filter(pt => pt.programId === id).length === 0){ const sync = document.getElementById('sync-indicator'); sync?.classList.remove('hidden'); for(const i of OFFICIAL_DATA){ await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), { ...i, programId: id, createdAt: new Date().toISOString() }); } sync?.classList.add('hidden'); showToast("Data asal diselaraskan!"); } };
+
+        const updateProgramUI = () => { 
+            const p = window.state.currentProgram; if(!p) return;
+            const l = document.getElementById('current-program-label'), h = document.getElementById('header-program-date'), s = document.getElementById('input-p-dept');
+            if(l) l.textContent = p.name; if(h) { h.textContent = `| PROGRAM: ${new Date(p.eventDate).toLocaleDateString('ms-MY')}`; h.classList.remove('hidden'); }
+            if(s) { s.innerHTML = '<option value="">Pilih Bahagian</option>'; (p.involvedDepts || DEPARTMENTS).forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; s.appendChild(o); }); }
+        };
+
+        window.renderDashboard = () => {
+            const container = document.getElementById('dashboard-list'); if(!container) return;
+            const search = document.getElementById('dashboard-search')?.value.toLowerCase() || "";
+            const { participants, currentProgram } = window.state; if(!currentProgram) return;
+            const progParts = participants.filter(p => p.programId === currentProgram.id);
+            const closingE = document.getElementById('stat-closing'), totalE = document.getElementById('stat-total'), targetE = document.getElementById('stat-target'), neededE = document.getElementById('stat-needed'), daysE = document.getElementById('stat-days');
+            
+            if(closingE) closingE.textContent = new Date(currentProgram.closingDate).toLocaleDateString('ms-MY', { day: 'numeric', month: 'short', year: '2-digit' });
+            if(totalE) totalE.textContent = progParts.length; 
+            if(targetE) targetE.textContent = currentProgram.targetCount;
+            
+            const needed = Math.max(0, currentProgram.targetCount - progParts.length);
+            if(neededE) neededE.textContent = needed;
+            const w = document.getElementById('widget-needed'), iconC = document.getElementById('stat-needed-icon');
+            if (iconC && w) {
+                if (needed > 0) { 
+                    w.className = "bg-amber-50/60 p-5 rounded-[2rem] border border-amber-200 shadow-premium flex items-center gap-4 text-black"; 
+                    iconC.className = "w-12 h-12 bg-white rounded-xl flex items-center justify-center text-amber-600 shadow-sm"; 
+                    iconC.innerHTML = '<i data-lucide="alert-triangle" class="w-6 h-6"></i>'; 
+                }
+                else { 
+                    w.className = "bg-emerald-50/60 p-5 rounded-[2rem] border border-emerald-200 shadow-premium flex items-center gap-4 text-black"; 
+                    iconC.className = "w-12 h-12 bg-white rounded-xl flex items-center justify-center text-emerald-600 shadow-sm"; 
+                    iconC.innerHTML = '<i data-lucide="check-circle" class="w-6 h-6"></i>'; 
+                }
+            }
+            const diff = Math.ceil((new Date(currentProgram.eventDate) - new Date()) / 86400000);
+            if(daysE) daysE.textContent = diff > 0 ? `${diff} Hari` : "HARI INI";
+            
+            let h = '';
+            (currentProgram.involvedDepts || DEPARTMENTS).forEach(dept => {
+                const list = progParts.filter(p => p.dept === dept && (p.name.toLowerCase().includes(search) || p.dept.toLowerCase().includes(search)));
+                const empty = list.length === 0;
+                h += `<div class="bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-premium text-black">
+                    <div class="px-8 py-5 border-b flex justify-between items-center ${empty?'bg-red-50/20':'bg-slate-50/50'} text-black text-black text-black">
+                        <h4 class="font-black uppercase text-sm ${empty?'text-red-600':'text-slate-800'} text-black">${dept}</h4>
+                        <span class="px-4 py-1.5 rounded-xl text-xs font-black border bg-white text-black">${list.length} Orang</span>
+                    </div>
+                    ${!empty ? `<table class="w-full text-left text-black"><tbody>${list.map((p, idx)=>`
+                        <tr class="border-b border-slate-50 hover:bg-blue-50/20 transition-all text-black">
+                            <td class="w-16 text-center text-slate-300 font-black">${idx+1}</td>
+                            <td class="font-bold py-5 text-slate-800 text-black">${p.name}</td>
+                            <td class="text-slate-400 uppercase text-xs font-black hidden sm:table-cell text-black">${p.position}</td>
+                            <td class="text-right pr-8 text-black text-black text-black"><button onclick="editParticipant('${p.id}')" class="p-2 text-slate-400 hover:text-blue-600 text-black"><i data-lucide="edit-2" class="w-5 h-5 text-black"></i></button><button onclick="deleteParticipant('${p.id}')" class="p-2 text-slate-400 hover:text-red-600 text-black"><i data-lucide="trash-2" class="w-5 h-5 text-black"></i></button></td>
+                        </tr>`).join('')}</tbody></table>`:''}
+                </div>`;
+            });
+            container.innerHTML = h; lucide.createIcons();
+        };
+
+        window.renderReport = () => {
+            const { participants, currentProgram } = window.state; if(!currentProgram) return;
+            const container = document.getElementById('report-container'); if(!container) return;
+            const progParts = participants.filter(p => p.programId === currentProgram.id);
+            const involved = currentProgram.involvedDepts || DEPARTMENTS;
+            let h = `<div class="text-center mb-12 pb-8 border-b-8 border-slate-900 font-black uppercase text-black"><h1 class="text-2xl mb-6 text-black">${currentProgram.name}</h1><div class="grid grid-cols-2 gap-10 text-left text-xs uppercase text-black"><div class="space-y-3"><p class="text-black">URUSE TIA: <span class="text-blue-800 text-black">${currentProgram.secretariat}</span></p><p class="text-black">LOKASI: ${currentProgram.location}</p><p class="text-black">MASA: ${currentProgram.time}</p></div><div class="text-right space-y-3"><p class="text-black text-black text-black">TARIKH ACARA: ${currentProgram.eventDate}</p><p class="text-black">CETAKAN: ${new Date().toLocaleDateString('ms-MY')}</p><p class="text-red-700 text-black font-black">TUTUP DAFTAR: ${currentProgram.closingDate}</p></div></div></div><div class="space-y-10 text-black">`;
+            involved.forEach(dept => { const list = progParts.filter(p => p.dept === dept); if(!list.length) return; h += `<div class="break-inside-avoid text-black"><h3 class="font-black text-sm bg-slate-100 border-l-[20px] border-slate-900 py-3 px-6 mb-4 uppercase text-black">${dept}</h3><div class="space-y-2 pl-10 text-black text-black text-black">${list.map((p, idx)=>`<div class="flex justify-between border-b border-slate-100 py-2 text-base font-bold text-black text-black text-black"><span>${idx+1}. ${p.name}</span><span class="text-xs opacity-60 uppercase italic text-black text-black text-black">${p.position}</span></div>`).join('')}</div></div>`; });
+            h += `</div><div class="mt-24 pt-12 border-t-8 border-slate-900 flex justify-between items-end font-black uppercase text-base text-black text-black"><div>JUMLAH KEKUATAN: ${progParts.length} ORANG</div><div class="opacity-20 italic text-xs text-black lowercase">Sistem Cloud MTIB</div></div>`;
+            container.innerHTML = h; lucide.createIcons();
+        };
+
+        // --- HANDLERS ---
+        window.openProgramModal = (id = null) => {
+            const modal = document.getElementById('modal-program'), checklist = document.getElementById('modal-dept-checklist');
+            if(checklist) checklist.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-4 p-3 hover:bg-white rounded-2xl cursor-pointer border border-transparent hover:border-blue-200 transition-all shadow-sm text-black"><input type="checkbox" name="involvedDepts" value="${d}" class="w-5 h-5 rounded-lg text-blue-600 shadow-inner text-black" checked><span class="text-xs font-black uppercase text-slate-700 text-black">${d}</span></label>`).join('');
+            if (id) {
+                const p = window.state.programs.find(pr => pr.id === id);
+                if(p) {
+                    document.getElementById('modal-title').textContent = "Pinda Program"; document.getElementById('edit-prog-id').value = id; document.getElementById('input-prog-name').value = p.name;
+                    document.getElementById('input-prog-secretariat').value = p.secretariat; document.getElementById('input-prog-target').value = p.targetCount; document.getElementById('input-prog-closing').value = p.closingDate;
+                    document.getElementById('input-prog-event-date').value = p.eventDate; document.getElementById('input-prog-location').value = p.location; document.getElementById('input-prog-time').value = p.time;
+                    checklist?.querySelectorAll('input').forEach(c => { c.checked = (p.involvedDepts || []).includes(c.value); });
+                }
+            } else { document.getElementById('modal-title').textContent = "Daftar Program Baharu"; document.getElementById('program-form')?.reset(); document.getElementById('edit-prog-id').value = ""; const t = new Date().toISOString().split('T')[0]; document.getElementById('input-prog-closing').value = t; document.getElementById('input-prog-event-date').value = t; }
+            modal?.classList.remove('hidden');
+        };
+        window.closeProgramModal = () => document.getElementById('modal-program')?.classList.add('hidden');
+        document.getElementById('program-form').onsubmit = async (e) => { e.preventDefault(); const id = document.getElementById('edit-prog-id').value, ch = Array.from(e.target.querySelectorAll('input[name="involvedDepts"]:checked')).map(c => c.value); const d = { name: document.getElementById('input-prog-name').value, secretariat: document.getElementById('input-prog-secretariat').value, targetCount: parseInt(document.getElementById('input-prog-target').value), eventDate: document.getElementById('input-prog-event-date').value, closingDate: document.getElementById('input-prog-closing').value, location: document.getElementById('input-prog-location').value, time: document.getElementById('input-prog-time').value, involvedDepts: ch, updatedAt: new Date().toISOString() }; try { if (id) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'programs', id), d); else await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), { ...d, createdAt: new Date().toISOString() }); closeProgramModal(); showToast("Berjaya Disimpan!"); } catch (err) { console.error(err); } };
+        window.deleteProgram = async (id, e) => { if(e) e.stopPropagation(); if (confirm("Padam program ini secara kekal?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'programs', id)); };
+        
+        window.openParticipantModal = (id = null) => {
+            const modal = document.getElementById('modal-participant');
+            const title = document.getElementById('participant-modal-title');
+            const form = document.getElementById('participant-form');
+            if (id) {
+                const p = window.state.participants.find(i => i.id === id);
+                if (p) {
+                    title.textContent = "Pinda Maklumat Peserta";
+                    document.getElementById('edit-p-id').value = id;
+                    document.getElementById('input-p-name').value = p.name;
+                    document.getElementById('input-p-position').value = p.position;
+                    document.getElementById('input-p-dept').value = p.dept;
+                }
+            } else {
+                title.textContent = "Daftar Peserta Baharu";
+                form?.reset();
+                document.getElementById('edit-p-id').value = "";
+            }
+            modal?.classList.remove('hidden');
+        };
+        window.closeParticipantModal = () => document.getElementById('modal-participant')?.classList.add('hidden');
+        
+        window.editParticipant = (id) => { openParticipantModal(id); };
+        window.deleteParticipant = async (id) => { if(confirm("Padam maklumat peserta ini?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', id)); };
+        document.getElementById('participant-form').onsubmit = async (e) => { 
+            e.preventDefault(); const id = document.getElementById('edit-p-id').value; 
+            const data = { name: document.getElementById('input-p-name').value, position: document.getElementById('input-p-position').value, dept: document.getElementById('input-p-dept').value, programId: window.state.currentProgram.id, updatedAt: new Date().toISOString() }; 
+            try { 
+                if (id) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', id), data); 
+                else await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), { ...data, createdAt: new Date().toISOString() }); 
+                closeParticipantModal();
+                showToast("Rekod Disimpan!"); 
+            } catch (err) { console.error(err); } 
+        };
+        window.loadSettings = () => { const p = window.state.currentProgram; if(!p) return; document.getElementById('set-prog-name').value = p.name; document.getElementById('set-prog-secretariat').value = p.secretariat; document.getElementById('set-prog-target').value = p.targetCount; document.getElementById('set-prog-event-date').value = p.eventDate; document.getElementById('set-prog-closing').value = p.closingDate; document.getElementById('set-prog-location').value = p.location; document.getElementById('set-prog-time').value = p.time; const ch = document.getElementById('settings-dept-checklist'); if(ch) ch.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-4 p-4 bg-white border border-slate-200 hover:border-blue-400 rounded-[2rem] cursor-pointer shadow-sm text-black text-black text-black text-black text-black text-black text-black"><input type="checkbox" name="settingsDepts" value="${d}" ${(p.involvedDepts||[]).includes(d)?'checked':''} class="w-6 h-6 rounded-lg text-blue-600 shadow-inner text-black"><span class="text-sm font-black uppercase text-slate-800 text-black text-black text-black text-black text-black text-black">${d}</span></label>`).join(''); };
+        document.getElementById('settings-form').onsubmit = async (e) => { e.preventDefault(); const ch = Array.from(e.target.querySelectorAll('input[name="settingsDepts"]:checked')).map(c => c.value); const d = { name: document.getElementById('set-prog-name').value, secretariat: document.getElementById('set-prog-secretariat').value, targetCount: parseInt(document.getElementById('set-prog-target').value), eventDate: document.getElementById('set-prog-event-date').value, closingDate: document.getElementById('set-prog-closing').value, location: document.getElementById('set-prog-location').value, time: document.getElementById('set-prog-time').value, involvedDepts: ch }; try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'programs', window.state.currentProgram.id), d); showToast("Dikemaskini!"); } catch (err) {} };
+        window.showToast = (m) => { const t = document.getElementById('toast'), e = document.getElementById('toast-message'); if(t && e){ e.textContent=m; t.classList.remove('hidden'); setTimeout(()=>t.classList.add('hidden'), 3000); } };
+        window.switchTab = (t) => { 
+            document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active', 'fade-in')); 
+            const e = document.getElementById(`tab-${t}`); if(e) { e.classList.add('active', 'fade-in'); }
+            document.querySelectorAll('.nav-btn').forEach(b => { 
+                if(b.dataset.tab === t) { 
+                    b.classList.add('bg-blue-100', 'text-blue-700', 'shadow-sm'); 
+                    b.classList.remove('text-slate-500', 'bg-transparent', 'hover:bg-slate-50'); 
+                } else { 
+                    b.classList.remove('bg-blue-100', 'text-blue-700', 'shadow-sm'); 
+                    b.classList.add('text-slate-500', 'bg-transparent', 'hover:bg-slate-50'); 
+                } 
+            }); 
+            if(t==='dashboard') renderDashboard(); 
+            if(t==='report') renderReport(); 
+            if(t==='settings') loadSettings(); 
+        };
+
+        const init = async () => { 
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const headerDate = document.getElementById('header-current-date');
+            if(headerDate) headerDate.textContent = new Date().toLocaleDateString('ms-MY', dateOptions);
+            
+            await initAuth(); 
+            onAuthStateChanged(auth, (u) => { window.state.user = u; if(u) setupListeners(); }); 
+            lucide.createIcons(); 
+        };
+        init();
+    </script>
+</body>
+</html>
