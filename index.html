@@ -1424,8 +1424,8 @@
             selectedAmPm = val;
             const amBtn = document.getElementById('clock-am');
             const pmBtn = document.getElementById('clock-pm');
-            amBtn.className = val === 'AM' ? "flex-1 py-1.5 rounded-lg text-xs font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-xs font-black text-slate-500 hover:bg-slate-200 transition-all";
-            pmBtn.className = val === 'PM' ? "flex-1 py-1.5 rounded-lg text-xs font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-xs font-black text-slate-500 hover:bg-slate-200 transition-all";
+            amBtn.className = val === 'AM' ? "flex-1 py-1.5 rounded-lg text-[10px] font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-[10px] font-black text-slate-500 hover:bg-slate-200 transition-all";
+            pmBtn.className = val === 'PM' ? "flex-1 py-1.5 rounded-lg text-[10px] font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-[10px] font-black text-slate-500 hover:bg-slate-200 transition-all";
         };
 
         window.setClockMode = (mode) => {
@@ -1476,6 +1476,21 @@
             document.getElementById('clock-display-mm').textContent = selectedMinute.toString().padStart(2, '0');
             window.renderClock();
         };
+
+        // --- PENYELESAIAN CETAKAN UNTUK TEMA GELAP ---
+        let isVistaDark = false;
+        window.addEventListener('beforeprint', () => {
+            if(document.body.classList.contains('theme-vista')) {
+                isVistaDark = true;
+                document.body.classList.remove('theme-vista');
+            }
+        });
+        window.addEventListener('afterprint', () => {
+            if(isVistaDark) {
+                document.body.classList.add('theme-vista');
+                isVistaDark = false;
+            }
+        });
 
         const init = async () => { 
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
