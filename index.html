@@ -16,6 +16,9 @@
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- SheetJS untuk Export Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
@@ -110,7 +113,7 @@
         
         body.theme-vista ::placeholder { color: #94a3b8 !important; opacity: 1; }
         
-        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) */
+        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) - DIKEMASKINI KESELURUHAN */
         body.theme-vista [class*="text-black"],
         body.theme-vista [class*="text-slate-9"], body.theme-vista [class*="text-slate-8"], body.theme-vista [class*="text-slate-7"] { color: #f8fafc !important; }
         body.theme-vista [class*="text-slate-6"], body.theme-vista [class*="text-slate-5"], body.theme-vista [class*="text-slate-4"] { color: #cbd5e1 !important; }
@@ -483,8 +486,14 @@
 
             <!-- REPORT -->
             <div id="tab-report" class="tab-content space-y-6">
-                <div class="flex justify-end no-print">
-                    <button onclick="window.print()" class="bg-indigo-900 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Cetak Laporan">
+                <div class="flex justify-end no-print gap-2">
+                    <button onclick="window.exportToWord()" class="bg-blue-600 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Muat Turun MS Word">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="window.exportToExcel()" class="bg-emerald-600 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Muat Turun MS Excel">
+                        <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="window.print()" class="bg-indigo-900 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Cetak / Simpan PDF">
                         <i data-lucide="printer" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -858,7 +867,7 @@
                 dayEl.onclick = () => filterByDate(dateStr);
                 dayEl.className = `calendar-day p-2 border-b border-r border-indigo-50 ${(dw===0||dw===6)?'is-weekend':'bg-white'} ${dayProg.length?'has-event':''} ${filterDate === dateStr ? 'selected-day' : ''}`;
                 
-                dayEl.innerHTML = `<span class="font-black text-[11px] text-indigo-950">${d}</span>${dayProg.length > 0 ? `<div class="mt-1.5"><div class="text-[9px] font-black uppercase bg-indigo-600 text-white py-0.5 px-1 rounded text-center shadow-sm w-full line-clamp-1 border border-indigo-700">${dayProg.length} Program</div></div>` : ''}`;
+                dayEl.innerHTML = `<span class="font-black text-xs text-indigo-950">${d}</span>${dayProg.length > 0 ? `<div class="mt-1.5"><div class="text-[9px] font-black uppercase bg-indigo-600 text-white py-0.5 px-1 rounded text-center shadow-sm w-full line-clamp-1 border border-indigo-700">${dayProg.length} Program</div></div>` : ''}`;
                 
                 container.appendChild(dayEl);
             }
@@ -1081,7 +1090,7 @@
                             <td class="w-[50%] sm:w-[45%] font-bold py-3 text-indigo-950 truncate pr-2">${p.name}</td>
                             <td class="w-[35%] text-slate-500 uppercase text-[10px] font-bold hidden sm:table-cell tracking-wider truncate pr-2">${p.position}</td>
                             <td class="text-right pr-4 truncate whitespace-nowrap">
-                                <button onclick="editParticipant('${p.id}')" title="Pinda" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="editParticipant('${p.id}')" title="Pinda" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
                                 <button onclick="window.moveParticipant('${p.id}', 'up', event)" title="Naik" class="p-1.5 text-slate-400 hover:text-emerald-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-emerald-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
                                 <button onclick="window.moveParticipant('${p.id}', 'down', event)" title="Turun" class="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-amber-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === list.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
                                 <button onclick="deleteParticipant('${p.id}')" title="Padam" class="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-0.5"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
@@ -1164,6 +1173,108 @@
                 await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', p.id), { createdAt: new Date(nextTime).toISOString() });
                 await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', next.id), { createdAt: new Date(pTime).toISOString() });
             }
+        };
+
+        // --- EXPORT KE EXCEL ---
+        window.exportToExcel = () => {
+            const { participants, currentProgram } = window.state;
+            if (!currentProgram) return;
+
+            const progParts = participants.filter(p => p.programId === currentProgram.id);
+            const involved = currentProgram.involvedDepts || DEPARTMENTS;
+            
+            const wsData = [
+                ["LAPORAN PENYERTAAN PROGRAM MTIB"],
+                [],
+                ["Nama Program", currentProgram.name],
+                ["Unit Urusetia", currentProgram.secretariat],
+                ["Lokasi", currentProgram.location],
+                ["Tarikh Acara", window.formatDateMY(currentProgram.eventDate)],
+                ["Tarikh Tutup Daftar", window.formatDateMY(currentProgram.closingDate)],
+                ["Sasaran Peserta", currentProgram.targetCount.toString()],
+                ["Jumlah Berdaftar", progParts.length.toString()],
+                [],
+                ["Bil", "Nama Wakil", "Jawatan/Gred", "Bahagian/Cawangan"]
+            ];
+
+            let bil = 1;
+            involved.forEach(dept => {
+                let list = progParts
+                    .filter(p => p.dept === dept)
+                    .sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+                
+                list.forEach(p => {
+                    wsData.push([bil++, p.name, p.position, p.dept]);
+                });
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            
+            // Auto fit column widths
+            const wscols = [ {wch: 5}, {wch: 40}, {wch: 30}, {wch: 40} ];
+            ws['!cols'] = wscols;
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Senarai Peserta");
+            
+            const filename = `Peserta_${currentProgram.name.substring(0, 15).replace(/[^a-z0-9]/gi, '_')}.xlsx`;
+            XLSX.writeFile(wb, filename);
+        };
+
+        // --- EXPORT KE WORD ---
+        window.exportToWord = () => {
+            const { currentProgram } = window.state;
+            if(!currentProgram) return;
+            
+            // Ambil struktur HTML Laporan
+            const reportHtml = document.getElementById('report-container').innerHTML;
+            
+            const preHtml = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>Laporan Program</title>
+                    <style>
+                        body { font-family: 'Arial', sans-serif; font-size: 12pt; } 
+                        .text-center { text-align: center; } 
+                        .text-left { text-align: left; }
+                        .text-right { text-align: right; }
+                        .font-bold, .font-black { font-weight: bold; }
+                        .mb-4 { margin-bottom: 1em; }
+                        .mb-8 { margin-bottom: 2em; }
+                        h1 { font-size: 16pt; text-transform: uppercase; }
+                        h3 { font-size: 12pt; text-transform: uppercase; background-color: #f1f5f9; padding: 5px; }
+                        .flex { display: table; width: 100%; }
+                        .flex > div { display: table-cell; }
+                        .space-y-1 > div, .space-y-1\\.5 > div, .space-y-2 > div { margin-bottom: 5px; }
+                        .border-b-4 { border-bottom: 2px solid black; }
+                        .border-t-4 { border-top: 2px solid black; }
+                        .border-b { border-bottom: 1px solid #ccc; }
+                        .opacity-70 { color: #666; font-style: italic; }
+                    </style>
+                </head>
+                <body>
+            `;
+            const postHtml = "</body></html>";
+            const html = preHtml + reportHtml + postHtml;
+
+            const blob = new Blob(['\ufeff', html], {
+                type: 'application/msword'
+            });
+            const url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+            const filename = `Laporan_${currentProgram.name.substring(0, 15).replace(/[^a-z0-9]/gi, '_')}.doc`;
+            
+            const downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            
+            if(navigator.msSaveOrOpenBlob ){
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                downloadLink.href = url;
+                downloadLink.download = filename;
+                downloadLink.click();
+            }
+            document.body.removeChild(downloadLink);
         };
 
         // --- PENGURUSAN CUSTOM CONFIRM MODAL ---
