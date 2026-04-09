@@ -44,14 +44,47 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         }
         
-        /* Gelapkan zon tertentu seperti dalam gambar (Acara, Tutup Daftar, Header Kalendar) */
+        /* Gelapkan zon tertentu (Acara, Tutup Daftar, Header Kalendar, Latar Nama Bahagian/Jabatan) */
         body.theme-vista .bg-emerald-50\/50,
         body.theme-vista .bg-rose-50\/50,
         body.theme-vista .bg-emerald-50\/80,
         body.theme-vista .bg-rose-50\/80,
-        body.theme-vista .bg-indigo-50\/50 {
+        body.theme-vista .bg-indigo-50\/50,
+        body.theme-vista .bg-indigo-50\/40,
+        body.theme-vista .bg-rose-50\/30 {
             background-color: rgba(2, 6, 23, 0.65) !important;
             border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Kesan Hover untuk Senarai Peserta / Row (Dark Mode) supaya tulisan cerah kekal nampak */
+        body.theme-vista .hover\:bg-indigo-50\/50:hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        /* Kesan Hover Butang Edit/Padam/Kecil (Dark Mode Contrast) */
+        body.theme-vista .hover\:bg-white:hover,
+        body.theme-vista .hover\:bg-indigo-100:hover,
+        body.theme-vista .hover\:bg-rose-100:hover {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        body.theme-vista .hover\:text-indigo-600:hover { color: #a5b4fc !important; }
+        body.theme-vista .hover\:text-rose-600:hover { color: #fda4af !important; }
+        body.theme-vista .hover\:text-emerald-500:hover { color: #6ee7b7 !important; }
+        body.theme-vista .hover\:text-amber-500:hover { color: #fcd34d !important; }
+        body.theme-vista .hover\:border-indigo-400:hover { border-color: rgba(165, 180, 252, 0.6) !important; }
+
+        /* Butang Putih/Terang asal (Cth: Butang Daftar Sebelah Nama Jabatan) */
+        body.theme-vista .bg-white.text-indigo-700 {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            color: #c7d2fe !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+        }
+        body.theme-vista .bg-white.text-indigo-700:hover {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+            color: #ffffff !important;
         }
 
         body.theme-vista .bg-indigo-900,
@@ -742,8 +775,11 @@
             if(p && p.name.toUpperCase().includes("HARI PEKERJA") && window.state.participants.filter(pt => pt.programId === id).length === 0){ 
                 const sync = document.getElementById('sync-indicator'); 
                 sync?.classList.remove('hidden'); 
-                for(const i of OFFICIAL_DATA){ 
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), { ...i, programId: id, createdAt: new Date().toISOString() }); 
+                for(let idx = 0; idx < OFFICIAL_DATA.length; idx++){ 
+                    const i = OFFICIAL_DATA[idx];
+                    // Beri kelainan masa sikit supaya setiap data berbeza ketika disusun
+                    const dateObj = new Date(Date.now() + (idx * 1000));
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), { ...i, programId: id, createdAt: dateObj.toISOString() }); 
                 } 
                 sync?.classList.add('hidden'); 
                 if(window.showToast) window.showToast("Data asal diselaraskan!"); 
@@ -820,7 +856,7 @@
                 dayEl.onclick = () => filterByDate(dateStr);
                 dayEl.className = `calendar-day p-2 border-b border-r border-indigo-50 ${(dw===0||dw===6)?'is-weekend':'bg-white'} ${dayProg.length?'has-event':''} ${filterDate === dateStr ? 'selected-day' : ''}`;
                 
-                dayEl.innerHTML = `<span class="font-black text-xs text-indigo-950">${d}</span>${dayProg.length > 0 ? `<div class="mt-1.5"><div class="text-[9px] font-black uppercase bg-indigo-600 text-white py-0.5 px-1 rounded text-center shadow-sm w-full line-clamp-1 border border-indigo-700">${dayProg.length} Program</div></div>` : ''}`;
+                dayEl.innerHTML = `<span class="font-black text-[11px] text-indigo-950">${d}</span>${dayProg.length > 0 ? `<div class="mt-1.5"><div class="text-[9px] font-black uppercase bg-indigo-600 text-white py-0.5 px-1 rounded text-center shadow-sm w-full line-clamp-1 border border-indigo-700">${dayProg.length} Program</div></div>` : ''}`;
                 
                 container.appendChild(dayEl);
             }
@@ -1021,7 +1057,10 @@
             
             let h = '';
             (currentProgram.involvedDepts || DEPARTMENTS).forEach(dept => {
-                const list = progParts.filter(p => p.dept === dept && (p.name.toLowerCase().includes(search) || p.dept.toLowerCase().includes(search)));
+                let list = progParts
+                    .filter(p => p.dept === dept && (p.name.toLowerCase().includes(search) || p.dept.toLowerCase().includes(search)))
+                    .sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+                    
                 const empty = list.length === 0;
                 
                 h += `<div class="bg-white rounded-2xl border border-indigo-50 shadow-sm overflow-hidden">
@@ -1035,13 +1074,15 @@
                         <span class="px-2.5 py-1 rounded-lg text-[10px] font-black border bg-white shadow-sm text-indigo-800">${list.length} Orang</span>
                     </div>
                     ${!empty ? `<table class="w-full text-left table-fixed"><tbody>${list.map((p, idx)=>`
-                        <tr class="border-b border-indigo-50/50 hover:bg-indigo-50/50 transition-all text-sm">
+                        <tr id="row-${p.id}" class="border-b border-indigo-50/50 hover:bg-indigo-50/50 transition-all duration-300 ease-in-out text-sm relative z-0 bg-transparent">
                             <td class="w-10 sm:w-12 text-center text-indigo-400 font-bold">${idx+1}</td>
                             <td class="w-[50%] sm:w-[45%] font-bold py-3 text-indigo-950 truncate pr-2">${p.name}</td>
                             <td class="w-[35%] text-slate-500 uppercase text-[10px] font-bold hidden sm:table-cell tracking-wider truncate pr-2">${p.position}</td>
-                            <td class="text-right pr-4 truncate">
-                                <button onclick="editParticipant('${p.id}')" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                                <button onclick="deleteParticipant('${p.id}')" class="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            <td class="text-right pr-4 truncate whitespace-nowrap">
+                                <button onclick="editParticipant('${p.id}')" title="Pinda" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                                <button onclick="window.moveParticipant('${p.id}', 'up', event)" title="Naik" class="p-1.5 text-slate-400 hover:text-emerald-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-emerald-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="w-4 h-4"></i></button>
+                                <button onclick="window.moveParticipant('${p.id}', 'down', event)" title="Turun" class="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-amber-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === list.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="w-4 h-4"></i></button>
+                                <button onclick="deleteParticipant('${p.id}')" title="Padam" class="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-0.5"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </td>
                         </tr>`).join('')}</tbody></table>`:''}
                 </div>`;
@@ -1055,9 +1096,72 @@
             const progParts = participants.filter(p => p.programId === currentProgram.id);
             const involved = currentProgram.involvedDepts || DEPARTMENTS;
             let h = `<div class="text-center mb-8 pb-6 border-b-4 border-slate-900 font-black uppercase w-full"><h1 class="text-xl leading-tight mb-4">${currentProgram.name}</h1><div class="flex justify-between w-full text-[11px] uppercase"><div class="text-left space-y-1.5"><p>URUSE TIA: <span class="text-blue-800">${currentProgram.secretariat}</span></p><p>LOKASI: ${currentProgram.location}</p><p>MASA: ${currentProgram.time}</p></div><div class="text-right space-y-1.5"><p>TARIKH ACARA: ${window.formatDateMY(currentProgram.eventDate)}</p><p class="text-red-700 font-black">TUTUP DAFTAR: ${window.formatDateMY(currentProgram.closingDate)}</p></div></div></div><div class="space-y-6 w-full">`;
-            involved.forEach(dept => { const list = progParts.filter(p => p.dept === dept); if(!list.length) return; h += `<div class="break-inside-avoid w-full"><h3 class="font-black text-[12px] bg-slate-100 border-l-[12px] border-slate-900 py-2 px-4 mb-2 uppercase tracking-widest">${dept}</h3><div class="space-y-1 pl-6">${list.map((p, idx)=>`<div class="flex w-full items-start border-b border-slate-100 py-1.5 text-sm font-bold"><span class="w-[65%] truncate pr-2">${idx+1}. ${p.name}</span><span class="w-[35%] text-[10px] opacity-70 uppercase italic text-slate-500 text-left truncate mt-0.5">${p.position}</span></div>`).join('')}</div></div>`; });
+            involved.forEach(dept => { 
+                let list = progParts
+                    .filter(p => p.dept === dept)
+                    .sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+                    
+                if(!list.length) return; 
+                
+                h += `<div class="break-inside-avoid w-full"><h3 class="font-black text-[12px] bg-slate-100 border-l-[12px] border-slate-900 py-2 px-4 mb-2 uppercase tracking-widest">${dept}</h3><div class="space-y-1 pl-6">${list.map((p, idx)=>`<div class="flex w-full items-start border-b border-slate-100 py-1.5 text-sm font-bold"><span class="w-[65%] truncate pr-2">${idx+1}. ${p.name}</span><span class="w-[35%] text-[10px] opacity-70 uppercase italic text-slate-500 text-left truncate mt-0.5">${p.position}</span></div>`).join('')}</div></div>`; 
+            });
             h += `</div><div class="mt-12 pt-6 border-t-4 border-slate-900 flex justify-between items-end font-black uppercase text-sm w-full"><div class="text-slate-600">SASARAN: ${currentProgram.targetCount} PESERTA</div><div>JUMLAH KESELURUHAN: ${progParts.length} ORANG</div></div>`;
             container.innerHTML = h; lucide.createIcons();
+        };
+
+        // --- FUNGSI NAIK & TURUN (REORDER) ---
+        window.moveParticipant = async (id, direction, e) => {
+            if (e) e.stopPropagation();
+            const { participants } = window.state;
+            const p = participants.find(x => x.id === id);
+            if (!p) return;
+            
+            // Ambil semua peserta dalam jabatan yang sama dan susun mengikut createdAt
+            let list = participants
+                .filter(pt => pt.programId === p.programId && pt.dept === p.dept)
+                .sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime());
+                
+            const idx = list.findIndex(pt => pt.id === id);
+            
+            // Efek Animasi Pergerakan
+            const row = document.getElementById(`row-${id}`);
+            if (row) {
+                row.style.zIndex = '10';
+                row.style.backgroundColor = 'rgba(99, 102, 241, 0.15)'; // Efek Warna Highlight
+                row.style.transform = direction === 'up' ? 'translateY(-100%)' : 'translateY(100%)';
+                
+                if (direction === 'up' && idx > 0) {
+                    const targetRow = document.getElementById(`row-${list[idx - 1].id}`);
+                    if (targetRow) targetRow.style.transform = 'translateY(100%)';
+                } else if (direction === 'down' && idx < list.length - 1) {
+                    const targetRow = document.getElementById(`row-${list[idx + 1].id}`);
+                    if (targetRow) targetRow.style.transform = 'translateY(-100%)';
+                }
+                
+                await new Promise(r => setTimeout(r, 250)); // Tunggu animasi pergerakan selesai (250ms)
+            }
+            
+            if (direction === 'up' && idx > 0) {
+                const prev = list[idx - 1];
+                let pTime = new Date(p.createdAt || Date.now()).getTime();
+                let prevTime = new Date(prev.createdAt || Date.now()).getTime();
+                
+                // Jika masa adalah sama tepat, pastikan wujud perbezaan untuk sorting berfungsi
+                if (pTime === prevTime) prevTime -= 1000;
+                
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', p.id), { createdAt: new Date(prevTime).toISOString() });
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', prev.id), { createdAt: new Date(pTime).toISOString() });
+                
+            } else if (direction === 'down' && idx < list.length - 1) {
+                const next = list[idx + 1];
+                let pTime = new Date(p.createdAt || Date.now()).getTime();
+                let nextTime = new Date(next.createdAt || Date.now()).getTime();
+                
+                if (pTime === nextTime) nextTime += 1000;
+                
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', p.id), { createdAt: new Date(nextTime).toISOString() });
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', next.id), { createdAt: new Date(pTime).toISOString() });
+            }
         };
 
         // --- PENGURUSAN CUSTOM CONFIRM MODAL ---
