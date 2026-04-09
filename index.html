@@ -110,7 +110,7 @@
         
         body.theme-vista ::placeholder { color: #94a3b8 !important; opacity: 1; }
         
-        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) - DIKEMASKINI KESELURUHAN */
+        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) */
         body.theme-vista [class*="text-black"],
         body.theme-vista [class*="text-slate-9"], body.theme-vista [class*="text-slate-8"], body.theme-vista [class*="text-slate-7"] { color: #f8fafc !important; }
         body.theme-vista [class*="text-slate-6"], body.theme-vista [class*="text-slate-5"], body.theme-vista [class*="text-slate-4"] { color: #cbd5e1 !important; }
@@ -247,7 +247,7 @@
                 
                 <!-- Action Buttons: Main Menu -->
                 <div id="header-right-main" class="flex items-center gap-2">
-                    <button id="header-settings-btn" onclick="openGlobalSettingsModal()" class="flex items-center justify-center p-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl shadow-sm transition-all active:scale-95 border border-indigo-200" title="Tetapan Sistem Global">
+                    <button onclick="openGlobalSettingsModal()" class="flex items-center justify-center p-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl shadow-sm transition-all active:scale-95 border border-indigo-200" title="Tetapan Sistem Global">
                         <i data-lucide="settings" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -281,12 +281,12 @@
                             
                             <!-- Search & Add Button -->
                             <div class="flex items-center gap-2 w-full sm:w-auto">
-                                <div class="relative w-full sm:w-48">
-                                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                    <input type="text" id="program-search-input" oninput="window.updateDaySummary(window.state.filterDate)" placeholder="Cari program..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800 placeholder:text-slate-400">
+                                <div class="relative w-full sm:w-40">
+                                    <i data-lucide="search" class="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <input type="text" id="program-search-input" oninput="window.updateDaySummary(window.state.filterDate)" placeholder="Cari program..." class="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800 placeholder:text-slate-400">
                                 </div>
-                                <button onclick="openProgramModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 text-xs font-black shadow-md transition-all active:scale-95 whitespace-nowrap flex-shrink-0 border border-transparent">
-                                    <i data-lucide="plus-circle" class="w-4 h-4"></i> TAMBAH
+                                <button onclick="openProgramModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg flex items-center justify-center gap-1.5 text-[10px] font-black shadow-sm transition-all active:scale-95 whitespace-nowrap flex-shrink-0 border border-transparent">
+                                    <i data-lucide="plus-circle" class="w-3 h-3"></i> TAMBAH
                                 </button>
                             </div>
                         </div>
@@ -495,7 +495,7 @@
 
     <!-- Modal Tetapan Global (Tajuk Aplikasi & Tema) -->
     <div id="modal-global-settings" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[150] hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-sm rounded-[1.5rem] border border-indigo-50 shadow-xl p-6 fade-in text-slate-800">
+        <div class="bg-white w-full max-w-md rounded-[1.5rem] border border-indigo-50 shadow-xl p-6 fade-in text-slate-800">
             <h2 class="text-xl font-black uppercase mb-5 text-center tracking-tight border-b border-slate-100 pb-3 text-indigo-950">Tetapan Sistem Global</h2>
             <form id="global-settings-form" class="space-y-4">
                 <div class="space-y-1">
@@ -523,56 +523,58 @@
 
     <!-- Modal Program Baru -->
     <div id="modal-program" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 overflow-y-auto text-slate-800">
-        <div class="bg-white w-full max-w-xl rounded-[2rem] border border-indigo-50 shadow-xl p-6 md:p-8 fade-in my-8">
-            <h2 id="modal-title" class="text-2xl font-black uppercase mb-6 text-center tracking-tight border-b-2 border-indigo-50 pb-3 text-indigo-950">Daftar Program Baharu</h2>
-            <form id="program-form" class="space-y-4">
+        <div class="bg-white w-full max-w-xl rounded-[2rem] border border-indigo-50 shadow-xl p-5 md:p-6 fade-in my-4">
+            <h2 id="modal-title" class="text-xl font-black uppercase mb-4 text-center tracking-tight border-b-2 border-indigo-50 pb-2 text-indigo-950">Daftar Program Baharu</h2>
+            <form id="program-form" class="space-y-3">
                 <input type="hidden" id="edit-prog-id">
                 <div class="space-y-1">
                     <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Nama Program / Seminar / Aktiviti</label>
-                    <input type="text" id="input-prog-name" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold uppercase outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Kursus Pemantapan IT" required>
+                    <input type="text" id="input-prog-name" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold uppercase outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Kursus Pemantapan IT" required>
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Unit Urusetia / Cawangan</label>
-                    <input type="text" id="input-prog-secretariat" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Cawangan Pengurusan Sumber Manusia" required>
+                    <input type="text" id="input-prog-secretariat" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Cawangan Pengurusan Sumber Manusia" required>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3">
                     <div class="space-y-1">
                         <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Lokasi</label>
-                        <input type="text" id="input-prog-location" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300" required>
+                        <input type="text" id="input-prog-location" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300" required>
                     </div>
                     <div class="space-y-1">
                         <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Masa</label>
-                        <input type="text" id="input-prog-time" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
+                        <input type="text" id="input-prog-time" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3">
                     <div class="space-y-1">
                         <label class="text-xs font-black text-indigo-600 uppercase tracking-widest ml-1">Tarikh Acara</label>
-                        <input type="date" id="input-prog-event-date" class="w-full px-4 py-2.5 bg-indigo-50/50 border border-indigo-200 rounded-xl text-sm font-bold date-picker-input" required>
+                        <input type="date" id="input-prog-event-date" class="w-full px-4 py-2 bg-indigo-50/50 border border-indigo-200 rounded-xl text-sm font-bold date-picker-input" required>
                     </div>
                     <div class="space-y-1">
                         <label class="text-xs font-black text-rose-600 uppercase tracking-widest ml-1">Tamat Pendaftaran</label>
-                        <input type="date" id="input-prog-closing" class="w-full px-4 py-2.5 bg-rose-50 border border-rose-200 rounded-xl text-sm font-bold date-picker-input" required>
+                        <input type="date" id="input-prog-closing" class="w-full px-4 py-2 bg-rose-50 border border-rose-200 rounded-xl text-sm font-bold date-picker-input" required>
                     </div>
                 </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Sasaran Peserta</label>
-                    <input type="number" id="input-prog-target" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold" value="50" required>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Sasaran</label>
+                        <input type="number" id="input-prog-target" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold" value="50" required>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-black text-indigo-600 uppercase tracking-widest ml-1">Status Pameran</label>
+                        <select id="input-prog-status" class="w-full px-4 py-2 bg-indigo-50 border border-indigo-200 rounded-xl text-sm font-bold text-indigo-900 outline-none focus:ring-2 focus:ring-indigo-400 appearance-none cursor-pointer">
+                            <option value="active">AKTIF (Berjalan)</option>
+                            <option value="draft">DERAF (KIV)</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-black text-indigo-600 uppercase tracking-widest ml-1">Status Pameran</label>
-                    <select id="input-prog-status" class="w-full px-4 py-2.5 bg-indigo-50 border border-indigo-200 rounded-xl text-sm font-bold text-indigo-900 outline-none focus:ring-2 focus:ring-indigo-400 appearance-none cursor-pointer">
-                        <option value="active">AKTIF (Berjalan)</option>
-                        <option value="draft">DERAF (KIV / Simpan)</option>
-                    </select>
-                </div>
-                <div class="space-y-2 pt-2">
+                <div class="space-y-1.5">
                     <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1 border-b pb-1 block">Pilih Bahagian Terlibat</label>
-                    <div id="modal-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-32 overflow-y-auto bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-inner custom-scrollbar"></div>
+                    <div id="modal-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-28 overflow-y-auto bg-slate-50 p-2.5 rounded-xl border border-slate-200 shadow-inner custom-scrollbar"></div>
                 </div>
-                <div class="flex gap-3 pt-4">
-                    <button type="button" onclick="closeProgramModal()" class="flex-1 py-3 bg-slate-100 text-slate-500 font-black rounded-xl text-xs uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
-                    <button type="submit" class="flex-[2] py-3 bg-indigo-600 text-white font-black rounded-xl text-xs shadow-md hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95 border border-transparent">Simpan Program</button>
+                <div class="flex gap-3 pt-3">
+                    <button type="button" onclick="closeProgramModal()" class="flex-1 py-2.5 bg-slate-100 text-slate-500 font-black rounded-xl text-xs uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
+                    <button type="submit" class="flex-[2] py-2.5 bg-indigo-600 text-white font-black rounded-xl text-xs shadow-md hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95 border border-transparent">Simpan Program</button>
                 </div>
             </form>
         </div>
@@ -1079,10 +1081,10 @@
                             <td class="w-[50%] sm:w-[45%] font-bold py-3 text-indigo-950 truncate pr-2">${p.name}</td>
                             <td class="w-[35%] text-slate-500 uppercase text-[10px] font-bold hidden sm:table-cell tracking-wider truncate pr-2">${p.position}</td>
                             <td class="text-right pr-4 truncate whitespace-nowrap">
-                                <button onclick="editParticipant('${p.id}')" title="Pinda" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                                <button onclick="window.moveParticipant('${p.id}', 'up', event)" title="Naik" class="p-1.5 text-slate-400 hover:text-emerald-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-emerald-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="w-4 h-4"></i></button>
-                                <button onclick="window.moveParticipant('${p.id}', 'down', event)" title="Turun" class="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-amber-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === list.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="w-4 h-4"></i></button>
-                                <button onclick="deleteParticipant('${p.id}')" title="Padam" class="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-0.5"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                <button onclick="editParticipant('${p.id}')" title="Pinda" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="window.moveParticipant('${p.id}', 'up', event)" title="Naik" class="p-1.5 text-slate-400 hover:text-emerald-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-emerald-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="window.moveParticipant('${p.id}', 'down', event)" title="Turun" class="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-amber-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === list.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="deleteParticipant('${p.id}')" title="Padam" class="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-0.5"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </td>
                         </tr>`).join('')}</tbody></table>`:''}
                 </div>`;
@@ -1296,7 +1298,7 @@
         // --- HANDLERS PROGRAM & PESERTA ---
         window.openProgramModal = (id = null) => {
             const modal = document.getElementById('modal-program'), checklist = document.getElementById('modal-dept-checklist');
-            if(checklist) checklist.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-4 p-3 hover:bg-indigo-50 rounded-xl cursor-pointer border border-transparent hover:border-indigo-200 transition-all shadow-sm text-indigo-900 bg-white"><input type="checkbox" name="involvedDepts" value="${d}" class="w-5 h-5 rounded text-indigo-600 shadow-inner" checked><span class="text-xs font-black uppercase text-indigo-900">${d}</span></label>`).join('');
+            if(checklist) checklist.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-3 p-2 hover:bg-indigo-50 rounded-xl cursor-pointer border border-transparent hover:border-indigo-200 transition-all shadow-sm text-indigo-900 bg-white"><input type="checkbox" name="involvedDepts" value="${d}" class="w-4 h-4 rounded text-indigo-600 shadow-inner" checked><span class="text-[10px] font-black uppercase text-indigo-900">${d}</span></label>`).join('');
             if (id) {
                 const p = window.state.programs.find(pr => pr.id === id);
                 if(p) {
@@ -1424,8 +1426,8 @@
             selectedAmPm = val;
             const amBtn = document.getElementById('clock-am');
             const pmBtn = document.getElementById('clock-pm');
-            amBtn.className = val === 'AM' ? "flex-1 py-1.5 rounded-lg text-[10px] font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-[10px] font-black text-slate-500 hover:bg-slate-200 transition-all";
-            pmBtn.className = val === 'PM' ? "flex-1 py-1.5 rounded-lg text-[10px] font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-[10px] font-black text-slate-500 hover:bg-slate-200 transition-all";
+            amBtn.className = val === 'AM' ? "flex-1 py-1.5 rounded-lg text-xs font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-xs font-black text-slate-500 hover:bg-slate-200 transition-all";
+            pmBtn.className = val === 'PM' ? "flex-1 py-1.5 rounded-lg text-xs font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-xs font-black text-slate-500 hover:bg-slate-200 transition-all";
         };
 
         window.setClockMode = (mode) => {
