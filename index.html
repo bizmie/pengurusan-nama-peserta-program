@@ -19,64 +19,67 @@
     
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        .shadow-premium { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
+        /* Soft pastel shadow */
+        .shadow-premium { box-shadow: 0 10px 25px -5px rgba(199, 210, 254, 0.5), 0 8px 10px -6px rgba(199, 210, 254, 0.3); }
         
         @media print {
+            @page { size: A4; margin: 1cm; }
             .no-print { display: none !important; }
             body { background: white !important; color: black !important; }
-            .print-area { border: none !important; box-shadow: none !important; width: 100% !important; margin: 0 !important; padding: 1cm !important; }
+            .print-area { border: none !important; box-shadow: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
         }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
-        .calendar-day { min-height: 80px; transition: all 0.2s; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; cursor: pointer; position: relative; }
-        .calendar-day:hover { background-color: #f1f5f9; }
+        .calendar-day { min-height: 70px; transition: all 0.2s; border-right: 1px solid #e0e7ff; border-bottom: 1px solid #e0e7ff; cursor: pointer; position: relative; }
+        .calendar-day:hover { background-color: #eef2ff; }
         .is-weekend { background-color: #f8fafc; color: #94a3b8; }
-        .has-event { border-left: 4px solid #2563eb !important; background-color: #f0f7ff; }
-        .selected-day { ring: 3px inset #2563eb; background-color: #f0f9ff !important; }
+        .has-event { border-left: 4px solid #4f46e5 !important; background-color: #eef2ff; }
+        .selected-day { box-shadow: inset 0 0 0 3px #4f46e5; background-color: #e0e7ff !important; }
 
         .fade-in { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-        /* Customizing Flatpickr Colors */
-        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
-            background: #1d4ed8; border-color: #1d4ed8;
-        }
+        .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
-<body class="bg-[#f3f4f6] text-slate-900">
+<body class="bg-[#f0f4f8] text-slate-800 text-sm">
 
     <!-- Notifikasi Toast -->
     <div id="toast" class="fixed top-8 left-1/2 -translate-x-1/2 z-[100] hidden">
-        <div class="bg-slate-900 text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700 animate-in fade-in zoom-in duration-300">
-            <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
-            <span id="toast-message" class="text-sm font-bold uppercase tracking-wide">Mesej Berjaya</span>
+        <div class="bg-indigo-950 text-white px-5 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 border border-indigo-800 animate-in fade-in zoom-in duration-300">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+            <span id="toast-message" class="text-xs font-bold uppercase tracking-wide">Mesej Berjaya</span>
         </div>
     </div>
 
     <!-- Header / Navigasi -->
-    <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center min-h-[4.5rem] py-2 md:py-0 text-black">
-            <div class="flex items-center gap-4 w-full md:w-auto">
-                <div class="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center shadow-lg cursor-pointer flex-shrink-0" onclick="goToMainMenu()">
-                    <i data-lucide="layout-grid" class="w-6 h-6 text-white"></i>
+    <nav class="bg-white/95 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-40 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center min-h-[4rem] py-2 md:py-0 text-black">
+            
+            <!-- Left Section: Logo & Titles -->
+            <div class="flex items-center gap-3 w-full md:w-auto overflow-hidden">
+                <div class="w-10 h-10 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center justify-center shadow-sm cursor-pointer flex-shrink-0" onclick="handleLogoClick()">
+                    <i data-lucide="book-open" class="w-5 h-5 text-indigo-700"></i>
                 </div>
-                <div class="min-w-0">
+                <div class="min-w-0 flex flex-col justify-center">
                     <div class="flex items-center gap-2">
-                        <h1 id="app-main-title" class="font-black text-lg md:text-xl leading-tight uppercase tracking-tighter text-slate-900 cursor-pointer truncate" onclick="goToMainMenu()">Sistem Program MTIB</h1>
-                        <button id="header-settings-btn" onclick="openGlobalSettingsModal()" class="text-slate-400 hover:text-blue-600 transition-colors bg-slate-100 p-1.5 rounded-lg flex-shrink-0" title="Tetapan Sistem Global">
-                            <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-                        </button>
+                        <h1 id="app-main-title" class="font-black text-lg leading-tight uppercase tracking-tight text-indigo-950 cursor-pointer truncate" onclick="handleLogoClick()">Sistem Program MTIB</h1>
                     </div>
                     <div class="flex items-center gap-2 mt-0.5">
-                        <p id="current-program-label" class="text-xs text-slate-500 font-bold uppercase tracking-widest">Utama</p>
+                        <p id="current-program-label" class="text-[10px] md:text-xs text-indigo-600 font-black uppercase tracking-widest truncate">Utama</p>
                         
                         <!-- Metadata Sub-Program (Tarikh, Lokasi) -->
                         <div id="header-program-meta" class="hidden flex items-center flex-wrap gap-2 text-[10px] font-black uppercase text-slate-600">
@@ -85,304 +88,368 @@
                             <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i> <span id="header-meta-location"></span></span>
                         </div>
 
-                        <span id="sync-indicator" class="text-[10px] text-amber-600 animate-pulse font-black hidden ml-2">• Menyelaras...</span>
+                        <span id="sync-indicator" class="text-[9px] text-amber-600 animate-pulse font-black hidden flex-shrink-0">• Menyelaras...</span>
                     </div>
                 </div>
             </div>
             
-            <div class="flex items-center gap-4 mt-3 md:mt-0 w-full md:w-auto justify-end">
-                <div id="header-right-main" class="flex flex-col items-end gap-1.5">
-                    <div id="header-current-date" class="hidden md:block text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 shadow-inner">
-                        <!-- Date injected via JS -->
-                    </div>
-                    <button onclick="openProgramModal()" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-1.5 rounded-lg flex items-center justify-center gap-2 text-[10px] font-black shadow-md transition-all active:scale-95">
-                        <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> TAMBAH PROGRAM
+            <!-- Right Section: Network, Date, Settings -->
+            <div class="flex items-center gap-3 mt-3 md:mt-0 w-full md:w-auto justify-end">
+                
+                <div class="flex items-center gap-1.5 text-indigo-900 font-black text-[10px] md:text-xs uppercase tracking-wide whitespace-nowrap pr-2 hidden sm:flex">
+                    <i data-lucide="wifi" class="w-3.5 h-3.5 text-emerald-500"></i>
+                    <span id="header-current-date"></span>
+                </div>
+                
+                <div class="w-px h-5 bg-indigo-100 hidden md:block"></div>
+                
+                <!-- Action Buttons: Main Menu -->
+                <div id="header-right-main" class="flex items-center gap-2">
+                    <button onclick="openGlobalSettingsModal()" class="flex items-center justify-center p-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl shadow-sm transition-all active:scale-95 border border-indigo-200" title="Tetapan Sistem Global">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                
+                <!-- Butang Keluar di Header (Hanya untuk Sub-Program) -->
+                <div id="header-right-program" class="hidden">
+                    <button onclick="goToMainMenu()" class="flex items-center justify-center p-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl shadow-sm transition-all active:scale-95 border border-rose-200" title="Keluar ke Utama">
+                        <i data-lucide="log-out" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <main class="max-w-7xl mx-auto p-4">
         
         <!-- SECTION 1: DASHBOARD UTAMA -->
-        <div id="section-main-menu" class="fade-in space-y-10">
+        <div id="section-main-menu" class="fade-in space-y-6">
             
-            <!-- Calendar & Summary Area -->
-            <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+            <!-- Calendar & Summary Area (Diseimbangkan 50/50 dan tinggi tetap berserta skrol) -->
+            <div class="flex flex-col lg:flex-row gap-4 items-stretch lg:h-[480px]">
                 
-                <!-- Left Column: Activity Summary Widget (Ringkasan Program) -->
-                <div id="day-summary-panel" class="w-full lg:w-2/3 flex-shrink-0 bg-white rounded-[2.5rem] border border-slate-200 shadow-premium p-8 flex flex-col transition-all bg-gradient-to-b from-white to-slate-50 min-h-[500px] text-black">
-                    <div id="summary-content" class="w-full text-left flex flex-col h-full">
-                        <div class="border-b-4 border-blue-600 pb-4 mb-6 flex justify-between items-end">
+                <!-- Left Column: Activity Summary Widget -->
+                <div id="day-summary-panel" class="w-full lg:w-1/2 flex-shrink-0 bg-white rounded-[1.5rem] border border-indigo-50 shadow-premium p-6 flex flex-col transition-all h-full text-slate-800 overflow-hidden">
+                    <div id="summary-content" class="w-full text-left flex flex-col h-full overflow-hidden">
+                        <div class="border-b-2 border-indigo-100 pb-3 mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 flex-shrink-0">
                             <div>
-                                <h4 class="text-blue-700 font-black text-2xl uppercase tracking-tighter">Ringkasan Program</h4>
-                                <p id="summary-date-label" class="text-xs text-slate-400 font-black uppercase tracking-widest mt-1">Semua Program Akan Datang</p>
+                                <h4 class="text-indigo-900 font-black text-lg uppercase tracking-tight">Ringkasan Program</h4>
+                                <p id="summary-date-label" class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Semua Program Akan Datang</p>
                             </div>
-                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 shadow-inner">
-                                <i data-lucide="list-todo" class="w-6 h-6"></i>
+                            
+                            <!-- Search & Add Button -->
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                <div class="relative w-full sm:w-48">
+                                    <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <input type="text" id="program-search-input" oninput="window.updateDaySummary(window.state.filterDate)" placeholder="Cari program..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800 placeholder:text-slate-400">
+                                </div>
+                                <button onclick="openProgramModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 text-[10px] font-black shadow-md transition-all active:scale-95 whitespace-nowrap flex-shrink-0">
+                                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> TAMBAH
+                                </button>
                             </div>
                         </div>
-                        <div id="summary-events-list" class="space-y-4 overflow-y-auto pr-2 flex-grow pb-4">
+                        <div id="summary-events-list" class="space-y-3 overflow-y-auto pr-2 flex-grow custom-scrollbar pb-2">
                             <!-- JS Injected -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Interactive Calendar (Kalendar Mini) -->
-                <div class="w-full lg:w-1/3 bg-white rounded-[2.5rem] border border-slate-200 shadow-premium overflow-hidden flex flex-col max-h-[500px] text-black">
-                    <div class="px-6 py-5 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                        <h3 id="calendar-month-year" class="font-black text-base uppercase tracking-tight text-slate-900">BULAN 2026</h3>
-                        <div class="flex gap-2">
-                            <button onclick="changeMonth(-1)" class="p-2 hover:bg-slate-200 rounded-xl transition border border-slate-300 bg-white shadow-sm text-black"><i data-lucide="chevron-left" class="w-4 h-4 text-black"></i></button>
-                            <button onclick="changeMonth(1)" class="p-2 hover:bg-slate-200 rounded-xl transition border border-slate-300 bg-white shadow-sm text-black"><i data-lucide="chevron-right" class="w-4 h-4 text-black"></i></button>
+                <!-- Right Column: Interactive Calendar -->
+                <div class="w-full lg:w-1/2 bg-white rounded-[1.5rem] border border-indigo-50 shadow-premium overflow-hidden flex flex-col h-[450px] lg:h-full text-slate-800">
+                    <div class="px-5 py-4 bg-indigo-50/50 border-b border-indigo-100 flex justify-between items-center flex-shrink-0">
+                        <h3 id="calendar-month-year" class="font-black text-sm uppercase tracking-tight text-indigo-950">BULAN 2026</h3>
+                        <div class="flex gap-1.5">
+                            <button onclick="changeMonth(-1)" class="p-1.5 hover:bg-indigo-100 rounded-md transition border border-indigo-200 bg-white shadow-sm text-indigo-800"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                            <button onclick="changeMonth(1)" class="p-1.5 hover:bg-indigo-100 rounded-md transition border border-indigo-200 bg-white shadow-sm text-indigo-800"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
                         </div>
                     </div>
-                    <div class="calendar-grid bg-slate-100/50">
-                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Isn</div>
-                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Sel</div>
-                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Rab</div>
-                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Kha</div>
-                        <div class="p-2.5 text-center text-[10px] font-black text-slate-400 uppercase border-b border-r">Jum</div>
-                        <div class="p-2.5 text-center text-[10px] font-black text-slate-500 border-b border-r bg-slate-200/50 uppercase">Sab</div>
-                        <div class="p-2.5 text-center text-[10px] font-black text-slate-500 border-b bg-slate-200/50 uppercase">Aha</div>
+                    <div class="calendar-grid bg-white flex-shrink-0 border-b border-indigo-100">
+                        <div class="p-2 text-center text-[9px] font-black text-indigo-400 uppercase border-r border-indigo-50">Isn</div>
+                        <div class="p-2 text-center text-[9px] font-black text-indigo-400 uppercase border-r border-indigo-50">Sel</div>
+                        <div class="p-2 text-center text-[9px] font-black text-indigo-400 uppercase border-r border-indigo-50">Rab</div>
+                        <div class="p-2 text-center text-[9px] font-black text-indigo-400 uppercase border-r border-indigo-50">Kha</div>
+                        <div class="p-2 text-center text-[9px] font-black text-indigo-400 uppercase border-r border-indigo-50">Jum</div>
+                        <div class="p-2 text-center text-[9px] font-black text-indigo-500 border-r border-indigo-50 bg-indigo-50/30 uppercase">Sab</div>
+                        <div class="p-2 text-center text-[9px] font-black text-indigo-500 bg-indigo-50/30 uppercase">Aha</div>
                     </div>
-                    <div id="calendar-days" class="calendar-grid text-black flex-grow overflow-y-auto"></div>
-                    <div class="p-3 border-t border-slate-100 bg-slate-50/50 flex justify-center">
-                        <button id="reset-filter-btn" onclick="filterByDate(null)" class="hidden px-6 py-2 text-[10px] font-black text-blue-700 uppercase border-2 border-blue-200 rounded-full hover:bg-blue-600 hover:text-white transition-all shadow-md text-black">Tunjuk Semua</button>
+                    <div id="calendar-days" class="calendar-grid text-slate-800 flex-grow overflow-y-auto custom-scrollbar bg-white"></div>
+                    <div class="p-2 border-t border-indigo-100 bg-indigo-50/50 flex justify-center flex-shrink-0">
+                        <button id="reset-filter-btn" onclick="filterByDate(null)" class="hidden px-5 py-1.5 text-[9px] font-black text-indigo-700 uppercase border border-indigo-200 rounded-full hover:bg-indigo-600 hover:text-white transition-all shadow-sm">Tunjuk Semua</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- SECTION 2: KANDUNGAN PROGRAM SPESIFIK -->
-        <div id="section-program-content" class="hidden space-y-6 text-black">
+        <div id="section-program-content" class="hidden space-y-4 text-slate-800">
             
+            <!-- Banner Peringatan Deraf KIV -->
+            <div id="draft-warning-banner" class="hidden mb-4 p-4 bg-slate-100 border border-slate-300 rounded-2xl flex items-center gap-3 text-slate-600 shadow-sm animate-in fade-in">
+                <i data-lucide="archive" class="w-6 h-6 text-slate-400"></i>
+                <div>
+                    <p class="text-xs font-black uppercase tracking-wide">MOD DERAF (KIV)</p>
+                    <p class="text-[10px] font-bold mt-0.5">Program ini disimpan sebagai deraf. Aktifkan di bahagian Tetapan untuk paparan rasmi.</p>
+                </div>
+            </div>
+
             <!-- TAB MENU BAR -->
-            <div id="program-nav" class="flex flex-wrap items-center justify-between gap-4 bg-white p-2.5 rounded-[2rem] border border-slate-200 shadow-sm w-full hidden">
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="switchTab('dashboard')" class="nav-btn active flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-black transition-all bg-blue-100 text-blue-700 shadow-sm" data-tab="dashboard" title="Dashboard">
-                        <i data-lucide="home" class="w-4 h-4"></i>
+            <div id="program-nav" class="flex flex-wrap items-center justify-start gap-3 bg-white p-2 rounded-2xl border border-indigo-50 shadow-premium w-full hidden no-print">
+                <div class="flex flex-wrap gap-1.5">
+                    <button onclick="switchTab('dashboard')" class="nav-btn active flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-50 text-indigo-700 shadow-sm border border-indigo-200" data-tab="dashboard" title="Dashboard">
+                        <i data-lucide="home" class="w-3.5 h-3.5"></i> Dashboard
                     </button>
-                    <button onclick="switchTab('report')" class="nav-btn flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-black transition-all text-slate-500 hover:bg-slate-50" data-tab="report">
-                        LAPORAN
+                    <button onclick="switchTab('report')" class="nav-btn flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-indigo-50/50 border border-transparent" data-tab="report">
+                        <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Laporan
                     </button>
-                    <button onclick="switchTab('settings')" class="nav-btn flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-black transition-all text-slate-500 hover:bg-slate-50" data-tab="settings">
-                        TETAPAN
+                    <button onclick="switchTab('settings')" class="nav-btn flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-indigo-50/50 border border-transparent" data-tab="settings">
+                        <i data-lucide="settings" class="w-3.5 h-3.5"></i> Tetapan
                     </button>
                 </div>
-                <button onclick="goToMainMenu()" class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-black transition-all text-red-600 hover:bg-red-50 hover:text-red-700" title="Kembali ke Utama">
-                    <i data-lucide="arrow-left-circle" class="w-4 h-4"></i> KEMBALI
-                </button>
             </div>
 
             <!-- TAB DASHBOARD -->
-            <div id="tab-dashboard" class="tab-content active fade-in text-black">
+            <div id="tab-dashboard" class="tab-content active fade-in text-slate-800">
                 
-                <!-- WIDGET STATISTIK -->
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 text-black">
-                    <div class="bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-premium flex items-center gap-4">
-                        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 shadow-inner text-black flex-shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Hadir</p>
-                            <h3 id="stat-total" class="text-lg font-black text-black truncate">0</h3>
+                <!-- Baris Ikon Maklumat Program -->
+                <div class="mb-6 bg-white p-5 rounded-[1.5rem] border border-indigo-50 shadow-premium">
+                    <div class="flex items-start gap-4 w-full">
+                        <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 shadow-inner flex-shrink-0 mt-0.5 border border-indigo-100">
+                            <i data-lucide="award" class="w-5 h-5"></i>
                         </div>
-                    </div>
-                    <div class="bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-premium flex items-center gap-4 text-black">
-                        <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-700 shadow-inner text-black flex-shrink-0"><i data-lucide="target" class="w-5 h-5 text-black"></i></div>
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Sasaran</p>
-                            <h3 id="stat-target" class="text-lg font-black text-black truncate">0</h3>
-                        </div>
-                    </div>
-                    <div id="widget-needed" class="bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-premium flex items-center gap-4 text-black">
-                        <div id="stat-needed-icon" class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center shadow-inner text-slate-400 text-black flex-shrink-0"></div>
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Baki</p>
-                            <h3 id="stat-needed" class="text-lg font-black text-black truncate">0</h3>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 px-5 py-3.5 rounded-2xl shadow-xl text-white flex items-center gap-4 text-black text-black">
-                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shadow-inner text-white text-black flex-shrink-0"><i data-lucide="calendar-check" class="w-5 h-5 text-white"></i></div>
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-black text-white/40 uppercase tracking-widest">Status</p>
-                            <h3 id="stat-days" class="text-lg font-black text-white text-black truncate">0</h3>
+                        <div class="flex flex-col gap-1.5 w-full">
+                            <h2 id="dashboard-program-title" class="text-lg md:text-xl font-black tracking-tight uppercase text-indigo-950 line-clamp-2"></h2>
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] font-bold text-slate-600 uppercase tracking-widest mt-1">
+                                <span class="flex items-center gap-1 bg-sky-50 text-sky-800 px-2.5 py-1 rounded-md border border-sky-100"><i data-lucide="calendar" class="w-3 h-3 text-sky-600"></i> <span id="dashboard-program-date"></span></span>
+                                <span class="flex items-center gap-1 bg-amber-50 text-amber-800 px-2.5 py-1 rounded-md border border-amber-100"><i data-lucide="clock" class="w-3 h-3 text-amber-600"></i> <span id="dashboard-program-time"></span></span>
+                                <span class="flex items-center gap-1 bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-md border border-emerald-100"><i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i> <span id="dashboard-program-location"></span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Senarai Berdaftar & Carian (Digabung) -->
-                <div class="bg-white p-8 md:p-12 rounded-[3.5rem] border border-slate-200 shadow-premium mt-8">
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-8 border-b-4 border-slate-50 pb-6">
-                        <h3 class="text-2xl font-black uppercase tracking-tighter text-slate-900">Senarai Peserta</h3>
-                        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                            <div class="relative w-full sm:w-72">
-                                <i data-lucide="search" class="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                <input type="text" id="dashboard-search" oninput="renderDashboard()" placeholder="Cari nama wakil..." class="w-full pl-12 pr-5 py-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-bold shadow-inner outline-none focus:ring-4 focus:ring-blue-100 transition-all text-black">
+                <!-- WIDGET STATISTIK (Pastel Theme) -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200 shadow-sm flex items-center gap-3">
+                        <div class="w-9 h-9 bg-sky-100 rounded-lg flex items-center justify-center text-sky-600 shadow-inner flex-shrink-0"><i data-lucide="users" class="w-4 h-4"></i></div>
+                        <div class="min-w-0">
+                            <p class="text-[9px] font-bold text-sky-700 uppercase tracking-widest">Hadir</p>
+                            <h3 id="stat-total" class="text-base font-black text-sky-950 truncate leading-tight">0</h3>
+                        </div>
+                    </div>
+                    <div class="bg-teal-50 p-4 rounded-2xl border border-teal-200 shadow-sm flex items-center gap-3">
+                        <div class="w-9 h-9 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 shadow-inner flex-shrink-0"><i data-lucide="target" class="w-4 h-4"></i></div>
+                        <div class="min-w-0">
+                            <p class="text-[9px] font-bold text-teal-700 uppercase tracking-widest">Sasaran</p>
+                            <h3 id="stat-target" class="text-base font-black text-teal-950 truncate leading-tight">0</h3>
+                        </div>
+                    </div>
+                    
+                    <div id="widget-needed" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                         <!-- Container injected via JS -->
+                    </div>
+                    
+                    <div class="bg-indigo-900 p-4 rounded-2xl border border-indigo-800 shadow-md flex items-center gap-3">
+                        <div class="w-9 h-9 bg-indigo-800 rounded-lg flex items-center justify-center text-indigo-100 shadow-inner flex-shrink-0"><i data-lucide="calendar-check" class="w-4 h-4"></i></div>
+                        <div class="min-w-0">
+                            <p class="text-[9px] font-bold text-indigo-300 uppercase tracking-widest">Baki Hari</p>
+                            <h3 id="stat-days" class="text-base font-black text-white truncate leading-tight">0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Senarai Berdaftar & Carian -->
+                <div class="bg-white p-5 md:p-6 rounded-[1.5rem] border border-indigo-50 shadow-premium mt-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-5 border-b border-indigo-50 pb-4">
+                        <h3 class="text-base font-black uppercase tracking-tight text-indigo-950">Senarai Peserta</h3>
+                        <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+                            <div class="relative w-full sm:w-60">
+                                <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="text" id="dashboard-search" oninput="renderDashboard()" placeholder="Cari nama / bahagian..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800">
                             </div>
-                            <button onclick="openParticipantModal()" class="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-8 py-3.5 rounded-2xl flex items-center justify-center gap-3 text-sm font-black shadow-xl transition-all active:scale-95 whitespace-nowrap">
-                                <i data-lucide="user-plus" class="w-5 h-5"></i> DAFTAR
+                            <button onclick="openParticipantModal()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg flex items-center justify-center gap-1.5 text-[11px] font-black shadow-md transition-all active:scale-95 whitespace-nowrap">
+                                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> DAFTAR
                             </button>
                         </div>
                     </div>
-                    <div id="dashboard-list" class="space-y-6 text-black"></div>
+                    <div id="dashboard-list" class="space-y-4"></div>
                 </div>
             </div>
 
             <!-- TAB SETTINGS -->
-            <div id="tab-settings" class="tab-content max-w-3xl mx-auto text-black text-black">
-                <div class="bg-white p-12 rounded-[4rem] border border-slate-200 shadow-premium">
-                    <h2 class="text-3xl font-black uppercase mb-12 border-b-4 border-blue-50 pb-6 flex items-center gap-5 tracking-tighter text-black">
-                        <i data-lucide="settings-2" class="w-10 h-10 text-blue-700"></i> Tetapan Program
+            <div id="tab-settings" class="tab-content max-w-2xl mx-auto">
+                <div class="bg-white p-6 md:p-8 rounded-[1.5rem] border border-indigo-50 shadow-premium">
+                    <h2 class="text-lg md:text-xl font-black uppercase mb-6 border-b-2 border-indigo-50 pb-3 flex items-center gap-2 tracking-tight text-indigo-950">
+                        <i data-lucide="settings-2" class="w-5 h-5 text-indigo-600"></i> Tetapan Program
                     </h2>
-                    <form id="settings-form" class="space-y-8 text-black">
-                        <div class="space-y-2">
-                            <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1 text-black">Tajuk Rasmi Program</label>
-                            <input type="text" id="set-prog-name" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black outline-none focus:ring-4 focus:ring-blue-100" required>
+                    <form id="settings-form" class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tajuk Rasmi Program</label>
+                            <input type="text" id="set-prog-name" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300" required>
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1 text-black">Unit Urusetia / Penganjur</label>
-                            <input type="text" id="set-prog-secretariat" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black outline-none focus:ring-4 focus:ring-blue-100" required>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Unit Urusetia / Penganjur</label>
+                            <input type="text" id="set-prog-secretariat" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300" required>
                         </div>
-                        <div class="grid grid-cols-2 gap-6 text-black">
-                            <div class="space-y-2">
-                                <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1">Lokasi Program</label>
-                                <input type="text" id="set-prog-location" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black outline-none focus:ring-4 focus:ring-blue-100" required>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Lokasi Program</label>
+                                <input type="text" id="set-prog-location" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300" required>
                             </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1">Masa / Waktu</label>
-                                <input type="text" id="set-prog-time" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black outline-none focus:ring-4 focus:ring-blue-100 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-6 text-black">
-                            <div class="space-y-2">
-                                <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-1">Sasaran Bilangan Peserta</label>
-                                <input type="number" id="set-prog-target" class="w-full px-8 py-5 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold text-black outline-none focus:ring-4 focus:ring-blue-100" required>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-black text-blue-500 uppercase tracking-widest ml-1">Tarikh Program Berlangsung</label>
-                                <input type="date" id="set-prog-event-date" class="w-full px-8 py-5 bg-blue-50 border border-blue-200 rounded-[2rem] text-base font-bold text-blue-900 text-black outline-none focus:ring-4 focus:ring-blue-100 date-picker-input" required>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Masa / Waktu</label>
+                                <input type="text" id="set-prog-time" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
                             </div>
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-black text-red-500 uppercase tracking-widest ml-1 underline underline-offset-8 text-black">Tarikh Akhir Pendaftaran (TUTUP)</label>
-                            <input type="date" id="set-prog-closing" class="w-full px-8 py-5 bg-red-50 border border-red-200 rounded-[2rem] text-base font-bold text-red-900 shadow-inner outline-none focus:ring-4 focus:ring-red-100 date-picker-input" required>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Sasaran Bilangan</label>
+                                <input type="number" id="set-prog-target" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300" required>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black text-indigo-600 uppercase tracking-widest ml-1">Status Pameran Program</label>
+                                <select id="set-prog-status" class="w-full px-4 py-2.5 bg-indigo-50 border border-indigo-200 rounded-xl text-sm font-bold text-indigo-900 outline-none focus:ring-2 focus:ring-indigo-400 appearance-none cursor-pointer">
+                                    <option value="active">AKTIF (Berjalan)</option>
+                                    <option value="draft">DERAF (KIV / Simpan)</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="space-y-6">
-                            <label class="text-sm font-black text-slate-400 uppercase tracking-widest ml-2 border-b-2 pb-2 block text-black">Konfigurasi Bahagian Terlibat</label>
-                            <div id="settings-dept-checklist" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto bg-slate-50 p-8 rounded-[3rem] border border-slate-200 shadow-inner text-black"></div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black text-indigo-600 uppercase tracking-widest ml-1">Tarikh Acara</label>
+                                <input type="date" id="set-prog-event-date" class="w-full px-4 py-2.5 bg-indigo-50/50 border border-indigo-200 rounded-xl text-sm font-bold text-indigo-900 outline-none focus:ring-2 focus:ring-indigo-300 date-picker-input" required>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black text-rose-600 uppercase tracking-widest ml-1">Tarikh Tutup</label>
+                                <input type="date" id="set-prog-closing" class="w-full px-4 py-2.5 bg-rose-50 border border-rose-200 rounded-xl text-sm font-bold text-rose-900 shadow-inner outline-none focus:ring-2 focus:ring-rose-300 date-picker-input" required>
+                            </div>
                         </div>
-                        <button type="submit" class="w-full py-6 bg-blue-700 text-white font-black rounded-[3rem] text-base shadow-2xl hover:bg-blue-800 transition-all uppercase tracking-[0.3em] active:scale-95 text-white">
-                            Kemaskini Tetapan Program
-                        </button>
+                        <div class="space-y-2 pt-2">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1 border-b pb-1 block">Konfigurasi Bahagian Terlibat</label>
+                            <div id="settings-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner custom-scrollbar"></div>
+                        </div>
+                        <div class="flex gap-3 pt-6 border-t border-slate-100 mt-4">
+                            <button type="button" onclick="deleteCurrentProgram()" class="flex-1 py-3 bg-rose-50 text-rose-600 font-black rounded-xl text-[10px] md:text-xs border border-rose-200 hover:bg-rose-100 transition-all uppercase tracking-widest active:scale-95 flex items-center justify-center gap-1.5">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i> <span class="hidden sm:inline">Padam Program</span>
+                            </button>
+                            <button type="submit" class="flex-[2] py-3 bg-indigo-600 text-white font-black rounded-xl text-[10px] md:text-xs shadow-md hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95">
+                                Kemaskini Tetapan
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
 
             <!-- REPORT -->
-            <div id="tab-report" class="tab-content space-y-6 text-black">
-                <div class="flex justify-end no-print text-black">
-                    <button onclick="window.print()" class="bg-slate-900 text-white p-4 rounded-xl flex items-center justify-center shadow-xl hover:scale-105 transition-all active:scale-95 text-white" title="Cetak Laporan">
-                        <i data-lucide="printer" class="w-6 h-6 text-white text-black"></i>
+            <div id="tab-report" class="tab-content space-y-6">
+                <div class="flex justify-end no-print">
+                    <button onclick="window.print()" class="bg-indigo-900 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Cetak Laporan">
+                        <i data-lucide="printer" class="w-5 h-5"></i>
                     </button>
                 </div>
-                <div id="report-container" class="bg-white p-8 md:p-12 shadow-2xl border border-slate-300 mx-auto max-w-[21cm] text-black print-area text-black"></div>
+                <div id="report-container" class="bg-white p-8 md:p-12 shadow-md border border-slate-300 mx-auto w-full max-w-[21cm] text-black print-area"></div>
             </div>
         </div>
     </main>
 
     <!-- Modal Tetapan Global (Tajuk Aplikasi) -->
-    <div id="modal-global-settings" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[150] hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] border border-slate-200 shadow-2xl p-8 fade-in my-10 text-black">
-            <h2 class="text-xl font-black uppercase mb-6 text-center tracking-tight border-b-2 border-slate-100 pb-4">Tetapan Sistem Global</h2>
-            <form id="global-settings-form" class="space-y-5">
-                <div class="space-y-1.5">
+    <div id="modal-global-settings" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[150] hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-sm rounded-[1.5rem] border border-indigo-50 shadow-xl p-6 fade-in text-slate-800">
+            <h2 class="text-lg font-black uppercase mb-5 text-center tracking-tight border-b border-slate-100 pb-3 text-indigo-950">Tetapan Sistem Global</h2>
+            <form id="global-settings-form" class="space-y-4">
+                <div class="space-y-1">
                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tajuk Utama Aplikasi</label>
-                    <input type="text" id="input-global-title" class="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-bold uppercase shadow-inner outline-none focus:ring-2 focus:ring-blue-200" required>
+                    <input type="text" id="input-global-title" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold uppercase outline-none focus:ring-2 focus:ring-indigo-300" required>
                 </div>
-                <div class="space-y-1.5">
+                <div class="space-y-1">
                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tajuk Kecil (Sub-title)</label>
-                    <input type="text" id="input-global-subtitle" class="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-bold uppercase shadow-inner outline-none focus:ring-2 focus:ring-blue-200" required>
+                    <input type="text" id="input-global-subtitle" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold uppercase outline-none focus:ring-2 focus:ring-indigo-300" required>
                 </div>
-                <div class="flex gap-4 pt-4">
-                    <button type="button" onclick="closeGlobalSettingsModal()" class="flex-1 py-3 bg-slate-100 text-slate-600 font-black rounded-xl text-xs uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
-                    <button type="submit" class="flex-[2] py-3 bg-blue-700 text-white font-black rounded-xl text-xs shadow-md hover:bg-blue-800 transition-all uppercase tracking-widest active:scale-95">Simpan Tetapan</button>
+                <div class="flex gap-3 pt-3">
+                    <button type="button" onclick="closeGlobalSettingsModal()" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-black rounded-lg text-[10px] uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
+                    <button type="submit" class="flex-[2] py-2.5 bg-indigo-600 text-white font-black rounded-lg text-[10px] shadow hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95">Simpan Tetapan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Program Baru (LUAS / SPACIOUS) -->
-    <div id="modal-program" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4 overflow-y-auto text-black">
-        <div class="bg-white w-full max-w-2xl rounded-[3rem] border border-slate-200 shadow-2xl p-8 md:p-12 fade-in my-10 text-black">
-            <h2 id="modal-title" class="text-2xl md:text-3xl font-black uppercase mb-8 text-center tracking-tighter border-b-4 border-blue-50 pb-4">Daftar Program Baharu</h2>
-            <form id="program-form" class="space-y-5">
+    <!-- Modal Program Baru -->
+    <div id="modal-program" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 overflow-y-auto text-slate-800">
+        <div class="bg-white w-full max-w-xl rounded-[2rem] border border-indigo-50 shadow-xl p-6 md:p-8 fade-in my-8">
+            <h2 id="modal-title" class="text-xl md:text-2xl font-black uppercase mb-6 text-center tracking-tight border-b-2 border-indigo-50 pb-3 text-indigo-950">Daftar Program Baharu</h2>
+            <form id="program-form" class="space-y-4">
                 <input type="hidden" id="edit-prog-id">
-                <div class="space-y-1.5">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Nama Program / Seminar / Aktiviti</label>
-                    <input type="text" id="input-prog-name" class="w-full px-6 py-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-bold uppercase shadow-inner outline-none focus:ring-2 focus:ring-blue-100" placeholder="Cth: Kursus Pemantapan IT" required>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Program / Seminar / Aktiviti</label>
+                    <input type="text" id="input-prog-name" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold uppercase outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Kursus Pemantapan IT" required>
                 </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Unit Urusetia / Cawangan</label>
-                    <input type="text" id="input-prog-secretariat" class="w-full px-6 py-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-bold shadow-inner outline-none focus:ring-2 focus:ring-blue-100" placeholder="Cth: Cawangan Pengurusan Sumber Manusia" required>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Unit Urusetia / Cawangan</label>
+                    <input type="text" id="input-prog-secretariat" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Cawangan Pengurusan Sumber Manusia" required>
                 </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Lokasi</label>
-                        <input type="text" id="input-prog-location" class="w-full px-6 py-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-bold shadow-inner focus:ring-2 focus:ring-blue-100" required>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Lokasi</label>
+                        <input type="text" id="input-prog-location" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-indigo-300" required>
                     </div>
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Masa</label>
-                        <input type="text" id="input-prog-time" class="w-full px-6 py-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-bold shadow-inner focus:ring-2 focus:ring-blue-100 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-blue-600 uppercase tracking-widest ml-2">Tarikh Acara</label>
-                        <input type="date" id="input-prog-event-date" class="w-full px-6 py-3.5 bg-blue-50 border border-blue-200 rounded-2xl text-sm font-bold shadow-inner date-picker-input" required>
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-red-600 uppercase tracking-widest ml-2">Tamat Pendaftaran</label>
-                        <input type="date" id="input-prog-closing" class="w-full px-6 py-3.5 bg-red-50 border border-red-200 rounded-2xl text-sm font-bold shadow-inner date-picker-input" required>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Masa</label>
+                        <input type="text" id="input-prog-time" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
                     </div>
                 </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Sasaran Peserta</label>
-                    <input type="number" id="input-prog-target" class="w-full px-6 py-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-bold shadow-inner" value="50" required>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-indigo-600 uppercase tracking-widest ml-1">Tarikh Acara</label>
+                        <input type="date" id="input-prog-event-date" class="w-full px-4 py-2.5 bg-indigo-50/50 border border-indigo-200 rounded-xl text-xs font-bold date-picker-input" required>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-rose-600 uppercase tracking-widest ml-1">Tamat Pendaftaran</label>
+                        <input type="date" id="input-prog-closing" class="w-full px-4 py-2.5 bg-rose-50 border border-rose-200 rounded-xl text-xs font-bold date-picker-input" required>
+                    </div>
                 </div>
-                <div class="space-y-3">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2 border-b pb-2 block">Pilih Bahagian Terlibat</label>
-                    <div id="modal-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-40 overflow-y-auto bg-slate-50 p-5 rounded-3xl border border-slate-200 shadow-inner"></div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Sasaran Peserta</label>
+                    <input type="number" id="input-prog-target" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold" value="50" required>
                 </div>
-                <div class="flex gap-4 pt-6">
-                    <button type="button" onclick="closeProgramModal()" class="flex-1 py-4 bg-slate-100 text-slate-500 font-black rounded-2xl text-xs uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
-                    <button type="submit" class="flex-[2] py-4 bg-blue-700 text-white font-black rounded-2xl text-xs shadow-xl hover:bg-blue-800 transition-all uppercase tracking-widest active:scale-95">Simpan Program</button>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-indigo-600 uppercase tracking-widest ml-1">Status Pameran</label>
+                    <select id="input-prog-status" class="w-full px-4 py-2.5 bg-indigo-50 border border-indigo-200 rounded-xl text-xs font-bold text-indigo-900 outline-none focus:ring-2 focus:ring-indigo-400 appearance-none cursor-pointer">
+                        <option value="active">AKTIF (Berjalan)</option>
+                        <option value="draft">DERAF (KIV / Simpan)</option>
+                    </select>
+                </div>
+                <div class="space-y-2 pt-2">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1 border-b pb-1 block">Pilih Bahagian Terlibat</label>
+                    <div id="modal-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-32 overflow-y-auto bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-inner custom-scrollbar"></div>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="closeProgramModal()" class="flex-1 py-3 bg-slate-100 text-slate-500 font-black rounded-xl text-[10px] uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
+                    <button type="submit" class="flex-[2] py-3 bg-indigo-600 text-white font-black rounded-xl text-[10px] shadow-md hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95">Simpan Program</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Modal Pendaftaran Peserta -->
-    <div id="modal-participant" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[150] hidden flex items-center justify-center p-4 overflow-y-auto text-black">
-        <div class="bg-white w-full max-w-xl rounded-[3rem] border border-slate-200 shadow-2xl p-10 fade-in my-10 text-black">
-            <h2 id="participant-modal-title" class="text-3xl font-black uppercase mb-8 text-center tracking-tighter border-b-4 border-blue-50 pb-6 text-black">Daftar Peserta Baru</h2>
-            <form id="participant-form" class="space-y-6 text-black">
+    <div id="modal-participant" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[150] hidden flex items-center justify-center p-4 overflow-y-auto text-black">
+        <div class="bg-white w-full max-w-lg rounded-[2rem] border border-indigo-50 shadow-xl p-6 md:p-8 fade-in my-8 text-slate-800">
+            <h2 id="participant-modal-title" class="text-xl md:text-2xl font-black uppercase mb-6 text-center tracking-tight border-b-2 border-indigo-50 pb-3 text-indigo-950">Daftar Peserta Baru</h2>
+            <form id="participant-form" class="space-y-4">
                 <input type="hidden" id="edit-p-id">
-                <div class="space-y-2 text-black">
-                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Nama Penuh Wakil</label>
-                    <input type="text" id="input-p-name" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 outline-none transition-all text-black" required>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Penuh Wakil</label>
+                    <input type="text" id="input-p-name" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-indigo-300 transition-all" required>
                 </div>
-                <div class="space-y-2 text-black">
-                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Gred / Jawatan</label>
-                    <input type="text" id="input-p-position" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 outline-none transition-all text-black" required>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Gred / Jawatan</label>
+                    <input type="text" id="input-p-position" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-indigo-300 transition-all" required>
                 </div>
-                <div class="space-y-2 text-black">
-                    <label class="text-sm font-black text-slate-500 uppercase tracking-widest ml-3 text-black">Bahagian / Cawangan MTIB</label>
-                    <select id="input-p-dept" class="w-full px-8 py-4 bg-slate-50 border border-slate-300 rounded-[2rem] text-base font-bold shadow-inner focus:ring-4 focus:ring-blue-100 outline-none appearance-none cursor-pointer text-black" required></select>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Bahagian / Cawangan MTIB</label>
+                    <select id="input-p-dept" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer appearance-none" required></select>
                 </div>
-                <div class="flex gap-6 pt-8 text-black">
-                    <button type="button" onclick="closeParticipantModal()" class="flex-1 py-4 bg-slate-100 text-slate-600 font-black rounded-[2rem] text-sm uppercase tracking-widest hover:bg-slate-200 transition-all text-black">Batal</button>
-                    <button type="submit" class="flex-[2] py-4 bg-blue-700 text-white font-black rounded-[2rem] text-sm shadow-2xl hover:bg-blue-800 transition-all uppercase tracking-widest active:scale-95 text-black">Simpan Rekod</button>
+                <div class="flex gap-3 pt-5">
+                    <button type="button" onclick="closeParticipantModal()" class="flex-1 py-3 bg-slate-100 text-slate-600 font-black rounded-xl text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all">Batal</button>
+                    <button type="submit" class="flex-[2] py-3 bg-indigo-600 text-white font-black rounded-xl text-[10px] shadow-md hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95">Simpan Rekod</button>
                 </div>
             </form>
         </div>
@@ -390,49 +457,49 @@
 
     <!-- Modal Pengesahan (Custom Confirm Box) -->
     <div id="modal-confirm" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[200] hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl max-w-sm w-full text-center fade-in text-black">
-            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600">
-                <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+        <div class="bg-white p-6 rounded-[2rem] shadow-xl max-w-[18rem] w-full text-center fade-in text-slate-800">
+            <div class="w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-3 text-rose-600 border border-rose-100">
+                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-xl font-black uppercase mb-2">Pengesahan Padam</h3>
-            <p id="confirm-msg" class="text-sm font-bold text-slate-500 mb-8">Adakah anda pasti?</p>
-            <div class="flex gap-4">
-                <button onclick="closeConfirmModal()" class="flex-1 py-3 bg-slate-100 text-slate-600 font-black rounded-2xl text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">Batal</button>
-                <button id="confirm-btn" class="flex-1 py-3 bg-red-600 text-white font-black rounded-2xl text-xs shadow-lg hover:bg-red-700 transition-all uppercase tracking-widest active:scale-95">Padam</button>
+            <h3 class="text-base font-black uppercase mb-1 text-indigo-950">Pengesahan Padam</h3>
+            <p id="confirm-msg" class="text-xs font-bold text-slate-500 mb-6">Adakah anda pasti?</p>
+            <div class="flex gap-3">
+                <button onclick="closeConfirmModal()" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-black rounded-xl text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all">Batal</button>
+                <button id="confirm-btn" class="flex-1 py-2.5 bg-rose-600 text-white font-black rounded-xl text-[10px] shadow-sm hover:bg-rose-700 transition-all uppercase tracking-widest active:scale-95">Padam</button>
             </div>
         </div>
     </div>
 
     <!-- POP-UP CUSTOM GRAFIK JAM ANALOG -->
-    <div id="modal-analog-clock" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[150] hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-[2.5rem] p-8 shadow-2xl w-[320px] flex flex-col items-center fade-in border border-slate-200 text-black">
-            <div class="flex items-center justify-center gap-2 mb-4 w-full">
-                <i data-lucide="clock-4" class="w-5 h-5 text-blue-600"></i>
-                <h3 class="text-sm font-black uppercase text-slate-500 tracking-widest">Pilih Masa</h3>
+    <div id="modal-analog-clock" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[150] hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-[2rem] p-6 shadow-xl w-[280px] flex flex-col items-center fade-in border border-indigo-50 text-slate-800">
+            <div class="flex items-center justify-center gap-1.5 mb-3 w-full">
+                <i data-lucide="clock-4" class="w-4 h-4 text-indigo-600"></i>
+                <h3 class="text-xs font-black uppercase text-indigo-900 tracking-widest">Pilih Masa</h3>
             </div>
             
-            <h2 class="text-4xl font-black text-blue-700 mb-3 flex items-baseline gap-1 tracking-tighter">
-                <span id="clock-display-hh" class="cursor-pointer text-blue-700 hover:text-blue-500 transition-colors" onclick="setClockMode('hours')">12</span>:
-                <span id="clock-display-mm" class="cursor-pointer text-slate-400 hover:text-blue-500 transition-colors" onclick="setClockMode('minutes')">00</span>
+            <h2 class="text-3xl font-black text-indigo-700 mb-2 flex items-baseline gap-1 tracking-tighter">
+                <span id="clock-display-hh" class="cursor-pointer text-indigo-700 hover:text-indigo-500 transition-colors" onclick="window.setClockMode('hours')">12</span>:
+                <span id="clock-display-mm" class="cursor-pointer text-slate-400 hover:text-indigo-500 transition-colors" onclick="window.setClockMode('minutes')">00</span>
             </h2>
             
-            <div class="flex gap-2 mb-6 bg-slate-100 p-1 rounded-xl shadow-inner w-full">
-                <button type="button" id="clock-am" class="flex-1 py-2 rounded-lg text-xs font-black bg-white shadow-sm text-blue-700 transition-all" onclick="setAmPm('AM')">AM / PAGI</button>
-                <button type="button" id="clock-pm" class="flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:bg-slate-200 transition-all" onclick="setAmPm('PM')">PM / PTG</button>
+            <div class="flex gap-1.5 mb-5 bg-slate-50 p-1 rounded-xl shadow-inner border border-slate-200 w-full">
+                <button type="button" id="clock-am" class="flex-1 py-1.5 rounded-lg text-[10px] font-black bg-white shadow-sm text-indigo-700 transition-all" onclick="window.setAmPm('AM')">AM / PAGI</button>
+                <button type="button" id="clock-pm" class="flex-1 py-1.5 rounded-lg text-[10px] font-black text-slate-500 hover:bg-slate-200 transition-all" onclick="window.setAmPm('PM')">PM / PTG</button>
             </div>
             
             <!-- Graphic Analog Clock Face -->
-            <div class="relative w-56 h-56 rounded-full bg-slate-50 border-[6px] border-slate-100 select-none shadow-inner flex items-center justify-center mt-2">
-                <div class="absolute w-3.5 h-3.5 bg-blue-600 rounded-full z-20 shadow-md"></div>
-                <div id="clock-hand" class="absolute w-[3px] bg-blue-500 origin-bottom rounded-full z-10 transition-transform duration-300 ease-[cubic-bezier(0.4, 0.0, 0.2, 1)]" style="height: 35%; bottom: 50%; transform: translateX(-50%) rotate(0deg);">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-8 bg-blue-500/20 rounded-full border-2 border-blue-500 backdrop-blur-sm"></div>
+            <div class="relative w-48 h-48 rounded-full bg-slate-50 border-[5px] border-slate-100 select-none shadow-inner flex items-center justify-center mt-1">
+                <div class="absolute w-2.5 h-2.5 bg-indigo-600 rounded-full z-20 shadow-sm"></div>
+                <div id="clock-hand" class="absolute w-[2px] bg-blue-500 origin-bottom rounded-full z-10 transition-transform duration-300 ease-[cubic-bezier(0.4, 0.0, 0.2, 1)]" style="height: 35%; bottom: 50%; transform: translateX(-50%) rotate(0deg);">
+                    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-6 bg-blue-500/20 rounded-full border-2 border-blue-500 backdrop-blur-sm"></div>
                 </div>
                 <div id="clock-numbers" class="absolute inset-0 w-full h-full"></div>
             </div>
 
-            <div class="flex gap-3 w-full mt-8">
-                <button type="button" onclick="closeAnalogClock()" class="flex-1 py-3.5 text-slate-500 font-black text-xs uppercase tracking-widest hover:bg-slate-100 rounded-2xl transition-all border border-slate-200">Batal</button>
-                <button type="button" onclick="confirmAnalogClock()" class="flex-[2] py-3.5 bg-blue-700 text-white font-black rounded-2xl text-xs shadow-xl hover:bg-blue-800 transition-all uppercase tracking-widest active:scale-95">Pilih Masa</button>
+            <div class="flex gap-2 w-full mt-6">
+                <button type="button" onclick="window.closeAnalogClock()" class="flex-1 py-2.5 text-slate-600 font-black text-[10px] uppercase tracking-widest hover:bg-slate-100 rounded-xl transition-all border border-slate-200">Batal</button>
+                <button type="button" onclick="window.confirmAnalogClock()" class="flex-[2] py-2.5 bg-indigo-600 text-white font-black rounded-xl text-[10px] shadow-sm hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95">Pilih Masa</button>
             </div>
         </div>
     </div>
@@ -453,7 +520,7 @@
             measurementId: "G-RHRFVZ11MZ"
         };
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mtib-multi-prog-v11';
+        const appId = 'mtib-multi-prog-v11'; 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -516,22 +583,32 @@
             if(!dateStr) return '';
             const d = new Date(dateStr);
             if(isNaN(d)) return dateStr;
-            return d.toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' });
+            return d.toLocaleDateString('ms-MY', { day: 'numeric', month: 'short', year: 'numeric' }); // Kompak version
         };
 
         const initAuth = async () => { 
             try { await signInAnonymously(auth); } catch (e) { console.error("Auth Fail:", e); } 
         };
 
+        window.handleLogoClick = () => {
+            if (window.state.currentProgram) {
+                window.switchTab('dashboard');
+            } else {
+                window.goToMainMenu();
+            }
+        };
+
         const updateGlobalTitleUI = () => {
-            const s = window.state.globalSettings;
-            const mainTitle = document.getElementById('app-main-title');
-            if(mainTitle) mainTitle.textContent = s.title;
             if(!window.state.currentProgram) {
+                const s = window.state.globalSettings;
+                const mainTitle = document.getElementById('app-main-title');
+                if(mainTitle) mainTitle.textContent = s.title || "Sistem Program MTIB";
+                
                 const subLabel = document.getElementById('current-program-label');
                 if(subLabel) {
-                    subLabel.textContent = s.subtitle;
+                    subLabel.textContent = s.subtitle || "Utama";
                     subLabel.classList.remove('hidden');
+                    subLabel.className = "text-[10px] md:text-xs text-indigo-600 font-black uppercase tracking-widest truncate"; 
                 }
             }
         };
@@ -545,7 +622,7 @@
                     await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), { ...i, programId: id, createdAt: new Date().toISOString() }); 
                 } 
                 sync?.classList.add('hidden'); 
-                window.showToast("Data asal diselaraskan!"); 
+                if(window.showToast) window.showToast("Data asal diselaraskan!"); 
             } 
         };
 
@@ -564,7 +641,8 @@
                         window.state.programs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                         if(!window.state.hasCheckedSync) checkInitial();
                         renderCalendar();
-                        updateDaySummary(window.state.filterDate);
+                        window.updateDaySummary(window.state.filterDate);
+                        
                         if (window.state.currentProgram) { 
                             const u = window.state.programs.find(p => p.id === window.state.currentProgram.id); 
                             if (u) { window.state.currentProgram = u; updateProgramUI(); } 
@@ -572,9 +650,9 @@
                     }, (err) => console.error("Permission Error Programs:", err));
 
                     onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), (snap) => {
-                        window.state.participants = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                        if (window.state.currentProgram) { renderDashboard(); renderReport(); }
-                        updateDaySummary(window.state.filterDate);
+                        window.state.participants = window.state.participants = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                        if (window.state.currentProgram) { window.renderDashboard(); window.renderReport(); }
+                        window.updateDaySummary(window.state.filterDate);
                     }, (err) => console.error("Permission Error Participants:", err));
                 }
             });
@@ -585,7 +663,7 @@
             window.state.hasCheckedSync = true;
             if (window.state.programs.length === 0) {
                 try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), { name: "SAMBUTAN HARI PEKERJA KEBANGSAAN 2026", secretariat: "PSM", targetCount: 50, eventDate: "2026-05-01", closingDate: "2026-04-25", location: "Stadium Bukit Jalil", time: "7.30 Pagi", involvedDepts: DEPARTMENTS, createdAt: new Date().toISOString() });
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), { name: "SAMBUTAN HARI PEKERJA KEBANGSAAN 2026", secretariat: "PSM", targetCount: 50, eventDate: "2026-05-01", closingDate: "2026-04-25", location: "Stadium Bukit Jalil", time: "7.30 Pagi", involvedDepts: DEPARTMENTS, status: "active", createdAt: new Date().toISOString() });
                 } catch(e) { console.error(e); }
             }
         };
@@ -604,7 +682,7 @@
             
             container.innerHTML = "";
             for(let i=0; i<offset; i++) { 
-                const e = document.createElement('div'); e.className="calendar-day border-b border-r border-slate-100 bg-slate-50"; container.appendChild(e); 
+                const e = document.createElement('div'); e.className="calendar-day border-b border-r border-indigo-50 bg-slate-50"; container.appendChild(e); 
             }
             
             for(let d=1; d<=daysInMonth; d++){
@@ -613,8 +691,10 @@
                 const dayProg = programs.filter(p => p.eventDate === dateStr);
                 const dayEl = document.createElement('div');
                 dayEl.onclick = () => filterByDate(dateStr);
-                dayEl.className = `calendar-day p-2.5 border-b border-r border-slate-100 ${(dw===0||dw===6)?'is-weekend':'bg-white'} ${dayProg.length?'has-event':''} ${filterDate === dateStr ? 'selected-day' : ''}`;
-                dayEl.innerHTML = `<span class="font-black text-[10px]">${d}</span><div class="mt-1 space-y-1">${dayProg.map(p => `<div class="text-[8px] font-black uppercase bg-blue-600 text-white p-1 rounded shadow-sm line-clamp-2">${p.name}</div>`).join('')}</div>`;
+                dayEl.className = `calendar-day p-2 border-b border-r border-indigo-50 ${(dw===0||dw===6)?'is-weekend':'bg-white'} ${dayProg.length?'has-event':''} ${filterDate === dateStr ? 'selected-day' : ''}`;
+                
+                dayEl.innerHTML = `<span class="font-black text-[10px] text-indigo-950">${d}</span>${dayProg.length > 0 ? `<div class="mt-1"><div class="text-[8px] font-black uppercase bg-indigo-600 text-white py-0.5 px-1 rounded text-center shadow-sm w-full line-clamp-1 border border-indigo-700">${dayProg.length} Program</div></div>` : ''}`;
+                
                 container.appendChild(dayEl);
             }
         };
@@ -624,54 +704,87 @@
         window.filterByDate = (date) => { 
             window.state.filterDate = date; 
             renderCalendar(); 
-            updateDaySummary(date); 
+            window.updateDaySummary(date); 
             const btn = document.getElementById('reset-filter-btn'); 
             if(btn) btn.classList.toggle('hidden', !date); 
         };
 
-        const updateDaySummary = (date) => {
+        window.updateDaySummary = (date) => {
             const listContainer = document.getElementById('summary-events-list');
             const label = document.getElementById('summary-date-label');
+            const searchInput = document.getElementById('program-search-input');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
             
             let progs = [];
             if(!date) { 
                 if(label) label.textContent = "Semua Program Akan Datang";
                 progs = window.state.programs.slice().sort((a,b) => new Date(a.eventDate) - new Date(b.eventDate));
             } else {
-                if(label) label.textContent = `Aktiviti pada: ${formatDateMY(date)}`;
+                if(label) label.textContent = `Aktiviti pada: ${window.formatDateMY(date)}`;
                 progs = window.state.programs.filter(p => p.eventDate === date);
+            }
+            
+            if (searchTerm) {
+                progs = progs.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) || 
+                    p.location.toLowerCase().includes(searchTerm) || 
+                    p.secretariat.toLowerCase().includes(searchTerm)
+                );
             }
             
             if(listContainer) {
                 if(progs.length === 0) {
-                    listContainer.innerHTML = '<div class="p-6 bg-slate-50 border border-slate-200 rounded-3xl text-center"><p class="text-xs text-slate-400 italic font-bold uppercase">Tiada program direkodkan</p></div>';
+                    listContainer.innerHTML = '<div class="p-5 bg-slate-50 border border-slate-200 rounded-[1.5rem] text-center mt-2"><p class="text-[11px] text-slate-400 italic font-bold uppercase">Tiada program dijumpai</p></div>';
                 } else {
                     listContainer.innerHTML = progs.map(p => {
                         const count = window.state.participants.filter(pt => pt.programId === p.id).length;
-                        return `
-                        <div onclick="enterProgram('${p.id}')" class="p-5 bg-white border border-slate-200 rounded-[2rem] cursor-pointer hover:border-blue-400 hover:shadow-md transition-all shadow-sm">
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="flex gap-3 items-center">
-                                    <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 shadow-inner"><i data-lucide="award" class="w-5 h-5"></i></div>
-                                    <h5 class="text-xs font-black uppercase leading-tight text-slate-900 group-hover:text-blue-700 transition-colors line-clamp-2 pr-2">${p.name}</h5>
+                        const isDraft = p.status === 'draft';
+                        
+                        if (isDraft) {
+                            // Paparan Kompak Deraf (KIV)
+                            return `
+                            <div onclick="enterProgram('${p.id}')" class="p-3 bg-slate-100 border border-slate-200 rounded-[1rem] cursor-pointer hover:border-slate-300 hover:shadow-sm transition-all shadow-none flex items-center justify-between opacity-80">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-slate-200 rounded-lg flex items-center justify-center text-slate-500 flex-shrink-0"><i data-lucide="archive" class="w-4 h-4"></i></div>
+                                    <div class="flex flex-col">
+                                        <h5 class="text-[11px] font-black uppercase leading-tight text-slate-600 line-clamp-1 pr-1">${p.name}</h5>
+                                        <div class="flex gap-2 items-center mt-1">
+                                            <span class="text-[8px] font-black uppercase text-slate-500 bg-slate-200 px-1.5 py-0.5 rounded">DERAF (KIV)</span>
+                                            <span class="text-[9px] font-bold text-slate-500">${window.formatDateMY(p.eventDate)}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onclick="openProgramModal('${p.id}'); event.stopPropagation();" class="p-2 bg-slate-50 border border-slate-200 rounded-lg hover:text-blue-700"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                                    <button onclick="deleteProgram('${p.id}', event)" class="p-2 bg-slate-50 border border-slate-200 rounded-lg hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                <div class="flex gap-1 opacity-0 hover:opacity-100 transition-opacity">
+                                    <button onclick="deleteProgram('${p.id}', event)" class="p-1.5 text-slate-400 hover:text-red-600 bg-white rounded-md shadow-sm border border-slate-200"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                                 </div>
-                            </div>
-                            <div class="space-y-2 mb-4 pl-[3.25rem]">
-                                <p class="text-[9px] font-black uppercase text-blue-800 bg-blue-50 px-2.5 py-1 rounded-md w-fit">${p.secretariat}</p>
-                                <p class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i> ${p.location}</p>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 text-[10px] font-black uppercase border-t border-slate-100 pt-4 mt-4 pl-[3.25rem]">
-                                <div class="text-emerald-700 bg-emerald-50/50 p-2 rounded-xl border border-emerald-100"><span class="text-emerald-400 block text-[8px] mb-1">ACARA</span>${formatDateMY(p.eventDate)}</div>
-                                <div class="text-red-700 bg-red-50 p-2 rounded-xl border border-red-100"><span class="text-red-400 block text-[8px] mb-1">TUTUP DAFTAR</span>${formatDateMY(p.closingDate)}</div>
-                            </div>
-                            <div class="flex justify-between items-center mt-4 pt-4 border-t border-slate-100 pl-[3.25rem] text-[10px] font-black uppercase text-blue-700">
-                                <span>Kekuatan Semasa</span><span>${count} / ${p.targetCount} Daftar</span>
-                            </div>
-                        </div>`;
+                            </div>`;
+                        } else {
+                            // Paparan Program Aktif Biasa
+                            return `
+                            <div onclick="enterProgram('${p.id}')" class="p-4 bg-white border border-indigo-100 rounded-2xl cursor-pointer hover:border-indigo-400 hover:shadow-md transition-all shadow-sm">
+                                <div class="flex justify-between items-start mb-2.5">
+                                    <div class="flex gap-2.5 items-center">
+                                        <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-700 shadow-inner flex-shrink-0"><i data-lucide="award" class="w-4 h-4"></i></div>
+                                        <h5 class="text-xs font-black uppercase leading-tight text-indigo-950 group-hover:text-indigo-700 transition-colors line-clamp-2 pr-1">${p.name}</h5>
+                                    </div>
+                                    <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button onclick="openProgramModal('${p.id}'); event.stopPropagation();" class="p-1.5 bg-slate-50 border border-slate-200 rounded-md hover:text-indigo-700"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                                        <button onclick="deleteProgram('${p.id}', event)" class="p-1.5 bg-slate-50 border border-slate-200 rounded-md hover:text-rose-700"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5 mb-3 pl-11">
+                                    <p class="text-[9px] font-black uppercase text-indigo-800 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded flex items-center w-fit">${p.secretariat}</p>
+                                    <p class="text-[10px] font-bold text-slate-600 uppercase flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i> ${p.location}</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-[9px] font-black uppercase border-t border-indigo-50 pt-2.5 mt-2.5 pl-11">
+                                    <div class="text-emerald-700 bg-emerald-50/50 p-2 rounded-lg border border-emerald-100"><span class="text-emerald-500 block text-[8px] mb-0.5">ACARA</span>${window.formatDateMY(p.eventDate)}</div>
+                                    <div class="text-rose-700 bg-rose-50/50 p-2 rounded-lg border border-rose-100"><span class="text-rose-500 block text-[8px] mb-0.5">TUTUP DAFTAR</span>${window.formatDateMY(p.closingDate)}</div>
+                                </div>
+                                <div class="flex justify-between items-center mt-2.5 pt-2.5 border-t border-indigo-50 pl-11 text-[10px] font-black uppercase text-indigo-700">
+                                    <span>Kekuatan Semasa</span><span>${count} / ${p.targetCount} Daftar</span>
+                                </div>
+                            </div>`;
+                        }
                     }).join('');
                     lucide.createIcons();
                 }
@@ -683,33 +796,28 @@
             document.getElementById('section-main-menu')?.classList.remove('hidden'); 
             document.getElementById('section-program-content')?.classList.add('hidden'); 
             document.getElementById('program-nav')?.classList.add('hidden'); 
+            
             document.getElementById('header-right-main')?.classList.remove('hidden');
+            document.getElementById('header-right-program')?.classList.add('hidden');
             
-            const l = document.getElementById('current-program-label'); 
-            if(l) { l.textContent = window.state.globalSettings?.subtitle || "Utama"; l.classList.remove('hidden'); }
+            updateGlobalTitleUI();
             
-            const mainTitle = document.getElementById('app-main-title');
-            if(mainTitle) mainTitle.textContent = window.state.globalSettings?.title || "Sistem Program MTIB";
-            
-            const meta = document.getElementById('header-program-meta');
-            if(meta) meta.classList.add('hidden');
-            
-            const settingsBtn = document.getElementById('header-settings-btn');
-            if(settingsBtn) settingsBtn.classList.remove('hidden');
-
-            updateDaySummary(window.state.filterDate); 
+            window.updateDaySummary(window.state.filterDate); 
         };
 
         window.enterProgram = async (id) => { 
             const p = window.state.programs.find(pr => pr.id === id); 
             if (!p) return; window.state.currentProgram = p; 
+            
             document.getElementById('section-main-menu')?.classList.add('hidden'); 
             document.getElementById('section-program-content')?.classList.remove('hidden'); 
             document.getElementById('program-nav')?.classList.remove('hidden'); 
+            
             document.getElementById('header-right-main')?.classList.add('hidden');
+            document.getElementById('header-right-program')?.classList.remove('hidden');
             
             updateProgramUI(); 
-            switchTab('dashboard'); 
+            window.switchTab('dashboard'); 
             await checkSyncData(id); 
         };
 
@@ -717,20 +825,34 @@
             const p = window.state.currentProgram; if(!p) return;
             
             const mainTitle = document.getElementById('app-main-title');
-            if(mainTitle) mainTitle.textContent = p.name;
+            if(mainTitle) mainTitle.textContent = window.state.globalSettings?.title || "Sistem Program MTIB";
             
-            const l = document.getElementById('current-program-label');
-            if(l) l.classList.add('hidden');
+            const subLabel = document.getElementById('current-program-label');
+            if(subLabel) {
+                subLabel.textContent = p.name;
+                subLabel.classList.remove('hidden');
+                subLabel.className = "text-[10px] md:text-xs text-indigo-600 font-black uppercase tracking-widest truncate";
+            }
             
-            const meta = document.getElementById('header-program-meta');
-            if(meta) meta.classList.remove('hidden');
+            // Show draft banner if it's a draft
+            const draftBanner = document.getElementById('draft-warning-banner');
+            if (draftBanner) {
+                if (p.status === 'draft') {
+                    draftBanner.classList.remove('hidden');
+                } else {
+                    draftBanner.classList.add('hidden');
+                }
+            }
             
-            document.getElementById('header-meta-date').textContent = formatDateMY(p.eventDate);
-            document.getElementById('header-meta-closing').textContent = formatDateMY(p.closingDate);
-            document.getElementById('header-meta-location').textContent = p.location;
-
-            const settingsBtn = document.getElementById('header-settings-btn');
-            if(settingsBtn) settingsBtn.classList.add('hidden');
+            const dashTitle = document.getElementById('dashboard-program-title');
+            if(dashTitle) dashTitle.textContent = p.name;
+            
+            const dashDate = document.getElementById('dashboard-program-date');
+            if(dashDate) dashDate.textContent = window.formatDateMY(p.eventDate);
+            const dashTime = document.getElementById('dashboard-program-time');
+            if(dashTime) dashTime.textContent = p.time;
+            const dashLoc = document.getElementById('dashboard-program-location');
+            if(dashLoc) dashLoc.textContent = p.location;
 
             const s = document.getElementById('input-p-dept');
             if(s) { s.innerHTML = '<option value="">Pilih Bahagian</option>'; (p.involvedDepts || DEPARTMENTS).forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; s.appendChild(o); }); }
@@ -753,13 +875,17 @@
             const w = document.getElementById('widget-needed'), iconC = document.getElementById('stat-needed-icon');
             if (iconC && w) {
                 if (needed > 0) { 
-                    w.className = "bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-premium flex items-center gap-4 text-black"; 
-                    iconC.className = "w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center shadow-inner text-slate-400 text-black flex-shrink-0"; 
-                    iconC.innerHTML = '<i data-lucide="alert-triangle" class="w-5 h-5"></i>'; 
+                    w.className = "bg-rose-50 p-3 rounded-2xl border border-rose-200 shadow-sm flex items-center gap-3"; 
+                    iconC.className = "w-8 h-8 bg-rose-100 rounded-lg flex items-center justify-center text-rose-700 shadow-inner flex-shrink-0"; 
+                    iconC.innerHTML = '<i data-lucide="alert-triangle" class="w-4 h-4"></i>'; 
+                    w.querySelector('p').className = "text-[9px] font-bold text-rose-800 uppercase tracking-widest";
+                    w.querySelector('h3').className = "text-base font-black text-rose-950 truncate leading-tight";
                 } else { 
-                    w.className = "bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-premium flex items-center gap-4 text-black"; 
-                    iconC.className = "w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center shadow-inner text-slate-400 text-black flex-shrink-0"; 
-                    iconC.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i>'; 
+                    w.className = "bg-emerald-50 p-3 rounded-2xl border border-emerald-200 shadow-sm flex items-center gap-3"; 
+                    iconC.className = "w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-700 shadow-inner flex-shrink-0"; 
+                    iconC.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i>'; 
+                    w.querySelector('p').className = "text-[9px] font-bold text-emerald-800 uppercase tracking-widest";
+                    w.querySelector('h3').className = "text-base font-black text-emerald-950 truncate leading-tight";
                 }
             }
 
@@ -771,19 +897,24 @@
                 const list = progParts.filter(p => p.dept === dept && (p.name.toLowerCase().includes(search) || p.dept.toLowerCase().includes(search)));
                 const empty = list.length === 0;
                 
-                h += `<div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-                    <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center ${empty?'bg-red-50/20':'bg-slate-50/50'} text-black">
-                        <h4 class="font-black uppercase text-[11px] ${empty?'text-red-600':'text-slate-800'}">${dept}</h4>
-                        <span class="px-3 py-1 rounded-lg text-[10px] font-black border bg-white shadow-sm">${list.length} Orang</span>
+                h += `<div class="bg-white rounded-2xl border border-indigo-50 shadow-sm overflow-hidden">
+                    <div class="px-5 py-3 border-b border-indigo-50 flex justify-between items-center ${empty?'bg-rose-50/30':'bg-indigo-50/40'} text-slate-800">
+                        <div class="flex items-center gap-2">
+                            <h4 class="font-black uppercase text-[11px] ${empty?'text-rose-700':'text-indigo-900'}">${dept}</h4>
+                            <button onclick="openParticipantModal(null, '${dept}')" class="px-2.5 py-1 bg-white text-indigo-700 hover:bg-indigo-100 hover:shadow-sm rounded-lg text-[9px] font-black transition-all flex items-center gap-1 border border-indigo-100" title="Daftar Terus Wakil ${dept}">
+                                <i data-lucide="user-plus" class="w-3 h-3"></i> Daftar
+                            </button>
+                        </div>
+                        <span class="px-2.5 py-0.5 rounded-lg text-[9px] font-black border bg-white shadow-sm text-indigo-800">${list.length} Orang</span>
                     </div>
-                    ${!empty ? `<table class="w-full text-left"><tbody>${list.map((p, idx)=>`
-                        <tr class="border-b border-slate-50 hover:bg-blue-50/30 transition-all">
-                            <td class="w-12 text-center text-slate-400 font-bold text-xs">${idx+1}</td>
-                            <td class="font-bold py-3.5 text-slate-800 text-xs">${p.name}</td>
-                            <td class="text-slate-400 uppercase text-[9px] font-black hidden sm:table-cell tracking-wider">${p.position}</td>
-                            <td class="text-right pr-6">
-                                <button onclick="editParticipant('${p.id}')" class="p-2.5 text-slate-400 hover:text-blue-600 hover:bg-white rounded-xl shadow-sm border border-transparent hover:border-blue-100 transition-all"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                                <button onclick="deleteParticipant('${p.id}')" class="p-2.5 text-slate-400 hover:text-red-600 hover:bg-white rounded-xl shadow-sm border border-transparent hover:border-red-100 transition-all"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    ${!empty ? `<table class="w-full text-left table-fixed"><tbody>${list.map((p, idx)=>`
+                        <tr class="border-b border-indigo-50/50 hover:bg-indigo-50/50 transition-all text-xs">
+                            <td class="w-10 sm:w-12 text-center text-indigo-400 font-bold">${idx+1}</td>
+                            <td class="w-[50%] sm:w-[45%] font-bold py-2.5 text-indigo-950 truncate pr-2">${p.name}</td>
+                            <td class="w-[35%] text-slate-500 uppercase text-[9px] font-bold hidden sm:table-cell tracking-wider truncate pr-2">${p.position}</td>
+                            <td class="text-right pr-4 truncate">
+                                <button onclick="editParticipant('${p.id}')" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="deleteParticipant('${p.id}')" class="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </td>
                         </tr>`).join('')}</tbody></table>`:''}
                 </div>`;
@@ -796,9 +927,9 @@
             const container = document.getElementById('report-container'); if(!container) return;
             const progParts = participants.filter(p => p.programId === currentProgram.id);
             const involved = currentProgram.involvedDepts || DEPARTMENTS;
-            let h = `<div class="text-center mb-10 pb-8 border-b-4 border-slate-900 font-black uppercase"><h1 class="text-xl leading-tight mb-5">${currentProgram.name}</h1><div class="grid grid-cols-2 gap-8 text-left text-[10px] uppercase"><div class="space-y-2"><p>URUSE TIA: <span class="text-blue-800">${currentProgram.secretariat}</span></p><p>LOKASI: ${currentProgram.location}</p><p>MASA: ${currentProgram.time}</p></div><div class="text-right space-y-2"><p>TARIKH ACARA: ${formatDateMY(currentProgram.eventDate)}</p><p class="text-red-700 font-black">TUTUP DAFTAR: ${formatDateMY(currentProgram.closingDate)}</p></div></div></div><div class="space-y-8">`;
-            involved.forEach(dept => { const list = progParts.filter(p => p.dept === dept); if(!list.length) return; h += `<div class="break-inside-avoid"><h3 class="font-black text-xs bg-slate-100 border-l-[16px] border-slate-900 py-2.5 px-5 mb-3 uppercase tracking-widest">${dept}</h3><div class="space-y-2 pl-8">${list.map((p, idx)=>`<div class="flex justify-between border-b border-slate-100 py-1.5 text-sm font-bold"><span>${idx+1}. ${p.name}</span><span class="text-[10px] opacity-70 uppercase italic text-slate-500">${p.position}</span></div>`).join('')}</div></div>`; });
-            h += `</div><div class="mt-12 pt-6 border-t-4 border-slate-900 flex justify-start font-black uppercase text-sm"><div>JUMLAH KESELURUHAN: ${progParts.length} ORANG</div></div>`;
+            let h = `<div class="text-center mb-8 pb-6 border-b-4 border-slate-900 font-black uppercase w-full"><h1 class="text-lg leading-tight mb-4">${currentProgram.name}</h1><div class="flex justify-between w-full text-[10px] uppercase"><div class="text-left space-y-1.5"><p>URUSE TIA: <span class="text-blue-800">${currentProgram.secretariat}</span></p><p>LOKASI: ${currentProgram.location}</p><p>MASA: ${currentProgram.time}</p></div><div class="text-right space-y-1.5"><p>TARIKH ACARA: ${window.formatDateMY(currentProgram.eventDate)}</p><p class="text-red-700 font-black">TUTUP DAFTAR: ${window.formatDateMY(currentProgram.closingDate)}</p></div></div></div><div class="space-y-6 w-full">`;
+            involved.forEach(dept => { const list = progParts.filter(p => p.dept === dept); if(!list.length) return; h += `<div class="break-inside-avoid w-full"><h3 class="font-black text-[11px] bg-slate-100 border-l-[12px] border-slate-900 py-2 px-4 mb-2 uppercase tracking-widest">${dept}</h3><div class="space-y-1 pl-6">${list.map((p, idx)=>`<div class="flex w-full items-start border-b border-slate-100 py-1 text-xs font-bold"><span class="w-[65%] truncate pr-2">${idx+1}. ${p.name}</span><span class="w-[35%] text-[9px] opacity-70 uppercase italic text-slate-500 text-left truncate mt-0.5">${p.position}</span></div>`).join('')}</div></div>`; });
+            h += `</div><div class="mt-12 pt-6 border-t-4 border-slate-900 flex justify-between items-end font-black uppercase text-xs w-full"><div class="text-slate-600">SASARAN: ${currentProgram.targetCount} PESERTA</div><div>JUMLAH KESELURUHAN: ${progParts.length} ORANG</div></div>`;
             container.innerHTML = h; lucide.createIcons();
         };
 
@@ -817,6 +948,23 @@
             if(confirmActionCallback) await confirmActionCallback();
             closeConfirmModal();
         });
+
+        // --- GLOBAL DELETE CURRENT PROGRAM FUNCTION ---
+        window.deleteCurrentProgram = () => {
+            const p = window.state.currentProgram;
+            if(!p) return;
+            window.openConfirmModal(`Padam program "${p.name}" secara kekal? Segala data peserta akan hilang.`, async () => {
+                // Delete all related participants
+                const progParts = window.state.participants.filter(pt => pt.programId === p.id);
+                for(const pt of progParts) {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', pt.id));
+                }
+                // Delete the program document
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'programs', p.id));
+                window.goToMainMenu();
+                if(window.showToast) window.showToast("Program dipadam sepenuhnya!");
+            });
+        };
 
         // --- HANDLERS GLOBAL SETTINGS ---
         window.openGlobalSettingsModal = () => {
@@ -845,7 +993,7 @@
                 try {
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'global'), { title, subtitle }, { merge: true });
                     closeGlobalSettingsModal();
-                    window.showToast("Tetapan Global Disimpan!");
+                    if(window.showToast) window.showToast("Tetapan Global Disimpan!");
                 } catch(err) { console.error(err); }
             });
 
@@ -861,6 +1009,7 @@
                     closingDate: document.getElementById('input-prog-closing').value, 
                     location: document.getElementById('input-prog-location').value, 
                     time: document.getElementById('input-prog-time').value, 
+                    status: document.getElementById('input-prog-status').value || 'active', // SIMPAN STATUS
                     involvedDepts: ch, 
                     updatedAt: new Date().toISOString() 
                 }; 
@@ -868,7 +1017,7 @@
                     if (id) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'programs', id), d); 
                     else await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), { ...d, createdAt: new Date().toISOString() }); 
                     closeProgramModal(); 
-                    window.showToast("Berjaya Disimpan!"); 
+                    if(window.showToast) window.showToast("Berjaya Disimpan!"); 
                 } catch (err) { console.error(err); }
             });
 
@@ -886,7 +1035,7 @@
                     if (id) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'participants', id), data); 
                     else await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'participants'), { ...data, createdAt: new Date().toISOString() }); 
                     closeParticipantModal(); 
-                    window.showToast("Rekod Disimpan!"); 
+                    if(window.showToast) window.showToast("Rekod Disimpan!"); 
                 } catch (err) { console.error(err); } 
             });
 
@@ -901,11 +1050,12 @@
                     closingDate: document.getElementById('set-prog-closing').value, 
                     location: document.getElementById('set-prog-location').value, 
                     time: document.getElementById('set-prog-time').value, 
+                    status: document.getElementById('set-prog-status').value || 'active', // SIMPAN STATUS BARU
                     involvedDepts: ch 
                 }; 
                 try { 
                     await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'programs', window.state.currentProgram.id), d); 
-                    window.showToast("Dikemaskini!"); 
+                    if(window.showToast) window.showToast("Dikemaskini!"); 
                 } catch (err) {}
             });
         };
@@ -913,19 +1063,21 @@
         // --- HANDLERS PROGRAM & PESERTA ---
         window.openProgramModal = (id = null) => {
             const modal = document.getElementById('modal-program'), checklist = document.getElementById('modal-dept-checklist');
-            if(checklist) checklist.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-4 p-3 hover:bg-white rounded-2xl cursor-pointer border border-transparent hover:border-blue-200 transition-all shadow-sm"><input type="checkbox" name="involvedDepts" value="${d}" class="w-4 h-4 rounded text-blue-600 shadow-inner" checked><span class="text-[11px] font-black uppercase text-slate-700">${d}</span></label>`).join('');
+            if(checklist) checklist.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-4 p-3 hover:bg-indigo-50 rounded-xl cursor-pointer border border-transparent hover:border-indigo-200 transition-all shadow-sm text-indigo-900 bg-white"><input type="checkbox" name="involvedDepts" value="${d}" class="w-4 h-4 rounded text-indigo-600 shadow-inner" checked><span class="text-[11px] font-black uppercase text-indigo-900">${d}</span></label>`).join('');
             if (id) {
                 const p = window.state.programs.find(pr => pr.id === id);
                 if(p) {
                     document.getElementById('modal-title').textContent = "Pinda Program"; document.getElementById('edit-prog-id').value = id; document.getElementById('input-prog-name').value = p.name;
                     document.getElementById('input-prog-secretariat').value = p.secretariat; document.getElementById('input-prog-target').value = p.targetCount; document.getElementById('input-prog-closing').value = p.closingDate;
                     document.getElementById('input-prog-event-date').value = p.eventDate; document.getElementById('input-prog-location').value = p.location; document.getElementById('input-prog-time').value = p.time;
+                    document.getElementById('input-prog-status').value = p.status || 'active';
                     checklist?.querySelectorAll('input').forEach(c => { c.checked = (p.involvedDepts || []).includes(c.value); });
                 }
             } else { 
                 document.getElementById('modal-title').textContent = "Daftar Program Baharu"; 
                 document.getElementById('program-form')?.reset(); 
                 document.getElementById('edit-prog-id').value = ""; 
+                document.getElementById('input-prog-status').value = "active";
                 const t = new Date().toISOString().split('T')[0]; 
                 document.getElementById('input-prog-closing').value = t; 
                 document.getElementById('input-prog-event-date').value = t; 
@@ -967,25 +1119,39 @@
             }); 
         };
 
-        window.loadSettings = () => { const p = window.state.currentProgram; if(!p) return; document.getElementById('set-prog-name').value = p.name; document.getElementById('set-prog-secretariat').value = p.secretariat; document.getElementById('set-prog-target').value = p.targetCount; document.getElementById('set-prog-event-date').value = p.eventDate; document.getElementById('set-prog-closing').value = p.closingDate; document.getElementById('set-prog-location').value = p.location; document.getElementById('set-prog-time').value = p.time; const ch = document.getElementById('settings-dept-checklist'); if(ch) ch.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-4 p-4 bg-white border border-slate-200 hover:border-blue-400 rounded-[2rem] cursor-pointer shadow-sm text-black"><input type="checkbox" name="settingsDepts" value="${d}" ${(p.involvedDepts||[]).includes(d)?'checked':''} class="w-6 h-6 rounded-lg text-blue-600 shadow-inner text-black"><span class="text-sm font-black uppercase text-slate-800">${d}</span></label>`).join(''); };
+        window.loadSettings = () => { 
+            const p = window.state.currentProgram; if(!p) return; 
+            document.getElementById('set-prog-name').value = p.name; 
+            document.getElementById('set-prog-secretariat').value = p.secretariat; 
+            document.getElementById('set-prog-target').value = p.targetCount; 
+            document.getElementById('set-prog-event-date').value = p.eventDate; 
+            document.getElementById('set-prog-closing').value = p.closingDate; 
+            document.getElementById('set-prog-location').value = p.location; 
+            document.getElementById('set-prog-time').value = p.time; 
+            document.getElementById('set-prog-status').value = p.status || 'active';
+            
+            const ch = document.getElementById('settings-dept-checklist'); 
+            if(ch) ch.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-3 p-2.5 bg-white border border-indigo-50 hover:border-indigo-300 rounded-xl cursor-pointer shadow-sm text-slate-800"><input type="checkbox" name="settingsDepts" value="${d}" ${(p.involvedDepts||[]).includes(d)?'checked':''} class="w-4 h-4 rounded text-indigo-600 shadow-inner"><span class="text-[10px] font-black uppercase text-indigo-950">${d}</span></label>`).join(''); 
+        };
         
         window.showToast = (m) => { const t = document.getElementById('toast'), e = document.getElementById('toast-message'); if(t && e){ e.textContent=m; t.classList.remove('hidden'); setTimeout(()=>t.classList.add('hidden'), 3000); } };
         
         window.switchTab = (t) => { 
             document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active', 'fade-in')); 
             const e = document.getElementById(`tab-${t}`); if(e) { e.classList.add('active', 'fade-in'); }
+            
             document.querySelectorAll('.nav-btn').forEach(b => { 
                 if(b.dataset.tab === t) { 
-                    b.classList.add('bg-blue-100', 'text-blue-700', 'shadow-sm'); 
-                    b.classList.remove('text-slate-500', 'bg-transparent', 'hover:bg-slate-50'); 
+                    b.classList.add('bg-indigo-50', 'text-indigo-700', 'border-indigo-200'); 
+                    b.classList.remove('text-slate-600', 'border-transparent', 'hover:bg-indigo-50/50'); 
                 } else { 
-                    b.classList.remove('bg-blue-100', 'text-blue-700', 'shadow-sm'); 
-                    b.classList.add('text-slate-500', 'bg-transparent', 'hover:bg-slate-50'); 
+                    b.classList.remove('bg-indigo-50', 'text-indigo-700', 'border-indigo-200'); 
+                    b.classList.add('text-slate-600', 'border-transparent', 'hover:bg-indigo-50/50'); 
                 } 
             }); 
-            if(t==='dashboard') renderDashboard(); 
-            if(t==='report') renderReport(); 
-            if(t==='settings') loadSettings(); 
+            if(t==='dashboard') window.renderDashboard(); 
+            if(t==='report') window.renderReport(); 
+            if(t==='settings') window.loadSettings(); 
         };
 
         // --- CUSTOM ANALOG CLOCK PICKER LOGIC ---
@@ -1025,13 +1191,13 @@
             selectedAmPm = val;
             const amBtn = document.getElementById('clock-am');
             const pmBtn = document.getElementById('clock-pm');
-            amBtn.className = val === 'AM' ? "flex-1 py-2 rounded-lg text-xs font-black bg-white shadow-sm text-blue-700 transition-all" : "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:bg-slate-200 transition-all";
-            pmBtn.className = val === 'PM' ? "flex-1 py-2 rounded-lg text-xs font-black bg-white shadow-sm text-blue-700 transition-all" : "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:bg-slate-200 transition-all";
+            amBtn.className = val === 'AM' ? "flex-1 py-1.5 rounded-lg text-[10px] font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-[10px] font-black text-slate-500 hover:bg-slate-200 transition-all";
+            pmBtn.className = val === 'PM' ? "flex-1 py-1.5 rounded-lg text-[10px] font-black bg-white shadow-sm text-indigo-700 transition-all" : "flex-1 py-1.5 rounded-lg text-[10px] font-black text-slate-500 hover:bg-slate-200 transition-all";
         };
 
         window.setClockMode = (mode) => {
             clockMode = mode;
-            document.getElementById('clock-display-hh').className = mode === 'hours' ? "cursor-pointer text-blue-700 transition-colors" : "cursor-pointer text-slate-300 hover:text-blue-500 transition-colors";
+            document.getElementById('clock-display-hh').className = mode === 'hours' ? "cursor-pointer text-indigo-700 transition-colors" : "cursor-pointer text-slate-300 hover:text-blue-500 transition-colors";
             document.getElementById('clock-display-mm').className = mode === 'minutes' ? "cursor-pointer text-blue-700 transition-colors" : "cursor-pointer text-slate-300 hover:text-blue-500 transition-colors";
             window.renderClock();
         };
@@ -1053,7 +1219,7 @@
                 const el = document.createElement('div');
                 const isSelected = clockMode === 'hours' ? (selectedHour === num || (selectedHour===12 && num===12)) : selectedMinute === num;
                 
-                el.className = `absolute w-8 h-8 -ml-4 -mt-4 rounded-full flex items-center justify-center text-sm font-black cursor-pointer transition-all ${isSelected ? 'bg-blue-600 text-white shadow-lg scale-110' : 'text-slate-600 hover:bg-blue-100 hover:text-blue-700'}`;
+                el.className = `absolute w-8 h-8 -ml-4 -mt-4 rounded-full flex items-center justify-center text-sm font-black cursor-pointer transition-all ${isSelected ? 'bg-indigo-600 text-white shadow-lg scale-110' : 'text-slate-600 hover:bg-indigo-100 hover:text-indigo-700'}`;
                 el.style.left = `${x}px`;
                 el.style.top = `${y}px`;
                 el.textContent = clockMode === 'minutes' ? num.toString().padStart(2, '0') : num;
@@ -1081,7 +1247,7 @@
         const init = async () => { 
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const headerDate = document.getElementById('header-current-date');
-            if(headerDate) headerDate.textContent = new Date().toLocaleDateString('ms-MY', dateOptions);
+            if(headerDate) headerDate.textContent = new Date().toLocaleDateString('ms-MY', dateOptions).toUpperCase();
             
             // Initialization Flatpickr Kalendar Menarik pada input tarikh
             setTimeout(() => {
@@ -1095,7 +1261,7 @@
             }, 500);
 
             // Bind manual input for time picker on Settings Tab
-            document.getElementById('set-prog-time')?.addEventListener('click', (e) => { e.preventDefault(); openAnalogClock('set-prog-time'); });
+            document.getElementById('set-prog-time')?.addEventListener('click', (e) => { e.preventDefault(); window.openAnalogClock('set-prog-time'); });
 
             setupForms();
             await initAuth(); 
