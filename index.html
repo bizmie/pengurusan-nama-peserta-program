@@ -47,7 +47,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         }
         
-        /* Gelapkan zon tertentu (Acara, Tutup Daftar, Header Kalendar, Latar Nama Bahagian/Jabatan) */
+        /* Gelapkan zon tertentu (Acara, Tutup Daftar, Header Kalendar, Latar Nama Bahagian/Jabatan, Rumusan) */
         body.theme-vista .bg-emerald-50\/50,
         body.theme-vista .bg-rose-50\/50,
         body.theme-vista .bg-emerald-50\/80,
@@ -113,7 +113,7 @@
         
         body.theme-vista ::placeholder { color: #94a3b8 !important; opacity: 1; }
         
-        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) */
+        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) - DIKEMASKINI KESELURUHAN */
         body.theme-vista [class*="text-black"],
         body.theme-vista [class*="text-slate-9"], body.theme-vista [class*="text-slate-8"], body.theme-vista [class*="text-slate-7"] { color: #f8fafc !important; }
         body.theme-vista [class*="text-slate-6"], body.theme-vista [class*="text-slate-5"], body.theme-vista [class*="text-slate-4"] { color: #cbd5e1 !important; }
@@ -380,32 +380,46 @@
                     </div>
                 </div>
 
-                <!-- WIDGET STATISTIK (Pastel Theme) -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center text-sky-600 shadow-inner flex-shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-bold text-sky-700 uppercase tracking-widest">Hadir</p>
-                            <h3 id="stat-total" class="text-xl font-black text-sky-950 truncate leading-tight">0</h3>
+                <!-- WIDGET STATISTIK & RUMUSAN -->
+                <div class="flex flex-col xl:flex-row gap-4 mb-6">
+                    <!-- 4 Kotak Statistik Utama -->
+                    <div class="grid grid-cols-2 gap-3 xl:w-[45%] h-fit">
+                        <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200 shadow-sm flex items-center gap-3">
+                            <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center text-sky-600 shadow-inner flex-shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold text-sky-700 uppercase tracking-widest">Hadir</p>
+                                <h3 id="stat-total" class="text-xl font-black text-sky-950 truncate leading-tight">0</h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="bg-teal-50 p-4 rounded-2xl border border-teal-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 shadow-inner flex-shrink-0"><i data-lucide="target" class="w-5 h-5"></i></div>
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-bold text-teal-700 uppercase tracking-widest">Sasaran</p>
-                            <h3 id="stat-target" class="text-xl font-black text-teal-950 truncate leading-tight">0</h3>
+                        <div class="bg-teal-50 p-4 rounded-2xl border border-teal-200 shadow-sm flex items-center gap-3">
+                            <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 shadow-inner flex-shrink-0"><i data-lucide="target" class="w-5 h-5"></i></div>
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold text-teal-700 uppercase tracking-widest">Sasaran</p>
+                                <h3 id="stat-target" class="text-xl font-black text-teal-950 truncate leading-tight">0</h3>
+                            </div>
+                        </div>
+                        
+                        <div id="widget-needed" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                             <!-- Container injected via JS -->
+                        </div>
+                        
+                        <div class="bg-indigo-900 p-4 rounded-2xl border border-indigo-800 shadow-md flex items-center gap-3">
+                            <div class="w-10 h-10 bg-indigo-800 rounded-lg flex items-center justify-center text-indigo-100 shadow-inner flex-shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold text-indigo-300 uppercase tracking-widest">Baki Hari</p>
+                                <h3 id="stat-days" class="text-xl font-black text-white truncate leading-tight">0</h3>
+                            </div>
                         </div>
                     </div>
                     
-                    <div id="widget-needed" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                         <!-- Container injected via JS -->
-                    </div>
-                    
-                    <div class="bg-indigo-900 p-4 rounded-2xl border border-indigo-800 shadow-md flex items-center gap-3">
-                        <div class="w-10 h-10 bg-indigo-800 rounded-lg flex items-center justify-center text-indigo-100 shadow-inner flex-shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-bold text-indigo-300 uppercase tracking-widest">Baki Hari</p>
-                            <h3 id="stat-days" class="text-xl font-black text-white truncate leading-tight">0</h3>
+                    <!-- Widget Rumusan -->
+                    <div class="bg-white p-5 rounded-[1.5rem] border border-indigo-50 shadow-premium xl:w-[55%] flex flex-col text-slate-800">
+                        <div class="flex items-center gap-3 mb-4 border-b border-indigo-50 pb-3">
+                            <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-700 shadow-inner flex-shrink-0"><i data-lucide="pie-chart" class="w-5 h-5"></i></div>
+                            <h3 class="text-sm font-black uppercase tracking-tight text-indigo-950">Rumusan Peserta</h3>
+                        </div>
+                        <div id="widget-rumusan" class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                            <!-- JS Injected -->
                         </div>
                     </div>
                 </div>
@@ -1117,6 +1131,53 @@
             const diff = Math.ceil((new Date(currentProgram.eventDate) - new Date()) / 86400000);
             if(daysE) daysE.textContent = diff > 0 ? `${diff} Hari` : "HARI INI";
             
+            // Rumusan Calculation
+            const shirtSizes = {};
+            let transSendiri = 0;
+            let transJabatan = 0;
+            
+            progParts.forEach(p => {
+                if (p.shirtSize) shirtSizes[p.shirtSize] = (shirtSizes[p.shirtSize] || 0) + 1;
+                if (p.transport === 'Sendiri') transSendiri++;
+                if (p.transport === 'Kenderaan Jabatan') transJabatan++;
+            });
+
+            const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '5XL'];
+            const availableSizes = sizeOrder.filter(s => shirtSizes[s] > 0);
+
+            const rumusanContainer = document.getElementById('widget-rumusan');
+            if (rumusanContainer) {
+                let shirtHtml = `<div class="bg-indigo-50/40 p-4 rounded-[1rem] border border-indigo-100/50">
+                    <p class="text-[10px] font-black text-indigo-800 uppercase tracking-widest mb-3">Saiz Baju Diperlukan</p>
+                    ${availableSizes.length > 0 ? `
+                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
+                        ${availableSizes.map(s => `
+                            <div class="bg-white px-2 py-2 rounded-lg border border-slate-200 flex flex-col items-center justify-center shadow-sm">
+                                <span class="text-[10px] font-bold text-slate-500 mb-0.5">${s}</span>
+                                <span class="text-sm font-black text-indigo-950">${shirtSizes[s]}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ` : `<p class="text-xs font-bold text-slate-400 italic mt-2">Tiada rekod saiz baju</p>`}
+                </div>`;
+
+                let transHtml = `<div class="bg-indigo-50/40 p-4 rounded-[1rem] border border-indigo-100/50 flex flex-col justify-center">
+                    <p class="text-[10px] font-black text-indigo-800 uppercase tracking-widest mb-3">Pengangkutan</p>
+                    <div class="space-y-2.5">
+                        <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
+                            <span class="text-xs font-bold text-slate-600 uppercase">Sendiri</span>
+                            <span class="text-sm font-black text-indigo-950">${transSendiri} <span class="text-[10px] text-slate-400 font-bold ml-0.5">pax</span></span>
+                        </div>
+                        <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
+                            <span class="text-xs font-bold text-slate-600 uppercase">Jabatan</span>
+                            <span class="text-sm font-black text-indigo-950">${transJabatan} <span class="text-[10px] text-slate-400 font-bold ml-0.5">pax</span></span>
+                        </div>
+                    </div>
+                </div>`;
+
+                rumusanContainer.innerHTML = shirtHtml + transHtml;
+            }
+
             let h = '';
             (currentProgram.involvedDepts || DEPARTMENTS).forEach(dept => {
                 let list = progParts
