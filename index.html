@@ -47,7 +47,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         }
         
-        /* Gelapkan zon tertentu (Acara, Tutup Daftar, Header Kalendar, Latar Nama Bahagian/Jabatan, Rumusan) */
+        /* Gelapkan zon tertentu (Acara, Tutup Daftar, Header Kalendar, Latar Nama Bahagian/Jabatan) */
         body.theme-vista .bg-emerald-50\/50,
         body.theme-vista .bg-rose-50\/50,
         body.theme-vista .bg-emerald-50\/80,
@@ -113,7 +113,7 @@
         
         body.theme-vista ::placeholder { color: #94a3b8 !important; opacity: 1; }
         
-        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) - DIKEMASKINI KESELURUHAN */
+        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) */
         body.theme-vista [class*="text-black"],
         body.theme-vista [class*="text-slate-9"], body.theme-vista [class*="text-slate-8"], body.theme-vista [class*="text-slate-7"] { color: #f8fafc !important; }
         body.theme-vista [class*="text-slate-6"], body.theme-vista [class*="text-slate-5"], body.theme-vista [class*="text-slate-4"] { color: #cbd5e1 !important; }
@@ -380,47 +380,44 @@
                     </div>
                 </div>
 
-                <!-- WIDGET STATISTIK & RUMUSAN -->
-                <div class="flex flex-col xl:flex-row gap-4 mb-6">
-                    <!-- 4 Kotak Statistik Utama -->
-                    <div class="grid grid-cols-2 gap-3 xl:w-[45%] h-fit">
-                        <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200 shadow-sm flex items-center gap-3">
-                            <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center text-sky-600 shadow-inner flex-shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
-                            <div class="min-w-0">
-                                <p class="text-[10px] font-bold text-sky-700 uppercase tracking-widest">Hadir</p>
-                                <h3 id="stat-total" class="text-xl font-black text-sky-950 truncate leading-tight">0</h3>
-                            </div>
+                <!-- WIDGET STATISTIK (Pastel Theme) -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                    <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200 shadow-sm flex items-center gap-3">
+                        <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center text-sky-600 shadow-inner flex-shrink-0"><i data-lucide="users" class="w-5 h-5"></i></div>
+                        <div class="min-w-0">
+                            <p class="text-[10px] font-bold text-sky-700 uppercase tracking-widest">Hadir</p>
+                            <h3 id="stat-total" class="text-xl font-black text-sky-950 truncate leading-tight">0</h3>
                         </div>
-                        <div class="bg-teal-50 p-4 rounded-2xl border border-teal-200 shadow-sm flex items-center gap-3">
-                            <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 shadow-inner flex-shrink-0"><i data-lucide="target" class="w-5 h-5"></i></div>
-                            <div class="min-w-0">
-                                <p class="text-[10px] font-bold text-teal-700 uppercase tracking-widest">Sasaran</p>
-                                <h3 id="stat-target" class="text-xl font-black text-teal-950 truncate leading-tight">0</h3>
-                            </div>
-                        </div>
-                        
-                        <div id="widget-needed" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                             <!-- Container injected via JS -->
-                        </div>
-                        
-                        <div class="bg-indigo-900 p-4 rounded-2xl border border-indigo-800 shadow-md flex items-center gap-3">
-                            <div class="w-10 h-10 bg-indigo-800 rounded-lg flex items-center justify-center text-indigo-100 shadow-inner flex-shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
-                            <div class="min-w-0">
-                                <p class="text-[10px] font-bold text-indigo-300 uppercase tracking-widest">Baki Hari</p>
-                                <h3 id="stat-days" class="text-xl font-black text-white truncate leading-tight">0</h3>
-                            </div>
+                    </div>
+                    <div class="bg-teal-50 p-4 rounded-2xl border border-teal-200 shadow-sm flex items-center gap-3">
+                        <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 shadow-inner flex-shrink-0"><i data-lucide="target" class="w-5 h-5"></i></div>
+                        <div class="min-w-0">
+                            <p class="text-[10px] font-bold text-teal-700 uppercase tracking-widest">Sasaran</p>
+                            <h3 id="stat-target" class="text-xl font-black text-teal-950 truncate leading-tight">0</h3>
                         </div>
                     </div>
                     
-                    <!-- Widget Rumusan -->
-                    <div class="bg-white p-5 rounded-[1.5rem] border border-indigo-50 shadow-premium xl:w-[55%] flex flex-col text-slate-800">
-                        <div class="flex items-center gap-3 mb-4 border-b border-indigo-50 pb-3">
-                            <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-700 shadow-inner flex-shrink-0"><i data-lucide="pie-chart" class="w-5 h-5"></i></div>
-                            <h3 class="text-sm font-black uppercase tracking-tight text-indigo-950">Rumusan Peserta</h3>
+                    <div id="widget-needed" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                         <!-- Container injected via JS -->
+                    </div>
+                    
+                    <div class="bg-indigo-900 p-4 rounded-2xl border border-indigo-800 shadow-md flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-800 rounded-lg flex items-center justify-center text-indigo-100 shadow-inner flex-shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+                        <div class="min-w-0">
+                            <p class="text-[10px] font-bold text-indigo-300 uppercase tracking-widest">Baki Hari</p>
+                            <h3 id="stat-days" class="text-xl font-black text-white truncate leading-tight">0</h3>
                         </div>
-                        <div id="widget-rumusan" class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
-                            <!-- JS Injected -->
-                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget Rumusan -->
+                <div class="bg-white p-5 rounded-[1.5rem] border border-indigo-50 shadow-premium mb-6 flex flex-col text-slate-800">
+                    <div class="flex items-center gap-3 mb-4 border-b border-indigo-50 pb-3">
+                        <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-700 shadow-inner flex-shrink-0"><i data-lucide="pie-chart" class="w-5 h-5"></i></div>
+                        <h3 class="text-sm font-black uppercase tracking-tight text-indigo-950">Rumusan Peserta</h3>
+                    </div>
+                    <div id="widget-rumusan" class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                        <!-- JS Injected -->
                     </div>
                 </div>
 
@@ -429,9 +426,13 @@
                     <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-5 border-b border-indigo-50 pb-4">
                         <h3 class="text-lg font-black uppercase tracking-tight text-indigo-950">Senarai Peserta</h3>
                         <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+                            <select id="filter-incomplete" onchange="window.renderDashboard()" class="w-full sm:w-auto px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800 cursor-pointer uppercase">
+                                <option value="all">Semua Rekod</option>
+                                <option value="incomplete">Tidak Lengkap</option>
+                            </select>
                             <div class="relative w-full sm:w-64">
                                 <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                <input type="text" id="dashboard-search" oninput="renderDashboard()" placeholder="Cari nama / bahagian..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800">
+                                <input type="text" id="dashboard-search" oninput="window.renderDashboard()" placeholder="Cari nama / bahagian..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800">
                             </div>
                             <button id="btn-daftar-peserta-main" onclick="openParticipantModal()" class="hidden w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg flex items-center justify-center gap-1.5 text-xs font-black shadow-md transition-all active:scale-95 whitespace-nowrap border border-transparent">
                                 <i data-lucide="user-plus" class="w-4 h-4"></i> DAFTAR
@@ -1100,6 +1101,7 @@
         window.renderDashboard = () => {
             const container = document.getElementById('dashboard-list'); if(!container) return;
             const search = document.getElementById('dashboard-search')?.value.toLowerCase() || "";
+            const filterMode = document.getElementById('filter-incomplete')?.value || "all";
             const { participants, currentProgram, isAdmin } = window.state; if(!currentProgram) return;
             const progParts = participants.filter(p => p.programId === currentProgram.id);
             
@@ -1184,7 +1186,13 @@
                     .filter(p => p.dept === dept && (p.name.toLowerCase().includes(search) || p.dept.toLowerCase().includes(search)))
                     .sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
                     
+                if (filterMode === 'incomplete') {
+                    list = list.filter(p => !p.shirtSize || !p.transport);
+                }
+                    
                 const empty = list.length === 0;
+                
+                if (empty && filterMode === 'incomplete') return;
                 
                 h += `<div class="bg-white rounded-2xl border border-indigo-50 shadow-sm overflow-hidden">
                     <div class="px-5 py-4 border-b border-indigo-50 flex justify-between items-center ${empty?'bg-rose-50/30':'bg-indigo-50/40'} text-slate-800">
@@ -1203,7 +1211,7 @@
                             <td class="w-10 sm:w-12 text-center text-indigo-400 font-bold">${idx+1}</td>
                             <td class="w-[45%] sm:w-[35%] font-bold py-3 text-indigo-950 truncate pr-2">${p.name}</td>
                             <td class="w-[20%] text-slate-500 uppercase text-[10px] font-bold hidden sm:table-cell tracking-wider truncate pr-2">${p.position}</td>
-                            <td class="w-[25%] text-slate-500 uppercase text-[10px] font-bold hidden md:table-cell tracking-wider truncate pr-2"><span class="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded mr-1" title="Saiz Baju">${p.shirtSize || '-'}</span> <span title="Pengangkutan">${p.transport || '-'}</span></td>
+                            <td class="w-[25%] text-slate-500 uppercase text-[10px] font-bold hidden md:table-cell tracking-wider truncate pr-2"><span class="${p.shirtSize ? 'bg-indigo-100 text-indigo-800' : 'bg-rose-100 text-rose-800'} px-1.5 py-0.5 rounded mr-1" title="Saiz Baju">${p.shirtSize || 'Tiada Baju'}</span> <span title="Pengangkutan" class="${p.transport ? '' : 'text-rose-600 font-black'}">${p.transport || 'Tiada Trans.'}</span></td>
                             <td class="text-right pr-4 truncate whitespace-nowrap">
                                 <div class="opacity-0 group-hover:opacity-100 transition-opacity flex justify-end">
                                 ${isAdmin ? `
