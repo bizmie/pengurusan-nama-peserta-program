@@ -25,173 +25,18 @@
         
         /* Soft pastel shadow (Lalai) */
         .shadow-premium { box-shadow: 0 10px 25px -5px rgba(199, 210, 254, 0.5), 0 8px 10px -6px rgba(199, 210, 254, 0.3); }
-        
-        /* TEMA WINDOWS VISTA (DARK AERO GLASS) */
-        body.theme-vista {
-            background: radial-gradient(circle at top left, #1e293b 0%, #0f172a 40%, #020617 80%, #09090b 100%) fixed;
-            color: #f8fafc;
-        }
-        body.theme-vista .bg-white,
-        body.theme-vista .bg-slate-50,
-        body.theme-vista .bg-indigo-50,
-        body.theme-vista .bg-sky-50,
-        body.theme-vista .bg-teal-50,
-        body.theme-vista .bg-emerald-50,
-        body.theme-vista .bg-rose-50,
-        body.theme-vista .bg-amber-50,
-        body.theme-vista .bg-slate-100 {
-            background-color: rgba(30, 41, 59, 0.45) !important;
-            backdrop-filter: blur(16px) saturate(140%);
-            -webkit-backdrop-filter: blur(16px) saturate(140%);
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-        }
-        
-        /* Gelapkan zon tertentu (Acara, Tutup Daftar, Header Kalendar, Latar Nama Bahagian/Jabatan) */
-        body.theme-vista .bg-emerald-50\/50,
-        body.theme-vista .bg-rose-50\/50,
-        body.theme-vista .bg-emerald-50\/80,
-        body.theme-vista .bg-rose-50\/80,
-        body.theme-vista .bg-indigo-50\/50,
-        body.theme-vista .bg-indigo-50\/40,
-        body.theme-vista .bg-rose-50\/30 {
-            background-color: rgba(2, 6, 23, 0.65) !important;
-            border-color: rgba(255, 255, 255, 0.1) !important;
-        }
-
-        /* Kesan Hover untuk Senarai Peserta / Row (Dark Mode) supaya tulisan cerah kekal nampak */
-        body.theme-vista .hover\:bg-indigo-50\/50:hover {
-            background-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        /* Kesan Hover Butang Edit/Padam/Kecil (Dark Mode Contrast) */
-        body.theme-vista .hover\:bg-white:hover,
-        body.theme-vista .hover\:bg-indigo-100:hover,
-        body.theme-vista .hover\:bg-rose-100:hover {
-            background-color: rgba(255, 255, 255, 0.15) !important;
-            color: #ffffff !important;
-            border-color: rgba(255, 255, 255, 0.3) !important;
-        }
-        
-        body.theme-vista .hover\:text-indigo-600:hover { color: #a5b4fc !important; }
-        body.theme-vista .hover\:text-rose-600:hover { color: #fda4af !important; }
-        body.theme-vista .hover\:text-emerald-500:hover { color: #6ee7b7 !important; }
-        body.theme-vista .hover\:text-amber-500:hover { color: #fcd34d !important; }
-        body.theme-vista .hover\:border-indigo-400:hover { border-color: rgba(165, 180, 252, 0.6) !important; }
-
-        /* Butang Putih/Terang asal (Cth: Butang Daftar Sebelah Nama Jabatan) */
-        body.theme-vista .bg-white.text-indigo-700 {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            color: #c7d2fe !important;
-            border-color: rgba(255, 255, 255, 0.15) !important;
-        }
-        body.theme-vista .bg-white.text-indigo-700:hover {
-            background-color: rgba(255, 255, 255, 0.2) !important;
-            color: #ffffff !important;
-        }
-
-        body.theme-vista .bg-indigo-900,
-        body.theme-vista .bg-slate-800,
-        body.theme-vista .bg-slate-900 {
-            background-color: rgba(2, 6, 23, 0.55) !important;
-            backdrop-filter: blur(16px) saturate(140%);
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6) !important;
-            color: #ffffff !important;
-        }
-        body.theme-vista nav {
-            background-color: rgba(15, 23, 42, 0.6) !important;
-            backdrop-filter: blur(20px) saturate(150%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        }
-        body.theme-vista input,
-        body.theme-vista select {
-            background-color: rgba(15, 23, 42, 0.6) !important;
-            color: #f8fafc !important;
-            border-color: rgba(255, 255, 255, 0.2) !important;
-        }
-        
-        body.theme-vista ::placeholder { color: #94a3b8 !important; opacity: 1; }
-        
-        /* Pintasan Warna Teks Untuk Tema Gelap (Dark Mode Contrast) */
-        body.theme-vista [class*="text-black"],
-        body.theme-vista [class*="text-slate-9"], body.theme-vista [class*="text-slate-8"], body.theme-vista [class*="text-slate-7"] { color: #f8fafc !important; }
-        body.theme-vista [class*="text-slate-6"], body.theme-vista [class*="text-slate-5"], body.theme-vista [class*="text-slate-4"] { color: #cbd5e1 !important; }
-        
-        body.theme-vista [class*="text-indigo-9"], body.theme-vista [class*="text-indigo-8"] { color: #e0e7ff !important; }
-        body.theme-vista [class*="text-indigo-7"], body.theme-vista [class*="text-indigo-6"] { color: #a5b4fc !important; }
-        
-        body.theme-vista [class*="text-sky-9"], body.theme-vista [class*="text-sky-8"] { color: #e0f2fe !important; }
-        body.theme-vista [class*="text-sky-7"], body.theme-vista [class*="text-sky-6"] { color: #7dd3fc !important; }
-
-        body.theme-vista [class*="text-teal-9"], body.theme-vista [class*="text-teal-8"] { color: #ccfbf1 !important; }
-        body.theme-vista [class*="text-teal-7"], body.theme-vista [class*="text-teal-6"] { color: #5eead4 !important; }
-
-        body.theme-vista [class*="text-emerald-9"], body.theme-vista [class*="text-emerald-8"] { color: #d1fae5 !important; }
-        body.theme-vista [class*="text-emerald-7"], body.theme-vista [class*="text-emerald-6"] { color: #6ee7b7 !important; }
-
-        body.theme-vista [class*="text-rose-9"], body.theme-vista [class*="text-rose-8"], body.theme-vista [class*="text-red-"] { color: #ffe4e6 !important; }
-        body.theme-vista [class*="text-rose-7"], body.theme-vista [class*="text-rose-6"] { color: #fda4af !important; }
-
-        body.theme-vista [class*="text-amber-9"], body.theme-vista [class*="text-amber-8"] { color: #fef3c7 !important; }
-        body.theme-vista [class*="text-amber-7"], body.theme-vista [class*="text-amber-6"] { color: #fcd34d !important; }
-
-        body.theme-vista .text-white { color: #ffffff !important; }
-
-        /* Flatpickr Dark Mode Overlay */
-        body.theme-vista .flatpickr-calendar {
-            background: rgba(15, 23, 42, 0.95) !important;
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6) !important;
-        }
-        body.theme-vista .flatpickr-calendar * { color: #e2e8f0 !important; }
-        body.theme-vista .flatpickr-day:hover { background: rgba(255, 255, 255, 0.1) !important; color: #ffffff !important; }
-        body.theme-vista .flatpickr-day.selected { background: #4f46e5 !important; color: white !important; font-weight: bold; border-color: #4f46e5 !important; }
-        body.theme-vista .flatpickr-months .flatpickr-month, body.theme-vista .flatpickr-current-month .flatpickr-monthDropdown-months { background: transparent !important; color: #f8fafc !important; }
-
-        /* Garisan pemisah dan kotak kelabu untuk Dark Mode */
-        body.theme-vista [class*="border-slate-"], 
-        body.theme-vista [class*="border-indigo-"],
-        body.theme-vista [class*="border-rose-"],
-        body.theme-vista [class*="border-emerald-"],
-        body.theme-vista [class*="border-sky-"],
-        body.theme-vista [class*="border-teal-"],
-        body.theme-vista [class*="border-amber-"] {
-            border-color: rgba(255, 255, 255, 0.15) !important;
-        }
-
-        @media print {
-            @page { size: A4; margin: 1cm; }
-            .no-print { display: none !important; }
-            body { background: white !important; color: black !important; }
-            .print-area { border: none !important; box-shadow: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-        }
-        
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
-        .calendar-day { min-height: 70px; transition: all 0.2s; border-right: 1px solid #e0e7ff; border-bottom: 1px solid #e0e7ff; cursor: pointer; position: relative; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid #cbd5e1; }
+        .calendar-day { min-height: 45px; transition: all 0.2s; border-right: 1px solid #cbd5e1; border-bottom: 2px solid #cbd5e1; cursor: pointer; position: relative; }
+        .calendar-day:nth-child(7n) { border-right: none; }
         .calendar-day:hover { background-color: #eef2ff; }
-        .is-weekend { background-color: #f8fafc; color: #94a3b8; }
+        .is-weekend { background-color: #fff1f2; color: #e11d48; }
+        .other-month { background-color: #f8fafc; color: #cbd5e1; border: 1px dashed #cbd5e1; opacity: 0.7; }
         .has-event { border-left: 4px solid #4f46e5 !important; background-color: #eef2ff; }
         .selected-day { box-shadow: inset 0 0 0 3px #4f46e5; background-color: #e0e7ff !important; }
-
-        /* Theme override for calendar on dark mode */
-        body.theme-vista .calendar-day { border-right: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); }
-        body.theme-vista .calendar-day:hover { background-color: rgba(255,255,255,0.1) !important; }
-        body.theme-vista .is-weekend { background-color: rgba(255,255,255,0.02) !important; color: #94a3b8 !important; }
-        body.theme-vista .has-event { background-color: rgba(79, 70, 229, 0.2) !important; border-left: 4px solid #818cf8 !important; }
 
         .fade-in { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -205,16 +50,18 @@
     <!-- Notifikasi Toast -->
     <div id="toast" class="fixed top-8 left-1/2 -translate-x-1/2 z-[300] hidden">
         <div class="bg-indigo-950 text-white px-5 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 border border-indigo-800 animate-in fade-in zoom-in duration-300">
-            <i id="toast-icon" data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+            <span id="toast-icon-container">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+            </span>
             <span id="toast-message" class="text-sm font-bold uppercase tracking-wide">Mesej Berjaya</span>
         </div>
     </div>
 
     <!-- Header / Navigasi -->
     <nav class="bg-white/95 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-40 shadow-sm no-print transition-colors duration-500">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center min-h-[4.5rem] py-2 md:py-0 text-black">
+        <div class="w-full px-4 lg:px-8 flex flex-col md:flex-row justify-between items-center min-h-[4.5rem] py-2 md:py-0 text-black">
             
-            <!-- Left Section: Logo & Titles -->
+            <!-- Kiri: Logo & Tajuk Utama -->
             <div class="flex items-center gap-3 w-full md:w-auto overflow-hidden">
                 <div class="w-10 h-10 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center justify-center shadow-sm cursor-pointer flex-shrink-0" onclick="handleLogoClick()">
                     <i data-lucide="book-open" class="w-5 h-5 text-indigo-700"></i>
@@ -238,12 +85,15 @@
                 </div>
             </div>
             
-            <!-- Right Section: Network, Date, Settings & Login -->
+            <!-- Kanan: Tarikh Semasa, Versi & Kawalan Admin -->
             <div class="flex items-center gap-3 mt-3 md:mt-0 w-full md:w-auto justify-end">
                 
-                <div class="flex items-center gap-1.5 text-indigo-900 font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap pr-2 hidden sm:flex">
-                    <i data-lucide="wifi" class="w-4 h-4 text-emerald-500"></i>
-                    <span id="header-current-date"></span>
+                <div class="flex-col items-end hidden sm:flex pr-2">
+                    <div class="flex items-center gap-1.5 text-indigo-900 font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap">
+                        <i data-lucide="wifi" class="w-4 h-4 text-emerald-500"></i>
+                        <span id="header-current-date"></span>
+                    </div>
+                    <span class="text-[10px] text-slate-400 font-semibold mt-0.5 opacity-60 tracking-wider">Sistem Versi 2.0</span>
                 </div>
                 
                 <div class="w-px h-5 bg-indigo-100 hidden md:block"></div>
@@ -256,7 +106,7 @@
                     <i data-lucide="unlock" class="w-5 h-5"></i>
                 </button>
 
-                <!-- Action Buttons: Main Menu -->
+                <!-- Action Buttons: Main Menu Settings -->
                 <div id="header-right-main" class="flex items-center gap-2 hidden">
                     <button id="header-settings-btn" onclick="openGlobalSettingsModal()" class="flex items-center justify-center p-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl shadow-sm transition-all active:scale-95 border border-indigo-200" title="Tetapan Sistem Global">
                         <i data-lucide="settings" class="w-5 h-5"></i>
@@ -273,61 +123,57 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-4">
+    <main class="w-full px-4 lg:px-8 py-4">
         
-        <!-- SECTION 1: DASHBOARD UTAMA -->
-        <div id="section-main-menu" class="fade-in space-y-6">
+        <!-- SECTION 1: DASHBOARD UTAMA (Layout Kiri Kiri-Kanan) -->
+        <div id="section-main-menu" class="fade-in flex flex-col lg:flex-row gap-6 items-start">
             
-            <!-- Calendar & Summary Area (Diseimbangkan 50/50 dan tinggi tetap berserta skrol) -->
-            <div class="flex flex-col lg:flex-row gap-4 items-stretch lg:h-[500px]">
-                
-                <!-- Left Column: Activity Summary Widget -->
-                <div id="day-summary-panel" class="w-full lg:w-1/2 flex-shrink-0 bg-white rounded-[1.5rem] border border-indigo-50 shadow-premium p-6 flex flex-col transition-all h-full text-slate-800 overflow-hidden">
-                    <div id="summary-content" class="w-full text-left flex flex-col h-full overflow-hidden">
-                        <div class="border-b-2 border-indigo-100 pb-3 mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 flex-shrink-0">
-                            <div>
-                                <h4 class="text-indigo-900 font-black text-xl uppercase tracking-tight">Ringkasan Program</h4>
-                                <p id="summary-date-label" class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-0.5">Semua Program Akan Datang</p>
-                            </div>
-                            
-                            <!-- Search & Add Button -->
-                            <div class="flex items-center gap-2 w-full sm:w-auto">
-                                <div class="relative w-full sm:w-40">
-                                    <i data-lucide="search" class="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                    <input type="text" id="program-search-input" oninput="window.updateDaySummary(window.state.filterDate)" placeholder="Cari program..." class="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800 placeholder:text-slate-400">
-                                </div>
-                                <button id="btn-add-program-summary" onclick="openProgramModal()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg flex items-center justify-center gap-1.5 text-[10px] font-black shadow-sm transition-all active:scale-95 whitespace-nowrap flex-shrink-0 border border-transparent">
-                                    <i data-lucide="plus-circle" class="w-3 h-3"></i> TAMBAH
-                                </button>
-                            </div>
-                        </div>
-                        <div id="summary-events-list" class="space-y-4 overflow-y-auto pr-2 flex-grow custom-scrollbar pb-2">
-                            <!-- JS Injected -->
-                        </div>
+            <!-- Left Column: Interactive Calendar (Kompak & Sticky) -->
+            <div class="w-full lg:w-[30%] xl:w-[25%] bg-white rounded-[1.5rem] border border-indigo-50 shadow-premium overflow-hidden flex flex-col text-slate-800 lg:sticky lg:top-24 flex-shrink-0">
+                <div class="px-4 py-3 bg-indigo-50/50 border-b border-indigo-100 flex justify-between items-center flex-shrink-0">
+                    <h3 id="calendar-month-year" class="font-black text-sm uppercase tracking-tight text-indigo-950">BULAN 2026</h3>
+                    <div class="flex gap-1">
+                        <button onclick="changeMonth(-1)" class="p-1 hover:bg-indigo-100 rounded-md transition border border-indigo-200 bg-white shadow-sm text-indigo-800"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                        <button onclick="changeMonth(1)" class="p-1 hover:bg-indigo-100 rounded-md transition border border-indigo-200 bg-white shadow-sm text-indigo-800"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
                     </div>
                 </div>
+                <div class="grid grid-cols-7 bg-indigo-50/30 flex-shrink-0 border-b-2 border-indigo-100">
+                    <div class="p-1.5 text-center text-[9px] font-black text-slate-600 uppercase">Isn</div>
+                    <div class="p-1.5 text-center text-[9px] font-black text-slate-600 uppercase">Sel</div>
+                    <div class="p-1.5 text-center text-[9px] font-black text-slate-600 uppercase">Rab</div>
+                    <div class="p-1.5 text-center text-[9px] font-black text-slate-600 uppercase">Kha</div>
+                    <div class="p-1.5 text-center text-[9px] font-black text-slate-600 uppercase">Jum</div>
+                    <div class="p-1.5 text-center text-[9px] font-black text-rose-600 uppercase bg-rose-50/50">Sab</div>
+                    <div class="p-1.5 text-center text-[9px] font-black text-rose-600 uppercase bg-rose-50/50">Aha</div>
+                </div>
+                <div id="calendar-days" class="calendar-grid text-slate-800 bg-white"></div>
+                <div class="p-1.5 border-t border-indigo-100 bg-indigo-50/50 flex justify-center flex-shrink-0">
+                    <button id="reset-filter-btn" onclick="filterByDate(null)" class="hidden px-4 py-1 text-[9px] font-black text-indigo-700 uppercase border border-indigo-200 rounded-full hover:bg-indigo-600 hover:text-white transition-all shadow-sm">Tunjuk Semua</button>
+                </div>
+            </div>
 
-                <!-- Right Column: Interactive Calendar -->
-                <div class="w-full lg:w-1/2 bg-white rounded-[1.5rem] border border-indigo-50 shadow-premium overflow-hidden flex flex-col h-[450px] lg:h-full text-slate-800">
-                    <div class="px-5 py-4 bg-indigo-50/50 border-b border-indigo-100 flex justify-between items-center flex-shrink-0">
-                        <h3 id="calendar-month-year" class="font-black text-base uppercase tracking-tight text-indigo-950">BULAN 2026</h3>
-                        <div class="flex gap-1.5">
-                            <button onclick="changeMonth(-1)" class="p-1.5 hover:bg-indigo-100 rounded-md transition border border-indigo-200 bg-white shadow-sm text-indigo-800"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
-                            <button onclick="changeMonth(1)" class="p-1.5 hover:bg-indigo-100 rounded-md transition border border-indigo-200 bg-white shadow-sm text-indigo-800"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+            <!-- Right Column: Senarai Program (Full Width & Auto Resize) -->
+            <div id="day-summary-panel" class="w-full lg:w-[70%] xl:w-[75%] flex flex-col transition-all text-slate-800">
+                <div id="summary-content" class="w-full text-left flex flex-col">
+                    <div class="border-b-2 border-indigo-200 pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 flex-shrink-0">
+                        <div>
+                            <h4 class="text-indigo-900 font-black text-2xl uppercase tracking-tight">Senarai Program</h4>
+                            <p id="summary-date-label" class="text-sm text-slate-500 font-bold uppercase tracking-widest mt-1">Semua Program Akan Datang</p>
+                        </div>
+                        
+                        <!-- Cari & Daftar Butang -->
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <div class="relative w-full sm:w-64">
+                                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="text" id="program-search-input" oninput="window.updateDaySummary(window.state.filterDate)" placeholder="Cari program..." class="w-full pl-9 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold shadow-sm outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800 placeholder:text-slate-400">
+                            </div>
+                            <button id="btn-add-program-summary" onclick="openProgramModal()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-black shadow-md transition-all active:scale-95 whitespace-nowrap flex-shrink-0 border border-transparent">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i> DAFTAR PROGRAM
+                            </button>
                         </div>
                     </div>
-                    <div class="calendar-grid bg-white flex-shrink-0 border-b border-indigo-100">
-                        <div class="p-2 text-center text-[10px] font-black text-indigo-400 uppercase border-r border-indigo-50">Isn</div>
-                        <div class="p-2 text-center text-[10px] font-black text-indigo-400 uppercase border-r border-indigo-50">Sel</div>
-                        <div class="p-2 text-center text-[10px] font-black text-indigo-400 uppercase border-r border-indigo-50">Rab</div>
-                        <div class="p-2 text-center text-[10px] font-black text-indigo-400 uppercase border-r border-indigo-50">Kha</div>
-                        <div class="p-2 text-center text-[10px] font-black text-indigo-400 uppercase border-r border-indigo-50">Jum</div>
-                        <div class="p-2 text-center text-[10px] font-black text-indigo-500 border-r border-indigo-50 bg-indigo-50/30 uppercase">Sab</div>
-                        <div class="p-2 text-center text-[10px] font-black text-indigo-500 bg-indigo-50/30 uppercase">Aha</div>
-                    </div>
-                    <div id="calendar-days" class="calendar-grid text-slate-800 flex-grow overflow-y-auto custom-scrollbar bg-white"></div>
-                    <div class="p-2 border-t border-indigo-100 bg-indigo-50/50 flex justify-center flex-shrink-0">
-                        <button id="reset-filter-btn" onclick="filterByDate(null)" class="hidden px-5 py-1.5 text-[10px] font-black text-indigo-700 uppercase border border-indigo-200 rounded-full hover:bg-indigo-600 hover:text-white transition-all shadow-sm">Tunjuk Semua</button>
+                    <div id="summary-events-list" class="w-full pb-8">
+                        <!-- JS Injected Table Senarai Program -->
                     </div>
                 </div>
             </div>
@@ -364,17 +210,17 @@
             <div id="tab-dashboard" class="tab-content active fade-in text-slate-800">
                 
                 <!-- Baris Ikon Maklumat Program -->
-                <div class="mb-6 bg-white p-5 rounded-[1.5rem] border border-indigo-50 shadow-premium">
+                <div class="mb-4 bg-white p-4 rounded-[1.5rem] border border-indigo-50 shadow-premium">
                     <div class="flex items-start gap-4 w-full">
                         <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 shadow-inner flex-shrink-0 mt-0.5 border border-indigo-100">
                             <i data-lucide="award" class="w-6 h-6"></i>
                         </div>
-                        <div class="flex flex-col gap-1.5 w-full">
-                            <h2 id="dashboard-program-title" class="text-xl md:text-2xl font-black tracking-tight uppercase text-indigo-950 line-clamp-2"></h2>
-                            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-bold text-slate-600 uppercase tracking-widest mt-1">
-                                <span class="flex items-center gap-1 bg-sky-50 text-sky-800 px-3 py-1 rounded-md border border-sky-100"><i data-lucide="calendar" class="w-3.5 h-3.5 text-sky-600"></i> <span id="dashboard-program-date"></span></span>
-                                <span class="flex items-center gap-1 bg-amber-50 text-amber-800 px-3 py-1 rounded-md border border-amber-100"><i data-lucide="clock" class="w-3.5 h-3.5 text-amber-600"></i> <span id="dashboard-program-time"></span></span>
-                                <span class="flex items-center gap-1 bg-emerald-50 text-emerald-800 px-3 py-1 rounded-md border border-emerald-100"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i> <span id="dashboard-program-location"></span></span>
+                        <div class="flex flex-col gap-1 w-full">
+                            <h2 id="dashboard-program-title" class="text-lg md:text-xl font-black tracking-tight uppercase text-indigo-950 line-clamp-2"></h2>
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10px] font-bold text-slate-600 uppercase tracking-widest mt-1">
+                                <span class="flex items-center gap-1 bg-sky-50 text-sky-800 px-2 py-0.5 rounded-md border border-sky-100"><i data-lucide="calendar" class="w-3 h-3 text-sky-600"></i> <span id="dashboard-program-date"></span></span>
+                                <span class="flex items-center gap-1 bg-amber-50 text-amber-800 px-2 py-0.5 rounded-md border border-amber-100"><i data-lucide="clock" class="w-3 h-3 text-amber-600"></i> <span id="dashboard-program-time"></span></span>
+                                <span class="flex items-center gap-1 bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-md border border-emerald-100"><i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i> <span id="dashboard-program-location"></span></span>
                             </div>
                         </div>
                     </div>
@@ -411,20 +257,20 @@
                 </div>
 
                 <!-- Widget Rumusan -->
-                <div class="bg-white p-5 rounded-[1.5rem] border border-indigo-50 shadow-premium mb-6 flex flex-col text-slate-800">
-                    <div class="flex items-center gap-3 mb-4 border-b border-indigo-50 pb-3">
-                        <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-700 shadow-inner flex-shrink-0"><i data-lucide="pie-chart" class="w-5 h-5"></i></div>
-                        <h3 class="text-sm font-black uppercase tracking-tight text-indigo-950">Rumusan Peserta</h3>
+                <div id="widget-rumusan-container" class="bg-white p-4 rounded-[1.5rem] border border-indigo-50 shadow-premium mb-4 flex-col text-slate-800 hidden">
+                    <div class="flex items-center gap-3 mb-3 border-b border-indigo-50 pb-2.5">
+                        <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-700 shadow-inner flex-shrink-0"><i data-lucide="pie-chart" class="w-4 h-4"></i></div>
+                        <h3 class="text-xs font-black uppercase tracking-tight text-indigo-950">Rumusan Peserta</h3>
                     </div>
-                    <div id="widget-rumusan" class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                    <div id="widget-rumusan" class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-grow">
                         <!-- JS Injected -->
                     </div>
                 </div>
 
                 <!-- Senarai Berdaftar & Carian -->
-                <div class="bg-white p-5 md:p-6 rounded-[1.5rem] border border-indigo-50 shadow-premium mt-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-5 border-b border-indigo-50 pb-4">
-                        <h3 class="text-lg font-black uppercase tracking-tight text-indigo-950">Senarai Peserta</h3>
+                <div class="bg-white p-4 md:p-5 rounded-[1.5rem] border border-indigo-50 shadow-premium mt-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4 border-b border-indigo-50 pb-3">
+                        <h3 class="text-base font-black uppercase tracking-tight text-indigo-950">Senarai Peserta</h3>
                         <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
                             <select id="filter-incomplete" onchange="window.renderDashboard()" class="w-full sm:w-auto px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold shadow-inner outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-slate-800 cursor-pointer uppercase">
                                 <option value="all">Semua Rekod</option>
@@ -458,7 +304,7 @@
                             <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Unit Urusetia / Penganjur</label>
                             <input type="text" id="set-prog-secretariat" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300" required>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1">
                                 <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Lokasi Program</label>
                                 <input type="text" id="set-prog-location" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300" required>
@@ -468,7 +314,7 @@
                                 <input type="text" id="set-prog-time" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1">
                                 <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Sasaran Bilangan</label>
                                 <input type="number" id="set-prog-target" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-300" required>
@@ -481,7 +327,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1">
                                 <label class="text-xs font-black text-indigo-600 uppercase tracking-widest ml-1">Tarikh Acara</label>
                                 <input type="date" id="set-prog-event-date" class="w-full px-4 py-2.5 bg-indigo-50/50 border border-indigo-200 rounded-xl text-base font-bold text-indigo-900 outline-none focus:ring-2 focus:ring-indigo-300 date-picker-input" required>
@@ -491,7 +337,27 @@
                                 <input type="date" id="set-prog-closing" class="w-full px-4 py-2.5 bg-rose-50 border border-rose-200 rounded-xl text-base font-bold text-rose-900 shadow-inner outline-none focus:ring-2 focus:ring-rose-300 date-picker-input" required>
                             </div>
                         </div>
-                        <div class="space-y-2 pt-2">
+                        
+                        <!-- Tetapan Data Peserta -->
+                        <div class="space-y-1.5 pt-2 border-t border-slate-100">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2">Keperluan Data Tambahan Peserta</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <label class="flex items-center gap-3 p-3 bg-white border border-slate-200 rounded-xl cursor-pointer shadow-sm hover:border-indigo-300 text-slate-800">
+                                    <input type="checkbox" id="set-prog-req-shirt" class="w-4 h-4 text-indigo-600 rounded">
+                                    <span class="text-xs font-bold uppercase">Saiz Baju</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-3 bg-white border border-slate-200 rounded-xl cursor-pointer shadow-sm hover:border-indigo-300 text-slate-800">
+                                    <input type="checkbox" id="set-prog-req-transport" class="w-4 h-4 text-indigo-600 rounded">
+                                    <span class="text-xs font-bold uppercase">Kenderaan</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-3 bg-white border border-slate-200 rounded-xl cursor-pointer shadow-sm hover:border-indigo-300 text-slate-800">
+                                    <input type="checkbox" id="set-prog-req-gender" class="w-4 h-4 text-indigo-600 rounded">
+                                    <span class="text-xs font-bold uppercase">Jantina</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 pt-2 border-t border-slate-100 mt-2">
                             <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1 border-b pb-1 block">Konfigurasi Bahagian Terlibat</label>
                             <div id="settings-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner custom-scrollbar"></div>
                         </div>
@@ -510,7 +376,7 @@
             <!-- REPORT -->
             <div id="tab-report" class="tab-content space-y-6">
                 <div class="flex justify-end no-print gap-2">
-                    <button onclick="window.exportToWord()" class="bg-blue-600 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Muat Turun MS Word">
+                    <button onclick="window.exportToWord()" class="bg-blue-600 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Muat Tunun MS Word">
                         <i data-lucide="file-text" class="w-5 h-5"></i>
                     </button>
                     <button onclick="window.exportToExcel()" class="bg-emerald-600 text-white p-3 rounded-lg flex items-center justify-center shadow-md hover:scale-105 transition-all active:scale-95" title="Muat Turun MS Excel">
@@ -536,7 +402,7 @@
             <h2 class="text-xl font-black uppercase mb-2 text-center tracking-tight text-indigo-950">Log Masuk Admin</h2>
             <p class="text-xs text-center text-slate-500 mb-6 font-bold uppercase tracking-widest">Akses penuh sistem</p>
             <form id="login-form" class="space-y-4">
-                <input type="password" id="input-password" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-center outline-none focus:ring-2 focus:ring-indigo-400 placeholder:text-slate-400" placeholder="Kata Laluan" required>
+                <input type="password" id="input-password" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-center outline-none focus:ring-2 focus:ring-indigo-400 placeholder:text-slate-400 font-bold" placeholder="Kata Laluan" required>
                 <div class="flex gap-3 pt-2">
                     <button type="button" onclick="window.closeLoginModal()" class="flex-1 py-3 bg-slate-100 text-slate-600 font-black rounded-lg text-xs uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
                     <button type="submit" class="flex-1 py-3 bg-indigo-600 text-white font-black rounded-lg text-xs shadow hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95 border border-transparent">Akses</button>
@@ -561,8 +427,7 @@
                 <div class="space-y-1">
                     <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Tema Paparan</label>
                     <select id="input-global-theme" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold uppercase outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer">
-                        <option value="pastel">Pastel Klasik (Lalai)</option>
-                        <option value="vista">Windows Vista (Dark Aero Glass)</option>
+                        <option value="pastel">Cerah Pastel (Lalai)</option>
                     </select>
                 </div>
                 <div class="flex gap-3 pt-3">
@@ -574,59 +439,83 @@
     </div>
 
     <!-- Modal Program Baru -->
-    <div id="modal-program" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 overflow-y-auto text-slate-800">
-        <div class="bg-white w-full max-w-xl rounded-[2rem] border border-indigo-50 shadow-xl p-5 md:p-6 fade-in my-4">
-            <h2 id="modal-title" class="text-xl font-black uppercase mb-4 text-center tracking-tight border-b-2 border-indigo-50 pb-2 text-indigo-950">Daftar Program Baharu</h2>
-            <form id="program-form" class="space-y-3">
-                <input type="hidden" id="edit-prog-id">
-                <div class="space-y-1">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Nama Program / Seminar / Aktiviti</label>
-                    <input type="text" id="input-prog-name" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold uppercase outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Kursus Pemantapan IT" required>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Unit Urusetia / Cawangan</label>
-                    <input type="text" id="input-prog-secretariat" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Cth: Cawangan Pengurusan Sumber Manusia" required>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
+    <div id="modal-program" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-2 sm:p-4 overflow-hidden text-slate-800">
+        <div class="bg-white w-full max-w-4xl rounded-lg border border-indigo-50 shadow-xl flex flex-col max-h-[95vh] fade-in">
+            <h2 id="modal-title" class="text-sm md:text-base font-black uppercase pt-4 px-4 pb-3 text-center tracking-tight border-b border-indigo-50 text-indigo-950 flex-shrink-0">Daftar Program Baharu</h2>
+            
+            <form id="program-form" class="flex flex-col flex-grow overflow-hidden">
+                <div class="overflow-y-auto custom-scrollbar p-4 space-y-3 flex-grow">
+                    <input type="hidden" id="edit-prog-id">
                     <div class="space-y-1">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Lokasi</label>
-                        <input type="text" id="input-prog-location" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300" required>
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-0.5">Nama Program / Seminar</label>
+                        <input type="text" id="input-prog-name" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded text-xs font-bold uppercase outline-none focus:ring-1 focus:ring-indigo-300" placeholder="Cth: Kursus Pemantapan IT" required>
                     </div>
                     <div class="space-y-1">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Masa</label>
-                        <input type="text" id="input-prog-time" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-0.5">Unit Urusetia</label>
+                        <input type="text" id="input-prog-secretariat" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded text-xs font-bold outline-none focus:ring-1 focus:ring-indigo-300" placeholder="Cth: Cawangan Pengurusan Sumber Manusia" required>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-0.5">Lokasi</label>
+                            <input type="text" id="input-prog-location" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded text-xs font-bold outline-none focus:ring-1 focus:ring-indigo-300" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-0.5">Masa</label>
+                            <input type="text" id="input-prog-time" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded text-xs font-bold outline-none focus:ring-1 focus:ring-indigo-300 cursor-pointer time-picker-input" readonly placeholder="Pilih masa" required>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-indigo-600 uppercase tracking-widest ml-0.5">Tarikh Acara</label>
+                            <input type="date" id="input-prog-event-date" class="w-full px-3 py-2 bg-indigo-50/50 border border-indigo-200 rounded text-xs font-bold date-picker-input" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-rose-600 uppercase tracking-widest ml-0.5">Tamat Pendaftaran</label>
+                            <input type="date" id="input-prog-closing" class="w-full px-3 py-2 bg-rose-50 border border-rose-300 rounded text-xs font-bold date-picker-input" required>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-0.5">Sasaran</label>
+                            <input type="number" id="input-prog-target" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded text-xs font-bold" value="50" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-indigo-600 uppercase tracking-widest ml-0.5">Status Pameran</label>
+                            <select id="input-prog-status" class="w-full px-3 py-2 bg-indigo-50 border border-indigo-200 rounded text-xs font-bold text-indigo-900 outline-none focus:ring-1 focus:ring-indigo-400 appearance-none cursor-pointer">
+                                <option value="active">AKTIF (Berjalan)</option>
+                                <option value="draft">DERAF (KIV)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Tetapan Data Peserta -->
+                    <div class="space-y-1 pt-3 border-t border-slate-200">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-0.5 block mb-1">Keperluan Data Tambahan Peserta</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            <label class="flex items-center gap-2 p-2 bg-white border border-slate-200 rounded cursor-pointer shadow-sm hover:border-indigo-300 text-slate-800">
+                                <input type="checkbox" id="input-prog-req-shirt" class="w-3.5 h-3.5 text-indigo-600 rounded">
+                                <span class="text-[10px] font-bold uppercase">Saiz Baju</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white border border-slate-200 rounded cursor-pointer shadow-sm hover:border-indigo-300 text-slate-800">
+                                <input type="checkbox" id="input-prog-req-transport" class="w-3.5 h-3.5 text-indigo-600 rounded">
+                                <span class="text-[10px] font-bold uppercase">Kenderaan</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white border border-slate-200 rounded cursor-pointer shadow-sm hover:border-indigo-300 text-slate-800">
+                                <input type="checkbox" id="input-prog-req-gender" class="w-3.5 h-3.5 text-indigo-600 rounded">
+                                <span class="text-[10px] font-bold uppercase">Jantina</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1 pt-3 border-t border-slate-200">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-0.5 border-b pb-1 block">Pilih Bahagian Terlibat</label>
+                        <div id="modal-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1.5 max-h-40 overflow-y-auto bg-slate-50 p-2.5 rounded border border-slate-200 shadow-inner custom-scrollbar"></div>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="space-y-1">
-                        <label class="text-xs font-black text-indigo-600 uppercase tracking-widest ml-1">Tarikh Acara</label>
-                        <input type="date" id="input-prog-event-date" class="w-full px-4 py-2 bg-indigo-50/50 border border-indigo-200 rounded-xl text-sm font-bold date-picker-input" required>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-xs font-black text-rose-600 uppercase tracking-widest ml-1">Tamat Pendaftaran</label>
-                        <input type="date" id="input-prog-closing" class="w-full px-4 py-2 bg-rose-50 border border-rose-200 rounded-xl text-sm font-bold date-picker-input" required>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="space-y-1">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Sasaran</label>
-                        <input type="number" id="input-prog-target" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold" value="50" required>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-xs font-black text-indigo-600 uppercase tracking-widest ml-1">Status Pameran</label>
-                        <select id="input-prog-status" class="w-full px-4 py-2 bg-indigo-50 border border-indigo-200 rounded-xl text-sm font-bold text-indigo-900 outline-none focus:ring-2 focus:ring-indigo-400 appearance-none cursor-pointer">
-                            <option value="active">AKTIF (Berjalan)</option>
-                            <option value="draft">DERAF (KIV)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1 border-b pb-1 block">Pilih Bahagian Terlibat</label>
-                    <div id="modal-dept-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-28 overflow-y-auto bg-slate-50 p-2.5 rounded-xl border border-slate-200 shadow-inner custom-scrollbar"></div>
-                </div>
-                <div class="flex gap-3 pt-3">
-                    <button type="button" onclick="closeProgramModal()" class="flex-1 py-2.5 bg-slate-100 text-slate-500 font-black rounded-xl text-xs uppercase tracking-widest transition-all hover:bg-slate-200">Batal</button>
-                    <button type="submit" class="flex-[2] py-2.5 bg-indigo-600 text-white font-black rounded-xl text-xs shadow-md hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95 border border-transparent">Simpan Program</button>
+                
+                <div class="flex gap-2 px-4 py-3 bg-slate-50 border-t border-slate-200 flex-shrink-0 rounded-b-lg">
+                    <button type="button" onclick="closeProgramModal()" class="flex-1 py-2 bg-white text-slate-500 font-black rounded text-[10px] uppercase tracking-widest transition-all hover:bg-slate-100 border border-slate-300 shadow-sm">Batal</button>
+                    <button type="submit" class="flex-[2] py-2 bg-indigo-600 text-white font-black rounded text-[10px] shadow hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95 border border-transparent">Simpan Program</button>
                 </div>
             </form>
         </div>
@@ -650,10 +539,19 @@
                     <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Bahagian / Cawangan MTIB</label>
                     <select id="input-p-dept" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer appearance-none" required></select>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-1">
+                
+                <div id="container-p-extras" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div id="container-p-gender" class="space-y-1 hidden">
+                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Jantina</label>
+                        <select id="input-p-gender" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer appearance-none">
+                            <option value="">Pilih Jantina</option>
+                            <option value="Lelaki">Lelaki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div id="container-p-shirt" class="space-y-1 hidden">
                         <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Saiz Baju</label>
-                        <select id="input-p-shirt" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer appearance-none" required>
+                        <select id="input-p-shirt" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer appearance-none">
                             <option value="">Pilih Saiz</option>
                             <option value="XS">XS</option>
                             <option value="S">S</option>
@@ -665,15 +563,16 @@
                             <option value="5XL">5XL</option>
                         </select>
                     </div>
-                    <div class="space-y-1">
+                    <div id="container-p-transport" class="space-y-1 hidden">
                         <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Pengangkutan</label>
-                        <select id="input-p-transport" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer appearance-none" required>
+                        <select id="input-p-transport" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer appearance-none">
                             <option value="">Pilih Kenderaan</option>
                             <option value="Sendiri">Sendiri</option>
                             <option value="Kenderaan Jabatan">Kenderaan Jabatan</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="flex gap-3 pt-5">
                     <button type="button" onclick="closeParticipantModal()" class="flex-1 py-3 bg-slate-100 text-slate-600 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">Batal</button>
                     <button type="submit" class="flex-[2] py-3 bg-indigo-600 text-white font-black rounded-xl text-xs shadow-md hover:bg-indigo-700 transition-all uppercase tracking-widest active:scale-95 border border-transparent">Simpan Rekod</button>
@@ -903,7 +802,21 @@
             window.state.hasCheckedSync = true;
             if (window.state.programs.length === 0) {
                 try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), { name: "SAMBUTAN HARI PEKERJA KEBANGSAAN 2026", secretariat: "PSM", targetCount: 50, eventDate: "2026-05-01", closingDate: "2026-04-25", location: "Stadium Bukit Jalil", time: "7.30 Pagi", involvedDepts: DEPARTMENTS, status: "active", createdAt: new Date().toISOString() });
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'programs'), { 
+                        name: "SAMBUTAN HARI PEKERJA KEBANGSAAN 2026", 
+                        secretariat: "PSM", 
+                        targetCount: 50, 
+                        eventDate: "2026-05-01", 
+                        closingDate: "2026-04-25", 
+                        location: "Stadium Bukit Jalil", 
+                        time: "7.30 Pagi", 
+                        involvedDepts: DEPARTMENTS, 
+                        status: "active", 
+                        requireShirtSize: true, 
+                        requireTransport: true, 
+                        requireGender: true, // Maklumat Jantina Asas
+                        createdAt: new Date().toISOString() 
+                    });
                 } catch(e) { console.error(e); }
             }
         };
@@ -921,21 +834,42 @@
             if(monthH) monthH.textContent = `${monthNames[currentMonth]} ${currentYear}`;
             
             container.innerHTML = "";
+            const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+            
+            // Hari bulan lepas (berlainan outline)
             for(let i=0; i<offset; i++) { 
-                const e = document.createElement('div'); e.className="calendar-day border-b border-r border-indigo-50 bg-slate-50"; container.appendChild(e); 
+                const prevD = prevMonthDays - offset + i + 1;
+                const e = document.createElement('div'); 
+                e.className="calendar-day other-month p-1.5 flex flex-col justify-between"; 
+                e.innerHTML = `<span class="font-bold text-[10px]">${prevD}</span>`;
+                container.appendChild(e); 
             }
             
+            // Hari bulan semasa
             for(let d=1; d<=daysInMonth; d++){
                 const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                 const dw = new Date(currentYear, currentMonth, d).getDay();
                 const dayProg = programs.filter(p => (isAdmin || p.status !== 'draft') && p.eventDate === dateStr);
                 const dayEl = document.createElement('div');
                 dayEl.onclick = () => filterByDate(dateStr);
-                dayEl.className = `calendar-day p-2 border-b border-r border-indigo-50 ${(dw===0||dw===6)?'is-weekend':'bg-white'} ${dayProg.length?'has-event':''} ${filterDate === dateStr ? 'selected-day' : ''}`;
+                dayEl.className = `calendar-day p-1.5 min-h-[45px] flex flex-col justify-between ${(dw===0||dw===6)?'is-weekend':'bg-white'} ${dayProg.length?'has-event':''} ${filterDate === dateStr ? 'selected-day' : ''}`;
                 
-                dayEl.innerHTML = `<span class="font-black text-[11px] text-indigo-950">${d}</span>${dayProg.length > 0 ? `<div class="mt-1.5"><div class="text-[9px] font-black uppercase bg-indigo-600 text-white py-0.5 px-1 rounded text-center shadow-sm w-full line-clamp-1 border border-indigo-700">${dayProg.length} Program</div></div>` : ''}`;
+                // Warna tulisan hari cuti vs hari biasa
+                const textStyle = (dw===0||dw===6) ? 'text-rose-600' : 'text-indigo-950';
+                
+                dayEl.innerHTML = `<span class="font-black text-[10px] ${textStyle}">${d}</span>${dayProg.length > 0 ? `<div class="mt-1"><div class="text-[8px] font-black uppercase bg-indigo-600 text-white py-0.5 px-1 rounded-sm text-center shadow-sm w-full line-clamp-1 border border-indigo-700">${dayProg.length} Prog.</div></div>` : ''}`;
                 
                 container.appendChild(dayEl);
+            }
+
+            // Hari bulan depan (berlainan outline)
+            const totalCells = offset + daysInMonth;
+            const remainingCells = (7 - (totalCells % 7)) % 7;
+            for(let i=1; i<=remainingCells; i++) {
+                const e = document.createElement('div'); 
+                e.className="calendar-day other-month p-1.5 flex flex-col justify-between"; 
+                e.innerHTML = `<span class="font-bold text-[10px]">${i}</span>`;
+                container.appendChild(e); 
             }
         };
 
@@ -957,9 +891,12 @@
             const { isAdmin } = window.state;
             
             let progs = window.state.programs.filter(p => isAdmin || p.status !== 'draft');
+            
+            // Sentiasa susun program mengikut tarikh acara (awal ke akhir)
+            progs.sort((a,b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
+
             if(!date) { 
                 if(label) label.textContent = "Semua Program Akan Datang";
-                progs = progs.sort((a,b) => new Date(a.eventDate) - new Date(b.eventDate));
             } else {
                 if(label) label.textContent = `Aktiviti pada: ${window.formatDateMY(date)}`;
                 progs = progs.filter(p => p.eventDate === date);
@@ -973,60 +910,116 @@
                 );
             }
             
+            const todayDate = new Date();
+            todayDate.setHours(0, 0, 0, 0);
+
             if(listContainer) {
                 if(progs.length === 0) {
-                    listContainer.innerHTML = '<div class="p-5 bg-slate-50 border border-slate-200 rounded-[1.5rem] text-center mt-2"><p class="text-sm text-slate-400 italic font-bold uppercase">Tiada program dijumpai</p></div>';
+                    listContainer.innerHTML = '<div class="w-full p-8 bg-white border border-slate-200 rounded-lg text-center mt-2 shadow-sm"><p class="text-sm text-slate-400 italic font-bold uppercase">Tiada program dijumpai</p></div>';
                 } else {
-                    listContainer.innerHTML = progs.map(p => {
+                    let tableHTML = `
+                    <div class="w-full overflow-x-auto bg-white rounded-lg border border-slate-300 shadow-sm mt-2 custom-scrollbar">
+                        <table class="w-full text-left border-collapse table-auto">
+                            <thead>
+                                <tr class="bg-indigo-50/85 border-b-2 border-indigo-200 text-indigo-950 text-[11px] uppercase tracking-widest font-extrabold">
+                                    <th class="py-3 px-4 text-center w-12 sm:w-16">Bil</th>
+                                    <th class="py-3 px-4 sm:px-6">Maklumat Program</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-indigo-100">
+                    `;
+                    
+                    const rows = progs.map((p, idx) => {
                         const count = window.state.participants.filter(pt => pt.programId === p.id).length;
                         const isDraft = p.status === 'draft';
                         
-                        if (isDraft) {
-                            return `
-                            <div onclick="enterProgram('${p.id}')" class="p-4 bg-slate-100 border border-slate-200 rounded-[1.25rem] cursor-pointer hover:border-slate-300 hover:shadow-sm transition-all shadow-none flex items-center justify-between opacity-80 group">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-slate-200 rounded-xl flex items-center justify-center text-slate-500 flex-shrink-0"><i data-lucide="archive" class="w-5 h-5"></i></div>
-                                    <div class="flex flex-col gap-1">
-                                        <h5 class="text-sm font-black uppercase leading-tight text-slate-700 line-clamp-1 pr-1">${p.name}</h5>
-                                        <div class="flex gap-2 items-center">
-                                            <span class="text-[10px] font-black uppercase text-slate-500 bg-slate-200 px-2 py-0.5 rounded border border-slate-300">DERAF (KIV)</span>
-                                            <span class="text-xs font-bold text-slate-500">${window.formatDateMY(p.eventDate)}</span>
+                        const pDate = new Date(p.eventDate);
+                        pDate.setHours(0, 0, 0, 0);
+                        const isPast = pDate < todayDate;
+                        
+                        // Latar belakang lembut mengikut status program
+                        const rowBg = isPast ? 'bg-slate-100 hover:bg-slate-200/80 theme-row-past' : (isDraft ? 'bg-amber-50/30 hover:bg-amber-100/30' : 'bg-white hover:bg-indigo-50/20');
+                        const isFull = count >= p.targetCount;
+                        
+                        return `
+                        <tr onclick="enterProgram('${p.id}')" class="transition-colors cursor-pointer group ${rowBg} theme-table-row">
+                            <td class="py-4 px-4 text-center font-bold text-slate-400 text-xs sm:text-sm align-middle border-r border-slate-100">${idx+1}</td>
+                            <td class="py-4 px-4 sm:px-6 align-middle">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <div class="flex items-start gap-4">
+                                        <!-- Ikon Khas berinsipirasikan Lampiran Imej -->
+                                        <div class="w-12 h-12 bg-[#f0f2fe] text-[#4f46e5] border border-[#e0e4fd] rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                                            <i data-lucide="${isPast ? 'calendar-check' : (isDraft ? 'archive' : 'award')}" class="w-6 h-6"></i>
+                                        </div>
+                                        <div class="flex flex-col gap-1.5">
+                                            <div class="flex flex-wrap items-center gap-2">
+                                                <!-- Tajuk Program Biru Gelap Tebal & UPPERCASE -->
+                                                <h5 class="text-sm sm:text-base font-extrabold uppercase text-[#002266] tracking-wide leading-tight group-hover:text-indigo-700 transition-colors">${p.name}</h5>
+                                            </div>
+                                            
+                                            <!-- Maklumat Program dalam Bentuk Lencana Latar Lembut (Pill Badges) -->
+                                            <div class="flex flex-wrap items-center gap-2 mt-1">
+                                                <!-- Lencana Deraf / Selesai -->
+                                                ${isDraft ? `<span class="bg-amber-100 text-amber-800 border border-amber-200 px-2 py-0.5 rounded text-[9px] font-bold shadow-sm uppercase status-badge">Deraf</span>` : ''}
+                                                ${isPast ? `<span class="bg-slate-200 text-slate-800 border border-slate-300 px-2 py-0.5 rounded text-[9px] font-bold shadow-sm uppercase status-badge">Selesai</span>` : ''}
+
+                                                <!-- Tarikh Acara (Biru) -->
+                                                <span class="bg-[#f0f9ff] text-[#0284c7] border border-[#bae6fd] px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm">
+                                                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-[#0284c7]"></i>
+                                                    <span>${window.formatDateMY(p.eventDate)}</span>
+                                                </span>
+                                                
+                                                <!-- Masa (Jingga) -->
+                                                <span class="bg-[#fffbeb] text-[#d97706] border border-[#fef3c7] px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm">
+                                                    <i data-lucide="clock" class="w-3.5 h-3.5 text-[#d97706]"></i>
+                                                    <span>${p.time || '7.30 PAGI'}</span>
+                                                </span>
+                                                
+                                                <!-- Lokasi (Hijau) -->
+                                                <span class="bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm">
+                                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#16a34a]"></i>
+                                                    <span>${p.location}</span>
+                                                </span>
+                                                
+                                                <!-- Urusetia (Ungu) -->
+                                                <span class="bg-[#faf5ff] text-[#7c3aed] border border-[#f3e8ff] px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm">
+                                                    <i data-lucide="building-2" class="w-3.5 h-3.5 text-[#7c3aed]"></i>
+                                                    <span>${p.secretariat}</span>
+                                                </span>
+                                                
+                                                <!-- Tarikh Tutup (Merah Rose) -->
+                                                <span class="bg-[#fff1f2] text-[#e11d48] border border-[#ffe4e6] px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm">
+                                                    <i data-lucide="clock-4" class="w-3.5 h-3.5 text-[#e11d48]"></i>
+                                                    <span>Tutup: ${window.formatDateMY(p.closingDate)}</span>
+                                                </span>
+                                                
+                                                <!-- Penyertaan (Abu-abu Slate) -->
+                                                <span class="bg-[#f8fafc] text-[#475569] border border-[#e2e8f0] px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm">
+                                                    <i data-lucide="users" class="w-3.5 h-3.5 text-[#475569]"></i>
+                                                    <span class="${isFull ? 'text-emerald-600 font-extrabold' : ''}">Penyertaan: ${count} / ${p.targetCount}</span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
+                                    
+                                    <!-- Butang Tindakan Admin secara bersebelahan di kanan -->
+                                    ${isAdmin ? `
+                                    <div class="flex items-center gap-1.5 self-end sm:self-center" onclick="event.stopPropagation()">
+                                        <button onclick="openProgramModal('${p.id}')" class="p-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-white shadow-sm transition-all active:scale-95 btn-action" title="Pinda Program">
+                                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                        </button>
+                                        <button onclick="deleteProgram('${p.id}')" class="p-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-white shadow-sm transition-all active:scale-95 btn-action" title="Padam Program">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>` : ''}
                                 </div>
-                                <div class="flex gap-1 opacity-0 hover:opacity-100 transition-opacity">
-                                    ${isAdmin ? `<button onclick="deleteProgram('${p.id}', event)" class="p-2 text-slate-400 hover:text-red-600 bg-white rounded-lg shadow-sm border border-slate-200"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : ''}
-                                </div>
-                            </div>`;
-                        } else {
-                            return `
-                            <div onclick="enterProgram('${p.id}')" class="p-5 bg-white border border-indigo-100 rounded-2xl cursor-pointer hover:border-indigo-400 hover:shadow-md transition-all shadow-sm group">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div class="flex gap-3 items-center">
-                                        <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-700 shadow-inner flex-shrink-0 border border-indigo-100"><i data-lucide="award" class="w-5 h-5"></i></div>
-                                        <h5 class="text-base font-black uppercase leading-tight text-indigo-950 group-hover:text-indigo-700 transition-colors line-clamp-2 pr-1">${p.name}</h5>
-                                    </div>
-                                    <div class="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        ${isAdmin ? `
-                                        <button onclick="openProgramModal('${p.id}'); event.stopPropagation();" class="p-2 bg-slate-50 border border-slate-200 rounded-lg hover:text-indigo-700 shadow-sm"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                                        <button onclick="deleteProgram('${p.id}', event)" class="p-2 bg-slate-50 border border-slate-200 rounded-lg hover:text-rose-700 shadow-sm"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                                        ` : ''}
-                                    </div>
-                                </div>
-                                <div class="space-y-2 mb-4 pl-[3.25rem]">
-                                    <p class="text-xs font-black uppercase text-indigo-800 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded flex items-center w-fit">${p.secretariat}</p>
-                                    <p class="text-sm font-bold text-slate-600 uppercase flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-slate-400"></i> ${p.location}</p>
-                                </div>
-                                <div class="grid grid-cols-2 gap-3 text-xs font-black uppercase border-t border-indigo-50 pt-3 mt-3 pl-[3.25rem]">
-                                    <div class="text-emerald-700 bg-emerald-50/50 p-2.5 rounded-xl border border-emerald-100"><span class="text-emerald-500 block text-[10px] mb-1">ACARA</span>${window.formatDateMY(p.eventDate)}</div>
-                                    <div class="text-rose-700 bg-rose-50/50 p-2.5 rounded-xl border border-rose-100"><span class="text-rose-500 block text-[10px] mb-1">TUTUP DAFTAR</span>${window.formatDateMY(p.closingDate)}</div>
-                                </div>
-                                <div class="flex justify-between items-center mt-3 pt-3 border-t border-indigo-50 pl-[3.25rem] text-xs font-black uppercase text-indigo-700">
-                                    <span>Kekuatan Semasa</span><span>${count} / ${p.targetCount} Daftar</span>
-                                </div>
-                            </div>`;
-                        }
+                            </td>
+                        </tr>
+                        `;
                     }).join('');
+                    
+                    tableHTML += rows + `</tbody></table></div>`;
+                    listContainer.innerHTML = tableHTML;
                     lucide.createIcons();
                 }
             }
@@ -1105,6 +1098,10 @@
             const { participants, currentProgram, isAdmin } = window.state; if(!currentProgram) return;
             const progParts = participants.filter(p => p.programId === currentProgram.id);
             
+            const reqShirt = currentProgram.requireShirtSize;
+            const reqTrans = currentProgram.requireTransport;
+            const reqGender = currentProgram.requireGender;
+            
             const totalE = document.getElementById('stat-total'), targetE = document.getElementById('stat-target'), neededE = document.getElementById('stat-needed'), daysE = document.getElementById('stat-days');
             
             if(totalE) totalE.textContent = progParts.length; 
@@ -1134,50 +1131,78 @@
             if(daysE) daysE.textContent = diff > 0 ? `${diff} Hari` : "HARI INI";
             
             // Rumusan Calculation
-            const shirtSizes = {};
-            let transSendiri = 0;
-            let transJabatan = 0;
+            const rumusanContainer = document.getElementById('widget-rumusan-container');
+            const rumusanGrid = document.getElementById('widget-rumusan');
             
-            progParts.forEach(p => {
-                if (p.shirtSize) shirtSizes[p.shirtSize] = (shirtSizes[p.shirtSize] || 0) + 1;
-                if (p.transport === 'Sendiri') transSendiri++;
-                if (p.transport === 'Kenderaan Jabatan') transJabatan++;
-            });
-
-            const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '5XL'];
-            const availableSizes = sizeOrder.filter(s => shirtSizes[s] > 0);
-
-            const rumusanContainer = document.getElementById('widget-rumusan');
-            if (rumusanContainer) {
-                let shirtHtml = `<div class="bg-indigo-50/40 p-4 rounded-[1rem] border border-indigo-100/50">
-                    <p class="text-[10px] font-black text-indigo-800 uppercase tracking-widest mb-3">Saiz Baju Diperlukan</p>
-                    ${availableSizes.length > 0 ? `
-                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-                        ${availableSizes.map(s => `
-                            <div class="bg-white px-2 py-2 rounded-lg border border-slate-200 flex flex-col items-center justify-center shadow-sm">
-                                <span class="text-[10px] font-bold text-slate-500 mb-0.5">${s}</span>
-                                <span class="text-sm font-black text-indigo-950">${shirtSizes[s]}</span>
+            if (!reqShirt && !reqTrans && !reqGender) {
+                if(rumusanContainer) rumusanContainer.classList.add('hidden');
+            } else {
+                if(rumusanContainer) rumusanContainer.classList.remove('hidden');
+                if (rumusanGrid) {
+                    let html = '';
+                    if (reqShirt) {
+                        const shirtSizes = {};
+                        progParts.forEach(p => { if (p.shirtSize) shirtSizes[p.shirtSize] = (shirtSizes[p.shirtSize] || 0) + 1; });
+                        const availableSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '5XL'].filter(s => shirtSizes[s] > 0);
+                        html += `<div class="bg-indigo-50/40 p-4 rounded-[1rem] border border-indigo-100/50">
+                            <p class="text-[10px] font-black text-indigo-800 uppercase tracking-widest mb-3">Saiz Baju</p>
+                            ${availableSizes.length > 0 ? `
+                            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
+                                ${availableSizes.map(s => `
+                                    <div class="bg-white px-2 py-2 rounded-lg border border-slate-200 flex flex-col items-center justify-center shadow-sm">
+                                        <span class="text-[10px] font-bold text-slate-500 mb-0.5">${s}</span>
+                                        <span class="text-sm font-black text-indigo-950">${shirtSizes[s]}</span>
+                                    </div>
+                                `).join('')}
                             </div>
-                        `).join('')}
-                    </div>
-                    ` : `<p class="text-xs font-bold text-slate-400 italic mt-2">Tiada rekod saiz baju</p>`}
-                </div>`;
+                            ` : `<p class="text-xs font-bold text-slate-400 italic mt-2">Tiada rekod</p>`}
+                        </div>`;
+                    }
+                    if (reqTrans) {
+                        let transSendiri = 0; let transJabatan = 0;
+                        progParts.forEach(p => {
+                            if (p.transport === 'Sendiri') transSendiri++;
+                            if (p.transport === 'Kenderaan Jabatan') transJabatan++;
+                        });
+                        html += `<div class="bg-indigo-50/40 p-4 rounded-[1rem] border border-indigo-100/50 flex flex-col justify-center">
+                            <p class="text-[10px] font-black text-indigo-800 uppercase tracking-widest mb-3">Pengangkutan</p>
+                            <div class="space-y-2.5">
+                                <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
+                                    <span class="text-xs font-bold text-slate-600 uppercase">Sendiri</span>
+                                    <span class="text-sm font-black text-indigo-950">${transSendiri} <span class="text-[10px] text-slate-400 font-bold ml-0.5">pax</span></span>
+                                </div>
+                                <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
+                                    <span class="text-xs font-bold text-slate-600 uppercase">Jabatan</span>
+                                    <span class="text-sm font-black text-indigo-950">${transJabatan} <span class="text-[10px] text-slate-400 font-bold ml-0.5">pax</span></span>
+                                </div>
+                            </div>
+                        </div>`;
+                    }
+                    if (reqGender) {
+                        let jLelaki = 0; let jPerempuan = 0;
+                        progParts.forEach(p => {
+                            if (p.gender === 'Lelaki') jLelaki++;
+                            if (p.gender === 'Perempuan') jPerempuan++;
+                        });
+                        html += `<div class="bg-indigo-50/40 p-4 rounded-[1rem] border border-indigo-100/50 flex flex-col justify-center">
+                            <p class="text-[10px] font-black text-indigo-800 uppercase tracking-widest mb-3">Jantina</p>
+                            <div class="space-y-2.5">
+                                <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
+                                    <span class="text-xs font-bold text-slate-600 uppercase">Lelaki</span>
+                                    <span class="text-sm font-black text-indigo-950">${jLelaki} <span class="text-[10px] text-slate-400 font-bold ml-0.5">org</span></span>
+                                </div>
+                                <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
+                                    <span class="text-xs font-bold text-slate-600 uppercase">Perempuan</span>
+                                    <span class="text-sm font-black text-indigo-950">${jPerempuan} <span class="text-[10px] text-slate-400 font-bold ml-0.5">org</span></span>
+                                </div>
+                            </div>
+                        </div>`;
+                    }
 
-                let transHtml = `<div class="bg-indigo-50/40 p-4 rounded-[1rem] border border-indigo-100/50 flex flex-col justify-center">
-                    <p class="text-[10px] font-black text-indigo-800 uppercase tracking-widest mb-3">Pengangkutan</p>
-                    <div class="space-y-2.5">
-                        <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
-                            <span class="text-xs font-bold text-slate-600 uppercase">Sendiri</span>
-                            <span class="text-sm font-black text-indigo-950">${transSendiri} <span class="text-[10px] text-slate-400 font-bold ml-0.5">pax</span></span>
-                        </div>
-                        <div class="bg-white px-4 py-2.5 rounded-lg border border-slate-200 flex justify-between items-center shadow-sm">
-                            <span class="text-xs font-bold text-slate-600 uppercase">Jabatan</span>
-                            <span class="text-sm font-black text-indigo-950">${transJabatan} <span class="text-[10px] text-slate-400 font-bold ml-0.5">pax</span></span>
-                        </div>
-                    </div>
-                </div>`;
-
-                rumusanContainer.innerHTML = shirtHtml + transHtml;
+                    let activeRumusan = [reqShirt, reqTrans, reqGender].filter(Boolean).length;
+                    rumusanGrid.className = `grid grid-cols-1 sm:grid-cols-${Math.min(activeRumusan, 3)} gap-4 flex-grow`;
+                    rumusanGrid.innerHTML = html;
+                }
             }
 
             let h = '';
@@ -1187,38 +1212,44 @@
                     .sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
                     
                 if (filterMode === 'incomplete') {
-                    list = list.filter(p => !p.shirtSize || !p.transport);
+                    list = list.filter(p => (reqShirt && !p.shirtSize) || (reqTrans && !p.transport) || (reqGender && !p.gender));
                 }
                     
                 const empty = list.length === 0;
                 
                 if (empty && filterMode === 'incomplete') return;
                 
-                h += `<div class="bg-white rounded-2xl border border-indigo-50 shadow-sm overflow-hidden">
-                    <div class="px-5 py-4 border-b border-indigo-50 flex justify-between items-center ${empty?'bg-rose-50/30':'bg-indigo-50/40'} text-slate-800">
+                h += `<div class="bg-white rounded-xl border border-indigo-50 shadow-sm overflow-hidden">
+                    <div class="px-4 py-2.5 border-b border-indigo-50 flex justify-between items-center ${empty?'bg-rose-50/30':'bg-indigo-50/40'} text-slate-800">
                         <div class="flex items-center gap-2">
-                            <h4 class="font-black uppercase text-[12px] ${empty?'text-rose-700':'text-indigo-900'}">${dept}</h4>
+                            <h4 class="font-black uppercase text-[11px] ${empty?'text-rose-700':'text-indigo-900'}">${dept}</h4>
                             ${isAdmin ? `
-                            <button onclick="openParticipantModal(null, '${dept}')" class="px-3 py-1.5 bg-white text-indigo-700 hover:bg-indigo-100 hover:shadow-sm rounded-lg text-[10px] font-black transition-all flex items-center gap-1.5 border border-indigo-100" title="Daftar Terus Wakil ${dept}">
+                            <button onclick="openParticipantModal(null, '${dept}')" class="px-2.5 py-1 bg-white text-indigo-700 hover:bg-indigo-100 hover:shadow-sm rounded-md text-[9px] font-black transition-all flex items-center gap-1 border border-indigo-100" title="Daftar Terus Wakil ${dept}">
                                 <i data-lucide="user-plus" class="w-3 h-3"></i> Daftar
                             </button>
                             ` : ''}
                         </div>
-                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-black border bg-white shadow-sm text-indigo-800">${list.length} Orang</span>
+                        <span class="px-2 py-0.5 rounded-md text-[9px] font-black border bg-white shadow-sm text-indigo-800">${list.length} Orang</span>
                     </div>
                     ${!empty ? `<table class="w-full text-left table-fixed"><tbody>${list.map((p, idx)=>`
                         <tr id="row-${p.id}" class="border-b border-indigo-50/50 hover:bg-indigo-50/50 transition-all duration-300 ease-in-out text-sm relative z-0 bg-transparent group">
                             <td class="w-10 sm:w-12 text-center text-indigo-400 font-bold">${idx+1}</td>
-                            <td class="w-[45%] sm:w-[35%] font-bold py-3 text-indigo-950 truncate pr-2">${p.name}</td>
-                            <td class="w-[20%] text-slate-500 uppercase text-[10px] font-bold hidden sm:table-cell tracking-wider truncate pr-2">${p.position}</td>
-                            <td class="w-[25%] text-slate-500 uppercase text-[10px] font-bold hidden md:table-cell tracking-wider truncate pr-2"><span class="${p.shirtSize ? 'bg-indigo-100 text-indigo-800' : 'bg-rose-100 text-rose-800'} px-1.5 py-0.5 rounded mr-1" title="Saiz Baju">${p.shirtSize || 'Tiada Baju'}</span> <span title="Pengangkutan" class="${p.transport ? '' : 'text-rose-600 font-black'}">${p.transport || 'Tiada Trans.'}</span></td>
+                            <td class="${(reqShirt||reqTrans||reqGender) ? 'w-[40%] sm:w-[30%]' : 'w-[50%] sm:w-[50%]'} font-bold py-1.5 text-indigo-950 truncate pr-2">${p.name}</td>
+                            <td class="${(reqShirt||reqTrans||reqGender) ? 'w-[20%]' : 'w-[35%]'} text-slate-500 uppercase text-[10px] font-bold hidden sm:table-cell tracking-wider truncate pr-2">${p.position}</td>
+                            
+                            ${(reqShirt || reqTrans || reqGender) ? `<td class="w-[30%] text-slate-500 uppercase text-[10px] font-bold hidden md:table-cell tracking-wider truncate pr-2">
+                                ${reqShirt ? `<span class="${p.shirtSize ? 'bg-indigo-100 text-indigo-800' : 'bg-rose-100 text-rose-800'} px-1 py-0.5 rounded-sm mr-1" title="Saiz Baju">${p.shirtSize || 'Tiada Baju'}</span>` : ''}
+                                ${reqGender ? `<span class="${p.gender ? 'bg-teal-100 text-teal-800' : 'bg-rose-100 text-rose-800'} px-1 py-0.5 rounded-sm mr-1" title="Jantina">${p.gender ? (p.gender === 'Lelaki' ? 'L' : 'P') : 'Tiada Jantina'}</span>` : ''}
+                                ${reqTrans ? `<span title="Pengangkutan" class="${p.transport ? '' : 'text-rose-600 font-black'}">${p.transport === 'Kenderaan Jabatan' ? 'Jabatan' : (p.transport || 'Tiada Trans.')}</span>` : ''}
+                            </td>` : ''}
+                            
                             <td class="text-right pr-4 truncate whitespace-nowrap">
                                 <div class="opacity-0 group-hover:opacity-100 transition-opacity flex justify-end">
                                 ${isAdmin ? `
-                                <button onclick="editParticipant('${p.id}')" title="Pinda" class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                                <button onclick="window.moveParticipant('${p.id}', 'up', event)" title="Naik" class="p-1.5 text-slate-400 hover:text-emerald-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-emerald-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
-                                <button onclick="window.moveParticipant('${p.id}', 'down', event)" title="Turun" class="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-amber-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === list.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
-                                <button onclick="deleteParticipant('${p.id}')" title="Padam" class="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-0.5"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="editParticipant('${p.id}')" title="Pinda" class="p-1 text-indigo-400 hover:text-indigo-600 hover:bg-white rounded-md shadow-sm border border-transparent hover:border-indigo-200 transition-all inline-block"><i data-lucide="edit-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="window.moveParticipant('${p.id}', 'up', event)" title="Naik" class="p-1 text-slate-400 hover:text-emerald-500 hover:bg-white rounded-md shadow-sm border border-transparent hover:border-emerald-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="window.moveParticipant('${p.id}', 'down', event)" title="Turun" class="p-1 text-slate-400 hover:text-amber-500 hover:bg-white rounded-md shadow-sm border border-transparent hover:border-amber-200 transition-all duration-200 active:scale-75 inline-block ml-0.5 disabled:opacity-30 disabled:cursor-not-allowed" ${idx === list.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="deleteParticipant('${p.id}')" title="Padam" class="p-1 text-rose-400 hover:text-rose-600 hover:bg-white rounded-md shadow-sm border border-transparent hover:border-rose-200 transition-all inline-block ml-0.5"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                                 ` : ''}
                                 </div>
                             </td>
@@ -1233,6 +1264,11 @@
             const container = document.getElementById('report-container'); if(!container) return;
             const progParts = participants.filter(p => p.programId === currentProgram.id);
             const involved = currentProgram.involvedDepts || DEPARTMENTS;
+            
+            const reqShirt = currentProgram.requireShirtSize;
+            const reqTrans = currentProgram.requireTransport;
+            const reqGender = currentProgram.requireGender;
+
             let h = `<div class="text-center mb-8 pb-6 border-b-4 border-slate-900 font-black uppercase w-full"><h1 class="text-xl leading-tight mb-4">${currentProgram.name}</h1><div class="flex justify-between w-full text-[11px] uppercase"><div class="text-left space-y-1.5"><p>URUSE TIA: <span class="text-blue-800">${currentProgram.secretariat}</span></p><p>LOKASI: ${currentProgram.location}</p><p>MASA: ${currentProgram.time}</p></div><div class="text-right space-y-1.5"><p>TARIKH ACARA: ${window.formatDateMY(currentProgram.eventDate)}</p><p class="text-red-700 font-black">TUTUP DAFTAR: ${window.formatDateMY(currentProgram.closingDate)}</p></div></div></div><div class="space-y-6 w-full">`;
             involved.forEach(dept => { 
                 let list = progParts
@@ -1241,7 +1277,21 @@
                     
                 if(!list.length) return; 
                 
-                h += `<div class="break-inside-avoid w-full"><h3 class="font-black text-[12px] bg-slate-100 border-l-[12px] border-slate-900 py-2 px-4 mb-2 uppercase tracking-widest">${dept}</h3><div class="space-y-1 pl-6">${list.map((p, idx)=>`<div class="flex w-full items-start border-b border-slate-100 py-1.5 text-sm font-bold"><span class="w-[50%] truncate pr-2">${idx+1}. ${p.name}</span><span class="w-[25%] text-[10px] opacity-70 uppercase italic text-slate-500 text-left truncate mt-0.5">${p.position}</span><span class="w-[25%] text-[10px] opacity-70 uppercase text-slate-500 text-right truncate mt-0.5">Baju: ${p.shirtSize || '-'} | Trans: ${p.transport === 'Kenderaan Jabatan' ? 'Jabatan' : (p.transport || '-')}</span></div>`).join('')}</div></div>`; 
+                h += `<div class="break-inside-avoid w-full"><h3 class="font-black text-[12px] bg-slate-100 border-l-[12px] border-slate-900 py-2 px-4 mb-2 uppercase tracking-widest">${dept}</h3><div class="space-y-1 pl-6">${list.map((p, idx)=>{
+                    let extraStr = '';
+                    if(reqShirt || reqTrans || reqGender) {
+                        let extras = [];
+                        if(reqGender) extras.push(`Jantina: ${p.gender || '-'}`);
+                        if(reqShirt) extras.push(`Baju: ${p.shirtSize || '-'}`);
+                        if(reqTrans) extras.push(`Trans: ${p.transport === 'Kenderaan Jabatan' ? 'Jabatan' : (p.transport || '-')}`);
+                        extraStr = `<span class="w-[35%] text-[10px] opacity-70 uppercase text-slate-500 text-right truncate mt-0.5">${extras.join(' | ')}</span>`;
+                    }
+                    return `<div class="flex w-full items-start border-b border-slate-100 py-1.5 text-sm font-bold">
+                        <span class="${(reqShirt||reqTrans||reqGender) ? 'w-[40%]' : 'w-[65%]'} truncate pr-2">${idx+1}. ${p.name}</span>
+                        <span class="${(reqShirt||reqTrans||reqGender) ? 'w-[25%]' : 'w-[35%]'} text-[10px] opacity-70 uppercase italic text-slate-500 text-left truncate mt-0.5">${p.position}</span>
+                        ${extraStr}
+                    </div>`;
+                }).join('')}</div></div>`; 
             });
             h += `</div><div class="mt-12 pt-6 border-t-4 border-slate-900 flex justify-between items-end font-black uppercase text-sm w-full"><div class="text-slate-600">SASARAN: ${currentProgram.targetCount} PESERTA</div><div>JUMLAH KESELURUHAN: ${progParts.length} ORANG</div></div>`;
             container.innerHTML = h; lucide.createIcons();
@@ -1307,6 +1357,10 @@
             const { participants, currentProgram } = window.state;
             if (!currentProgram) return;
 
+            const reqShirt = currentProgram.requireShirtSize;
+            const reqTrans = currentProgram.requireTransport;
+            const reqGender = currentProgram.requireGender;
+
             const progParts = participants.filter(p => p.programId === currentProgram.id);
             const involved = currentProgram.involvedDepts || DEPARTMENTS;
             
@@ -1321,8 +1375,13 @@
                 ["Sasaran Peserta", currentProgram.targetCount.toString()],
                 ["Jumlah Berdaftar", progParts.length.toString()],
                 [],
-                ["Bil", "Nama Wakil", "Jawatan/Gred", "Bahagian/Cawangan", "Saiz Baju", "Pengangkutan"]
             ];
+
+            let headers = ["Bil", "Nama Wakil", "Jawatan/Gred", "Bahagian/Cawangan"];
+            if(reqGender) headers.push("Jantina");
+            if(reqShirt) headers.push("Saiz Baju");
+            if(reqTrans) headers.push("Pengangkutan");
+            wsData.push(headers);
 
             let bil = 1;
             involved.forEach(dept => {
@@ -1331,14 +1390,21 @@
                     .sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
                 
                 list.forEach(p => {
-                    wsData.push([bil++, p.name, p.position, p.dept, p.shirtSize || '-', p.transport || '-']);
+                    let row = [bil++, p.name, p.position, p.dept];
+                    if(reqGender) row.push(p.gender || '-');
+                    if(reqShirt) row.push(p.shirtSize || '-');
+                    if(reqTrans) row.push(p.transport || '-');
+                    wsData.push(row);
                 });
             });
 
             const ws = XLSX.utils.aoa_to_sheet(wsData);
             
             // Auto fit column widths
-            const wscols = [ {wch: 5}, {wch: 40}, {wch: 30}, {wch: 40}, {wch: 15}, {wch: 20} ];
+            const wscols = [ {wch: 5}, {wch: 40}, {wch: 30}, {wch: 40} ];
+            if(reqGender) wscols.push({wch: 15});
+            if(reqShirt) wscols.push({wch: 15});
+            if(reqTrans) wscols.push({wch: 20});
             ws['!cols'] = wscols;
 
             const wb = XLSX.utils.book_new();
@@ -1518,18 +1584,15 @@
                     window.applyAuthUI();
                 } else {
                     if(window.showToast) {
-                        // Trick ringkas untuk tunjuk error toast
-                        const icon = document.getElementById('toast-icon');
-                        if(icon) {
-                            icon.setAttribute('data-lucide', 'x-circle');
-                            icon.className = 'w-4 h-4 text-red-400';
+                        const ic = document.getElementById('toast-icon-container');
+                        if (ic) {
+                            ic.innerHTML = '<i data-lucide="x-circle" class="w-4 h-4 text-rose-400"></i>';
+                            lucide.createIcons();
                         }
-                        window.showToast("Kata laluan salah!");
-                        // Reset icon untuk next use
+                        window.showToast("Kata laluan salah!", "error");
                         setTimeout(() => {
-                            if(icon) {
-                                icon.setAttribute('data-lucide', 'check-circle-2');
-                                icon.className = 'w-4 h-4 text-emerald-400';
+                            if(ic) {
+                                ic.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>';
                             }
                         }, 3000);
                     }
@@ -1561,6 +1624,9 @@
                     location: document.getElementById('input-prog-location').value, 
                     time: document.getElementById('input-prog-time').value, 
                     status: document.getElementById('input-prog-status').value || 'active', // SIMPAN STATUS
+                    requireShirtSize: document.getElementById('input-prog-req-shirt').checked, // MAKLUMAT TAMBAHAN
+                    requireTransport: document.getElementById('input-prog-req-transport').checked, // MAKLUMAT TAMBAHAN
+                    requireGender: document.getElementById('input-prog-req-gender').checked, // MAKLUMAT JANTINA
                     involvedDepts: ch, 
                     updatedAt: new Date().toISOString() 
                 }; 
@@ -1581,6 +1647,7 @@
                     dept: document.getElementById('input-p-dept').value, 
                     shirtSize: document.getElementById('input-p-shirt').value, 
                     transport: document.getElementById('input-p-transport').value, 
+                    gender: document.getElementById('input-p-gender').value, 
                     programId: window.state.currentProgram.id, 
                     updatedAt: new Date().toISOString() 
                 }; 
@@ -1604,6 +1671,9 @@
                     location: document.getElementById('set-prog-location').value, 
                     time: document.getElementById('set-prog-time').value, 
                     status: document.getElementById('set-prog-status').value || 'active', // SIMPAN STATUS BARU
+                    requireShirtSize: document.getElementById('set-prog-req-shirt').checked, // KEMASKINI MAKLUMAT TAMBAHAN
+                    requireTransport: document.getElementById('set-prog-req-transport').checked, // KEMASKINI MAKLUMAT TAMBAHAN
+                    requireGender: document.getElementById('set-prog-req-gender').checked, // KEMASKINI MAKLUMAT JANTINA
                     involvedDepts: ch 
                 }; 
                 try { 
@@ -1616,14 +1686,23 @@
         // --- HANDLERS PROGRAM & PESERTA ---
         window.openProgramModal = (id = null) => {
             const modal = document.getElementById('modal-program'), checklist = document.getElementById('modal-dept-checklist');
-            if(checklist) checklist.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-4 p-3 hover:bg-indigo-50 rounded-xl cursor-pointer border border-transparent hover:border-indigo-200 transition-all shadow-sm text-indigo-900 bg-white"><input type="checkbox" name="involvedDepts" value="${d}" class="w-5 h-5 rounded text-indigo-600 shadow-inner" checked><span class="text-xs font-black uppercase text-indigo-900">${d}</span></label>`).join('');
+            if(checklist) checklist.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-3 p-2.5 hover:bg-indigo-50 rounded-xl cursor-pointer border border-transparent hover:border-indigo-200 transition-all shadow-sm text-indigo-900 bg-white"><input type="checkbox" name="involvedDepts" value="${d}" class="w-4 h-4 rounded text-indigo-600 shadow-inner"><span class="text-[10px] font-black uppercase text-indigo-900">${d}</span></label>`).join('');
             if (id) {
                 const p = window.state.programs.find(pr => pr.id === id);
                 if(p) {
-                    document.getElementById('modal-title').textContent = "Pinda Program"; document.getElementById('edit-prog-id').value = id; document.getElementById('input-prog-name').value = p.name;
-                    document.getElementById('input-prog-secretariat').value = p.secretariat; document.getElementById('input-prog-target').value = p.targetCount; document.getElementById('input-prog-closing').value = p.closingDate;
-                    document.getElementById('input-prog-event-date').value = p.eventDate; document.getElementById('input-prog-location').value = p.location; document.getElementById('input-prog-time').value = p.time;
+                    document.getElementById('modal-title').textContent = "Pinda Program"; 
+                    document.getElementById('edit-prog-id').value = id; 
+                    document.getElementById('input-prog-name').value = p.name;
+                    document.getElementById('input-prog-secretariat').value = p.secretariat; 
+                    document.getElementById('input-prog-target').value = p.targetCount; 
+                    document.getElementById('input-prog-closing').value = p.closingDate;
+                    document.getElementById('input-prog-event-date').value = p.eventDate; 
+                    document.getElementById('input-prog-location').value = p.location; 
+                    document.getElementById('input-prog-time').value = p.time;
                     document.getElementById('input-prog-status').value = p.status || 'active';
+                    document.getElementById('input-prog-req-shirt').checked = p.requireShirtSize || false;
+                    document.getElementById('input-prog-req-transport').checked = p.requireTransport || false;
+                    document.getElementById('input-prog-req-gender').checked = p.requireGender || false;
                     checklist?.querySelectorAll('input').forEach(c => { c.checked = (p.involvedDepts || []).includes(c.value); });
                 }
             } else { 
@@ -1631,6 +1710,9 @@
                 document.getElementById('program-form')?.reset(); 
                 document.getElementById('edit-prog-id').value = ""; 
                 document.getElementById('input-prog-status').value = "active";
+                document.getElementById('input-prog-req-shirt').checked = false;
+                document.getElementById('input-prog-req-transport').checked = false;
+                document.getElementById('input-prog-req-gender').checked = false;
                 const t = new Date().toISOString().split('T')[0]; 
                 document.getElementById('input-prog-closing').value = t; 
                 document.getElementById('input-prog-event-date').value = t; 
@@ -1653,6 +1735,35 @@
             const modal = document.getElementById('modal-participant');
             const title = document.getElementById('participant-modal-title');
             const form = document.getElementById('participant-form');
+            
+            const pProg = window.state.currentProgram;
+            const reqShirt = pProg ? pProg.requireShirtSize : false;
+            const reqTrans = pProg ? pProg.requireTransport : false;
+            const reqGender = pProg ? pProg.requireGender : false;
+            
+            const extrasContainer = document.getElementById('container-p-extras');
+            const shirtContainer = document.getElementById('container-p-shirt');
+            const transContainer = document.getElementById('container-p-transport');
+            const genderContainer = document.getElementById('container-p-gender');
+            
+            if(reqShirt) shirtContainer.classList.remove('hidden');
+            else shirtContainer.classList.add('hidden');
+            
+            if(reqTrans) transContainer.classList.remove('hidden');
+            else transContainer.classList.add('hidden');
+
+            if(reqGender) genderContainer.classList.remove('hidden');
+            else genderContainer.classList.add('hidden');
+            
+            let activeExtras = [reqShirt, reqTrans, reqGender].filter(Boolean).length;
+
+            if(activeExtras === 0) {
+                extrasContainer.classList.add('hidden');
+            } else {
+                extrasContainer.classList.remove('hidden');
+                extrasContainer.className = `grid grid-cols-1 sm:grid-cols-${Math.min(activeExtras, 3)} gap-4`;
+            }
+
             if (id) {
                 const p = window.state.participants.find(i => i.id === id);
                 if (p) { 
@@ -1663,6 +1774,7 @@
                     document.getElementById('input-p-dept').value = p.dept; 
                     document.getElementById('input-p-shirt').value = p.shirtSize || ''; 
                     document.getElementById('input-p-transport').value = p.transport || ''; 
+                    document.getElementById('input-p-gender').value = p.gender || ''; 
                 }
             } else { 
                 title.textContent = "Daftar Peserta Baharu"; 
@@ -1670,6 +1782,7 @@
                 document.getElementById('edit-p-id').value = ""; 
                 document.getElementById('input-p-shirt').value = ""; 
                 document.getElementById('input-p-transport').value = ""; 
+                document.getElementById('input-p-gender').value = ""; 
                 if(defaultDept) document.getElementById('input-p-dept').value = defaultDept;
             }
             modal?.classList.remove('hidden');
@@ -1692,12 +1805,30 @@
             document.getElementById('set-prog-location').value = p.location; 
             document.getElementById('set-prog-time').value = p.time; 
             document.getElementById('set-prog-status').value = p.status || 'active';
+            document.getElementById('set-prog-req-shirt').checked = p.requireShirtSize || false;
+            document.getElementById('set-prog-req-transport').checked = p.requireTransport || false;
+            document.getElementById('set-prog-req-gender').checked = p.requireGender || false;
             
             const ch = document.getElementById('settings-dept-checklist'); 
-            if(ch) ch.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-3 p-3 bg-white border border-indigo-50 hover:border-indigo-300 rounded-xl cursor-pointer shadow-sm text-slate-800"><input type="checkbox" name="settingsDepts" value="${d}" ${(p.involvedDepts||[]).includes(d)?'checked':''} class="w-5 h-5 rounded text-indigo-600 shadow-inner"><span class="text-xs font-black uppercase text-indigo-950">${d}</span></label>`).join(''); 
+            if(ch) ch.innerHTML = DEPARTMENTS.map(d => `<label class="flex items-center gap-3 p-3 bg-white border border-slate-200 rounded-xl cursor-pointer shadow-sm hover:border-indigo-300 text-slate-800"><input type="checkbox" name="settingsDepts" value="${d}" ${(p.involvedDepts||[]).includes(d)?'checked':''} class="w-5 h-5 rounded text-indigo-600 shadow-inner"><span class="text-xs font-black uppercase text-indigo-950">${d}</span></label>`).join(''); 
         };
         
-        window.showToast = (m) => { const t = document.getElementById('toast'), e = document.getElementById('toast-message'); if(t && e){ e.textContent=m; t.classList.remove('hidden'); setTimeout(()=>t.classList.add('hidden'), 3000); } };
+        window.showToast = (m, type = 'success') => { 
+            const t = document.getElementById('toast'), 
+                  e = document.getElementById('toast-message'),
+                  ic = document.getElementById('toast-icon-container'); 
+            if(t && e && ic){ 
+                e.textContent=m; 
+                if(type === 'error'){ 
+                    ic.innerHTML = '<i data-lucide="x-circle" class="w-4 h-4 text-rose-400"></i>'; 
+                } else { 
+                    ic.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>'; 
+                } 
+                lucide.createIcons(); 
+                t.classList.remove('hidden'); 
+                setTimeout(()=>t.classList.add('hidden'), 3000); 
+            } 
+        };
         
         window.switchTab = (t) => { 
             document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active', 'fade-in')); 
